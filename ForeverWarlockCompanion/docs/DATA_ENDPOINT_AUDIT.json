@@ -1,0 +1,61 @@
+{
+  "accessedAt": "2026-11-19T11:22:06.803822+00:00",
+  "credentialUsed": false,
+  "requests": [
+    {
+      "path": "/api/v1/items?limit=1",
+      "status": 401,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "path": "/api/v1/items/14469",
+      "status": 401,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "path": "/api/v1/vendors?limit=1",
+      "status": 401,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "path": "/api/v1/vendors/11557",
+      "status": 401,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "path": "/api/v1/quests?limit=1",
+      "status": 401,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "path": "/api/v1/quests/1",
+      "status": 401,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "path": "/api/v1/professions",
+      "status": 401,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "path": "/api/v1/professions/tailoring?limit=1",
+      "status": 401,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "path": "/api/v1/dungeons?limit=1",
+      "status": 401,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "path": "/api/v1/merchants-favor",
+      "status": 401,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "path": "/api/v1/classes/warlock",
+      "status": 401,
+      "contentType": "application/json; charset=utf-8"
+    }
+  ]
+}

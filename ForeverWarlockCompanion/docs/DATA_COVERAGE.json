@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "sha256": "68f7a98f9166ddc208e0a0e9553c71fa47b29e50ebf432b182859812e080fe32",
+  "scope": "single vendor slice; no mass import",
+  "entities": {
+    "items": 4,
+    "vendors": 1,
+    "vendorOffers": 1,
+    "recipes": 0,
+    "quests": 0,
+    "acquisitions": 1
+  },
+  "coverage": {
+    "professions": {
+      "Alchemy": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Blacksmithing": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Enchanting": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Engineering": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Leatherworking": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Tailoring": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Herbalism": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Mining": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Skinning": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Cooking": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "First Aid": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Fishing": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      }
+    },
+    "quests": {
+      "imported": 0,
+      "status": "NOT_IMPORTED"
+    },
+    "vendorSlice": {
+      "offers": 1,
+      "requirementsComplete": false,
+      "liveClientValidated": false
+    },
+    "stats": {
+      "items": 4,
+      "status": "PARTIAL; units/effects/build must be checked"
+    }
+  }
+}

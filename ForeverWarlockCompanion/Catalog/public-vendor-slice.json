@@ -1,0 +1,571 @@
+{
+  "schemaVersion": 1,
+  "provenance": {
+    "fdb-item-272411": {
+      "sourceName": "ForeverDB.net",
+      "sourceURL": "https://foreverdb.net/item/272411",
+      "sourceBuild": "1.60.1.70959",
+      "importedAt": "2026-11-19T11:31:39.353354+00:00",
+      "evidenceType": "published_forever_client_page",
+      "verifiedStatus": "publisher_reported_not_locally_verified",
+      "redistributionBasis": "Minimal attributed factual transcription; no guides, site code or assets copied",
+      "sha256": "b7f8fda461e032f1c6de4e574e6b475f6bc2ff239b1b95f7e8e758d7ddb83ca5"
+    },
+    "fdb-item-226404": {
+      "sourceName": "ForeverDB.net",
+      "sourceURL": "https://foreverdb.net/item/226404",
+      "sourceBuild": "1.60.1.70959",
+      "importedAt": "2026-11-19T11:31:39.353354+00:00",
+      "evidenceType": "published_forever_client_page",
+      "verifiedStatus": "publisher_reported_not_locally_verified",
+      "redistributionBasis": "Minimal attributed factual transcription; no guides, site code or assets copied",
+      "sha256": "a013b7aacf7c97fc00bbca2d921d7209419a72b30bcacac4ed65a04ffb4626ca"
+    },
+    "fdb-item-18407": {
+      "sourceName": "ForeverDB.net",
+      "sourceURL": "https://foreverdb.net/item/18407",
+      "sourceBuild": "1.60.1.70959",
+      "importedAt": "2026-11-19T11:31:39.353354+00:00",
+      "evidenceType": "published_forever_client_page",
+      "verifiedStatus": "publisher_reported_not_locally_verified",
+      "redistributionBasis": "Minimal attributed factual transcription; no guides, site code or assets copied",
+      "sha256": "301e28ad90a2a33138d2e04120164cdf67a4416f77386a8c956e1de9a216a1b3"
+    },
+    "fdb-item-10019": {
+      "sourceName": "ForeverDB.net",
+      "sourceURL": "https://foreverdb.net/item/10019",
+      "sourceBuild": "1.60.1.70959",
+      "importedAt": "2026-11-19T11:31:39.353354+00:00",
+      "evidenceType": "published_forever_client_page",
+      "verifiedStatus": "publisher_reported_not_locally_verified",
+      "redistributionBasis": "Minimal attributed factual transcription; no guides, site code or assets copied",
+      "sha256": "817fac35e919e944f338436564d6a7122ecd0466e0eccdbb6cab98c56b6b6cff"
+    }
+  },
+  "items": {
+    "272411": {
+      "itemId": 272411,
+      "name": {
+        "status": "KNOWN",
+        "value": "Arcanoweave Cloak",
+        "provenance": [
+          "fdb-item-272411"
+        ]
+      },
+      "quality": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-item-272411"
+        ]
+      },
+      "slot": {
+        "status": "KNOWN",
+        "value": "Back (Cloth)",
+        "provenance": [
+          "fdb-item-272411"
+        ]
+      },
+      "requiredLevel": {
+        "status": "KNOWN",
+        "value": 60,
+        "provenance": [
+          "fdb-item-272411"
+        ]
+      },
+      "stats": {
+        "Armor": {
+          "value": 46,
+          "statKey": "RESISTANCE0_NAME",
+          "unit": "armor",
+          "provenance": [
+            "fdb-item-272411"
+          ]
+        },
+        "Spell Power": {
+          "value": 16,
+          "statKey": "ITEM_MOD_SPELL_POWER_SHORT",
+          "unit": "spell_power",
+          "provenance": [
+            "fdb-item-272411"
+          ]
+        },
+        "Hit": {
+          "value": 10,
+          "statKey": null,
+          "unit": "unknown",
+          "provenance": [
+            "fdb-item-272411"
+          ]
+        },
+        "Intellect": {
+          "value": 8,
+          "statKey": "ITEM_MOD_INTELLECT_SHORT",
+          "unit": "points",
+          "provenance": [
+            "fdb-item-272411"
+          ]
+        }
+      },
+      "effects": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-item-272411"
+        ]
+      },
+      "equipRestrictions": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-item-272411"
+        ]
+      },
+      "buildVersion": "1.60.1.70959",
+      "statsCoverage": "partial",
+      "sourceConfidence": "publisher_reported",
+      "provenance": [
+        "fdb-item-272411"
+      ]
+    },
+    "226404": {
+      "itemId": 226404,
+      "name": {
+        "status": "KNOWN",
+        "value": "Tarnished Undermine Real",
+        "provenance": [
+          "fdb-item-226404"
+        ]
+      },
+      "quality": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-item-226404"
+        ]
+      },
+      "slot": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-item-226404"
+        ]
+      },
+      "requiredLevel": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-item-226404"
+        ]
+      },
+      "stats": {},
+      "effects": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-item-226404"
+        ]
+      },
+      "equipRestrictions": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-item-226404"
+        ]
+      },
+      "buildVersion": "1.60.1.70959",
+      "statsCoverage": "partial",
+      "sourceConfidence": "publisher_reported",
+      "provenance": [
+        "fdb-item-226404"
+      ]
+    },
+    "18407": {
+      "itemId": 18407,
+      "name": {
+        "status": "KNOWN",
+        "value": "Felcloth Gloves",
+        "provenance": [
+          "fdb-item-18407"
+        ]
+      },
+      "quality": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-item-18407"
+        ]
+      },
+      "slot": {
+        "status": "KNOWN",
+        "value": "Hands (Cloth)",
+        "provenance": [
+          "fdb-item-18407"
+        ]
+      },
+      "requiredLevel": {
+        "status": "KNOWN",
+        "value": 57,
+        "provenance": [
+          "fdb-item-18407"
+        ]
+      },
+      "stats": {
+        "Armor": {
+          "value": 55,
+          "statKey": "RESISTANCE0_NAME",
+          "unit": "armor",
+          "provenance": [
+            "fdb-item-18407"
+          ]
+        },
+        "Stamina": {
+          "value": 9,
+          "statKey": "ITEM_MOD_STAMINA_SHORT",
+          "unit": "points",
+          "provenance": [
+            "fdb-item-18407"
+          ]
+        },
+        "Shadow Damage Done": {
+          "value": 33,
+          "statKey": "ITEM_MOD_DAMAGE_SHADOW_SHORT",
+          "unit": "spell_damage",
+          "provenance": [
+            "fdb-item-18407"
+          ]
+        }
+      },
+      "effects": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-item-18407"
+        ]
+      },
+      "equipRestrictions": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-item-18407"
+        ]
+      },
+      "buildVersion": "1.60.1.70959",
+      "statsCoverage": "partial",
+      "sourceConfidence": "publisher_reported",
+      "provenance": [
+        "fdb-item-18407"
+      ]
+    },
+    "10019": {
+      "itemId": 10019,
+      "name": {
+        "status": "KNOWN",
+        "value": "Dreamweave Gloves",
+        "provenance": [
+          "fdb-item-10019"
+        ]
+      },
+      "quality": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-item-10019"
+        ]
+      },
+      "slot": {
+        "status": "KNOWN",
+        "value": "Hands (Cloth)",
+        "provenance": [
+          "fdb-item-10019"
+        ]
+      },
+      "requiredLevel": {
+        "status": "KNOWN",
+        "value": 40,
+        "provenance": [
+          "fdb-item-10019"
+        ]
+      },
+      "stats": {
+        "Armor": {
+          "value": 41,
+          "statKey": "RESISTANCE0_NAME",
+          "unit": "armor",
+          "provenance": [
+            "fdb-item-10019"
+          ]
+        },
+        "Spirit": {
+          "value": 7,
+          "statKey": "ITEM_MOD_SPIRIT_SHORT",
+          "unit": "points",
+          "provenance": [
+            "fdb-item-10019"
+          ]
+        },
+        "Intellect": {
+          "value": 4,
+          "statKey": "ITEM_MOD_INTELLECT_SHORT",
+          "unit": "points",
+          "provenance": [
+            "fdb-item-10019"
+          ]
+        },
+        "Spell Power": {
+          "value": 18,
+          "statKey": "ITEM_MOD_SPELL_POWER_SHORT",
+          "unit": "spell_power",
+          "provenance": [
+            "fdb-item-10019"
+          ]
+        }
+      },
+      "effects": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-item-10019"
+        ]
+      },
+      "equipRestrictions": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-item-10019"
+        ]
+      },
+      "buildVersion": "1.60.1.70959",
+      "statsCoverage": "partial",
+      "sourceConfidence": "publisher_reported",
+      "provenance": [
+        "fdb-item-10019"
+      ]
+    }
+  },
+  "vendors": {
+    "pix-xizzix": {
+      "vendorKey": "pix-xizzix",
+      "npcId": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-item-272411"
+        ]
+      },
+      "name": {
+        "status": "KNOWN",
+        "value": "Pix Xizzix",
+        "provenance": [
+          "fdb-item-272411"
+        ]
+      },
+      "faction": {
+        "status": "KNOWN",
+        "value": "Horde",
+        "provenance": [
+          "fdb-item-272411"
+        ]
+      },
+      "zone": {
+        "status": "KNOWN",
+        "value": "Stranglethorn Vale",
+        "provenance": [
+          "fdb-item-272411"
+        ]
+      },
+      "coordinates": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-item-272411"
+        ]
+      },
+      "inventory": [
+        "pix:272411"
+      ],
+      "provenance": [
+        "fdb-item-272411"
+      ]
+    }
+  },
+  "vendorOffers": {
+    "pix:272411": {
+      "offerId": "pix:272411",
+      "vendorId": "pix-xizzix",
+      "itemId": 272411,
+      "requiredReputationFaction": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-item-272411"
+        ]
+      },
+      "requiredReputationRank": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-item-272411"
+        ]
+      },
+      "goldCostCopper": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-item-272411"
+        ]
+      },
+      "additionalCurrencies": {
+        "status": "KNOWN",
+        "value": [
+          {
+            "kind": "item",
+            "itemId": 226404,
+            "name": "Tarnished Undermine Real",
+            "quantity": 75,
+            "provenance": [
+              "fdb-item-272411",
+              "fdb-item-226404"
+            ]
+          }
+        ],
+        "provenance": [
+          "fdb-item-272411"
+        ]
+      },
+      "requiredItems": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-item-272411"
+        ]
+      },
+      "stockLimit": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-item-272411"
+        ]
+      },
+      "availabilityStatus": {
+        "status": "KNOWN",
+        "value": "seen_in_forever",
+        "provenance": [
+          "fdb-item-272411"
+        ]
+      },
+      "questPrerequisites": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-item-272411"
+        ]
+      },
+      "requirementsComplete": false,
+      "provenance": [
+        "fdb-item-272411"
+      ]
+    }
+  },
+  "recipes": {},
+  "quests": {},
+  "acquisitions": {
+    "vendor:272411:pix": {
+      "acquisitionId": "vendor:272411:pix",
+      "itemId": 272411,
+      "type": "Vendor",
+      "sourceId": "pix:272411",
+      "conditions": {
+        "op": "ALL",
+        "children": [
+          {
+            "op": "QUANTITY",
+            "metric": "level",
+            "amount": 60
+          },
+          {
+            "op": "QUANTITY",
+            "metric": "item",
+            "itemId": 226404,
+            "amount": 75,
+            "name": "Tarnished Undermine Real",
+            "role": "purchase_cost"
+          },
+          {
+            "op": "UNKNOWN",
+            "reason": "Gold, reputation, quest prerequisites and stock are not fully published; inspect the vendor."
+          }
+        ]
+      },
+      "confidence": "published_forever_observation_partial_requirements",
+      "provenance": [
+        "fdb-item-272411"
+      ]
+    }
+  },
+  "coverage": {
+    "professions": {
+      "Alchemy": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Blacksmithing": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Enchanting": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Engineering": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Leatherworking": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Tailoring": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Herbalism": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Mining": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Skinning": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Cooking": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "First Aid": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Fishing": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      }
+    },
+    "quests": {
+      "imported": 0,
+      "status": "NOT_IMPORTED"
+    },
+    "vendorSlice": {
+      "offers": 1,
+      "requirementsComplete": false,
+      "liveClientValidated": false
+    },
+    "stats": {
+      "items": 4,
+      "status": "PARTIAL; units/effects/build must be checked"
+    }
+  }
+}

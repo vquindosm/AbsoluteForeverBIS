@@ -1,0 +1,41 @@
+## Interface: 16001
+## Title: Forever Companion
+## Notes: Equipment planning, native model preview and progression. Imported lists are unranked.
+## Version: 3.3.2-preview
+## SavedVariablesPerCharacter: ForeverWarlockCompanionDB
+
+ForeverWarlockCompanion.lua
+Data.lua
+Data\Affliction.lua
+Data\Recipes.lua
+Data\Foundation.lua
+Services\Compatibility.lua
+Services\ItemStats.lua
+Services\Persistence.lua
+Services\Catalog.lua
+Services\InventoryScanner.lua
+Services\CharacterReader.lua
+Services\ProfessionTracker.lua
+Services\GearPlanner.lua
+Services\NavigationService.lua
+Services\AcquisitionRequirementsResolver.lua
+Services\MerchantObserver.lua
+Services\AcquisitionResolver.lua
+Services\ObjectiveService.lua
+Services\ProgressService.lua
+Services\MaterialAggregator.lua
+Services\DungeonService.lua
+UI\Widgets.lua
+UI\DesignSystem.lua
+UI\ModelViewer.lua
+UI\ItemDetails.lua
+UI\CharacterPanel.lua
+UI\ItemSelector.lua
+UI\SupportingPanels.lua
+UI\StatsPanel.lua
+UI\Dashboard.lua
+UI\ObjectivesPanel.lua
+UI\ContentPanel.lua
+UI\MainWindow.lua
+UI\Tracker.lua
+Events.lua

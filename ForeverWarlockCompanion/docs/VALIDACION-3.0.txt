@@ -1,0 +1,31 @@
+3.0.0-preview — VALIDACIÓN AUTOMATIZADA Y LÍMITES
+
+Lua 5.1.5: todos los archivos Lua compilan por separado con luac -p.
+TOC: 31 archivos Lua presentes en el orden declarado.
+Constructor e importador: sintaxis Python válida. El ZIP se comprueba con testzip y se
+comprueba que cada referencia del .toc exista dentro del directorio del addon.
+
+Regresión tests/run.lua (APIs simuladas):
+modern: 134 comprobaciones
+legacy: 130 comprobaciones
+no-model: 132 comprobaciones
+player-model: 133 comprobaciones
+
+Casos de 3.0 tests/v3.lua:
+modern: 52 comprobaciones
+legacy: 52 comprobaciones
+no-model: 52 comprobaciones
+player-model: 52 comprobaciones
+Total 737 comprobaciones entre los ocho escenarios; muchas se repiten entre escenarios.
+
+Escenario real de datos: Spellweaver's Turban 22267 (Affliction). Migración de esquema 2,
+backup, selección y pesos preservados, objetivo con dungeon/jefe conocidos, pasos manuales,
+adquisición independiente, custom steps, dependencias acíclicas, material compartido en
+fixtures, navegación/Back, fuentes, foco/expansión de tracker y roundtrip a archivo temporal.
+Geometría simulada en 880x640, 1180x780 y 1700x1100. Dos temas y metadatos desconocidos.
+El inventario conserva el debounce y la navegación no añade escaneos continuos.
+
+NO VALIDADO: renderizado real, fuentes, tooltips, SetUnit/TryOn, combate, secret values o
+la respuesta exacta del cliente Forever instalado por el usuario. No se tomaron capturas
+reales de esta versión. Los mocks no certifican compatibilidad real.
+Seguir PRUEBAS-3.0.md antes de considerar esta preview validada en juego.

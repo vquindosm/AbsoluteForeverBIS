@@ -1,0 +1,20 @@
+# Local secrets and player data
+.env
+.env.*
+*.key
+credentials*.json
+token*.json
+SavedVariables/
+**/SavedVariables/
+private-api/
+**/private-api/
+
+# Build tools and local artifacts
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+/dist/
+/output/
+*.zip
+.DS_Store

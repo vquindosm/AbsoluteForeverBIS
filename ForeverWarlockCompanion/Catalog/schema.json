@@ -1,0 +1,655 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forever-companion.local/catalog/schema-v1",
+  "$defs": {
+    "Field": {
+      "type": "object",
+      "required": [
+        "status",
+        "value",
+        "provenance"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "KNOWN",
+            "UNKNOWN",
+            "LEGACY",
+            "APPROXIMATE"
+          ]
+        },
+        "value": {},
+        "provenance": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "KNOWN"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "not": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "UNKNOWN"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Provenance": {
+      "type": "object",
+      "required": [
+        "sourceName",
+        "sourceURL",
+        "sourceBuild",
+        "importedAt",
+        "evidenceType",
+        "verifiedStatus",
+        "redistributionBasis"
+      ],
+      "properties": {
+        "sourceURL": {
+          "type": "string",
+          "pattern": "^https://"
+        }
+      }
+    },
+    "Condition": {
+      "type": "object",
+      "required": [
+        "op"
+      ],
+      "properties": {
+        "op": {
+          "enum": [
+            "ALL",
+            "ANY",
+            "QUANTITY",
+            "MANUAL",
+            "UNKNOWN"
+          ]
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Condition"
+          }
+        },
+        "amount": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "op": {
+                "const": "QUANTITY"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "metric",
+              "amount"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "op": {
+                "enum": [
+                  "ALL",
+                  "ANY"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "children"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "op": {
+                "const": "ANY"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "children": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "op": {
+                "const": "UNKNOWN"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "reason"
+            ]
+          }
+        }
+      ]
+    },
+    "Item": {
+      "type": "object",
+      "required": [
+        "itemId",
+        "name",
+        "quality",
+        "slot",
+        "requiredLevel",
+        "stats",
+        "effects",
+        "equipRestrictions",
+        "buildVersion",
+        "sourceConfidence",
+        "provenance"
+      ],
+      "properties": {
+        "name": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Field"
+            },
+            {
+              "if": {
+                "properties": {
+                  "status": {
+                    "const": "KNOWN"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "value": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "quality": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Field"
+            },
+            {
+              "if": {
+                "properties": {
+                  "status": {
+                    "const": "KNOWN"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "value": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 7
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "slot": {
+          "$ref": "#/$defs/Field"
+        },
+        "requiredLevel": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Field"
+            },
+            {
+              "if": {
+                "properties": {
+                  "status": {
+                    "const": "KNOWN"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "value": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "effects": {
+          "$ref": "#/$defs/Field"
+        },
+        "equipRestrictions": {
+          "$ref": "#/$defs/Field"
+        },
+        "stats": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/Stat"
+          }
+        }
+      }
+    },
+    "Vendor": {
+      "type": "object",
+      "required": [
+        "vendorKey",
+        "npcId",
+        "name",
+        "faction",
+        "zone",
+        "coordinates",
+        "inventory",
+        "provenance"
+      ],
+      "properties": {
+        "npcId": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Field"
+            },
+            {
+              "if": {
+                "properties": {
+                  "status": {
+                    "const": "KNOWN"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "value": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "name": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Field"
+            },
+            {
+              "if": {
+                "properties": {
+                  "status": {
+                    "const": "KNOWN"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "value": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "faction": {
+          "$ref": "#/$defs/Field"
+        },
+        "zone": {
+          "$ref": "#/$defs/Field"
+        },
+        "coordinates": {
+          "$ref": "#/$defs/Field"
+        }
+      }
+    },
+    "VendorOffer": {
+      "type": "object",
+      "required": [
+        "offerId",
+        "vendorId",
+        "itemId",
+        "requiredReputationFaction",
+        "requiredReputationRank",
+        "goldCostCopper",
+        "additionalCurrencies",
+        "requiredItems",
+        "stockLimit",
+        "availabilityStatus",
+        "provenance"
+      ],
+      "properties": {
+        "requiredReputationFaction": {
+          "$ref": "#/$defs/Field"
+        },
+        "requiredReputationRank": {
+          "$ref": "#/$defs/Field"
+        },
+        "goldCostCopper": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Field"
+            },
+            {
+              "if": {
+                "properties": {
+                  "status": {
+                    "const": "KNOWN"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "value": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "additionalCurrencies": {
+          "$ref": "#/$defs/Field"
+        },
+        "requiredItems": {
+          "$ref": "#/$defs/Field"
+        },
+        "stockLimit": {
+          "$ref": "#/$defs/Field"
+        },
+        "availabilityStatus": {
+          "$ref": "#/$defs/Field"
+        }
+      }
+    },
+    "Recipe": {
+      "type": "object",
+      "required": [
+        "spellId",
+        "outputItemId",
+        "outputQuantity",
+        "profession",
+        "requiredSkill",
+        "reagents",
+        "learningSources",
+        "cooldown",
+        "provenance"
+      ],
+      "properties": {
+        "outputItemId": {
+          "$ref": "#/$defs/Field"
+        },
+        "outputQuantity": {
+          "$ref": "#/$defs/Field"
+        },
+        "profession": {
+          "$ref": "#/$defs/Field"
+        },
+        "requiredSkill": {
+          "$ref": "#/$defs/Field"
+        },
+        "reagents": {
+          "$ref": "#/$defs/Field"
+        },
+        "learningSources": {
+          "$ref": "#/$defs/Field"
+        },
+        "cooldown": {
+          "$ref": "#/$defs/Field"
+        }
+      }
+    },
+    "Quest": {
+      "type": "object",
+      "required": [
+        "questId",
+        "name",
+        "level",
+        "faction",
+        "zone",
+        "startNPC",
+        "endNPC",
+        "prerequisites",
+        "rewards",
+        "completionRequirements",
+        "provenance"
+      ],
+      "properties": {
+        "name": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Field"
+            },
+            {
+              "if": {
+                "properties": {
+                  "status": {
+                    "const": "KNOWN"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "value": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "level": {
+          "$ref": "#/$defs/Field"
+        },
+        "faction": {
+          "$ref": "#/$defs/Field"
+        },
+        "zone": {
+          "$ref": "#/$defs/Field"
+        },
+        "startNPC": {
+          "$ref": "#/$defs/Field"
+        },
+        "endNPC": {
+          "$ref": "#/$defs/Field"
+        },
+        "prerequisites": {
+          "$ref": "#/$defs/Field"
+        },
+        "rewards": {
+          "$ref": "#/$defs/Field"
+        },
+        "completionRequirements": {
+          "$ref": "#/$defs/Field"
+        }
+      }
+    },
+    "AcquisitionSource": {
+      "type": "object",
+      "required": [
+        "acquisitionId",
+        "itemId",
+        "type",
+        "sourceId",
+        "conditions",
+        "confidence",
+        "provenance"
+      ],
+      "properties": {
+        "conditions": {
+          "$ref": "#/$defs/Condition"
+        }
+      }
+    },
+    "Stat": {
+      "type": "object",
+      "required": [
+        "value",
+        "statKey",
+        "unit",
+        "provenance"
+      ],
+      "properties": {
+        "value": {
+          "type": "number"
+        },
+        "statKey": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "unit": {
+          "enum": [
+            "points",
+            "armor",
+            "spell_power",
+            "spell_damage",
+            "unknown",
+            "rating",
+            "percent",
+            "mp5"
+          ]
+        },
+        "provenance": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "unit": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "statKey": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "provenance",
+    "coverage",
+    "items",
+    "vendors",
+    "vendorOffers",
+    "recipes",
+    "quests",
+    "acquisitions"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/Provenance"
+      }
+    },
+    "coverage": {
+      "type": "object"
+    },
+    "items": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/Item"
+      }
+    },
+    "vendors": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/Vendor"
+      }
+    },
+    "vendorOffers": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/VendorOffer"
+      }
+    },
+    "recipes": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/Recipe"
+      }
+    },
+    "quests": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/Quest"
+      }
+    },
+    "acquisitions": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/AcquisitionSource"
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,50 @@
+{
+  "capture": {
+    "systemCount": 410,
+    "tableCount": 801,
+    "interface": 16001,
+    "product": "wow_classic_beta",
+    "consoleCommandCount": 1878,
+    "buildDate": "Nov  3 2026",
+    "hasAPIDocumentation": true,
+    "eventCount": 1816,
+    "version": "1.60.1",
+    "exportedAt": "2026-11-05 13:35:56",
+    "functionCount": 6621,
+    "build": "70790"
+  },
+  "source": "https://github.com/Atraeau/WoW-Addons/blob/main/docs/api.json",
+  "functions": {
+    "C_Timer": [
+      "After"
+    ],
+    "C_Item": [
+      "GetItemInfo",
+      "GetItemStats",
+      "RequestLoadItemDataByID"
+    ],
+    "C_Container": [
+      "GetContainerItemInfo",
+      "GetContainerNumSlots"
+    ],
+    "C_ClassTalents": [
+      "GetActiveConfigID"
+    ],
+    "C_Traits": [
+      "GetConfigInfo",
+      "GetDefinitionInfo",
+      "GetEntryInfo",
+      "GetNodeInfo",
+      "GetTreeNodes"
+    ],
+    "C_Spell": [
+      "GetSpellInfo"
+    ],
+    "C_SpecializationInfo": [
+      "GetSpecialization",
+      "GetSpecializationInfo",
+      "GetTalentInfo"
+    ]
+  },
+  "missing": []
+}

@@ -1,0 +1,25 @@
+VALIDACIÓN LOCAL — 2.2.0-preview
+
+Lua 5.1.5: todos los archivos .lua pasan luac -p por separado.
+TOC: los 19 módulos existen y se cargan en el orden indicado.
+16 funciones de namespaces contrastadas con la exportación documental de Forever 16001
+build 70790; detalles en api-functions.json. Esto no es una prueba dentro del cliente.
+
+Suite con APIs simuladas:
+PASS modern: 109 comprobaciones
+PASS legacy: 105 comprobaciones
+PASS no-model: 108 comprobaciones
+PASS player-model: 108 comprobaciones
+Total: 430 comprobaciones entre los cuatro escenarios (muchas son comunes).
+
+Verifica migración y respaldo, ID/alternativas de Head, selección de objetivos, perfiles,
+modos, filtros, cantidades de bolsas, fallo de APIs, diferimiento en combate, debounce,
+snapshots de talentos, cantidades de anillos, acciones en siete pestañas, tamaños mínimos,
+reutilización de filas, rechazo de TryOn y roundtrip de SavedVariables a un archivo temporal.
+No se observaron errores de módulo en esos escenarios. El render repetido no escanea bolsas.
+El importador se volvió a ejecutar sobre la captura con idénticos hash/recuentos; la sintaxis
+y el escenario modern pasan también tras la regeneración final de datos.
+
+NO EJECUTADO: cliente WoW Forever, renderizado, tooltips reales, apariencia de equipo,
+restricciones reales del motor, datos reales de talentos/recetas, reload/logout del juego.
+Sigue docs/PRUEBAS_EN_JUEGO.md. No se afirma validación efectiva completa del build del usuario.

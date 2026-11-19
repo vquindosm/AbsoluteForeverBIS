@@ -1,0 +1,130 @@
+Forever Companion 2.6.0-preview — interfaz objetivo 16001
+
+INSTALACIÓN
+1. Cierra el juego o desactiva la versión anterior. Conserva una copia de tus SavedVariables.
+2. Sustituye la carpeta ForeverWarlockCompanion completa por la de este paquete.
+3. Debe quedar Interface/AddOns/ForeverWarlockCompanion/ForeverWarlockCompanion.toc.
+   En una instalación Forever, AddOns está dentro de _forever_. No anides otra carpeta igual.
+4. Inicia el juego y ejecuta /fwc. Se conservan el nombre de carpeta y la variable
+   ForeverWarlockCompanionDB por personaje. No cargues simultáneamente la versión antigua.
+
+RECORRIDO INICIAL
+- Selecciona WARLOCK / Affliction / Pre-BiS en la barra superior.
+- Character & Gear -> Head abre Item Explorer, con diez candidatos importados.
+- Selecciona un objeto y pulsa Set as Target: vuelve al personaje en modo Planned.
+- Current / Planned alternan la apariencia; Restore actual appearance restaura el modelo.
+- El icono de objetivo y el botón Equipped abren tooltips nativos al pasar el ratón.
+- La comparación numérica usa únicamente estadísticas que devuelve el cliente para ambos
+  enlaces. Los datos importados se muestran separados y nunca se convierten en DPS.
+- /reload guarda las selecciones. Cambia de especialización y vuelve para comprobar
+  la separación de perfiles. BiS está vacío de forma deliberada: faltan datos revisados.
+- Selecciona Tailoring / Enchanting para aplicar los filtros de recetas y consultar materiales.
+- Arrastra el título para mover; arrastra la esquina inferior derecha para redimensionar.
+  Las listas y los detalles admiten rueda de ratón y barra de desplazamiento.
+
+ESTADO DE ESTA ENTREGA
+Fase 1: auditoría estática completada; ver docs/AUDITORIA.md.
+Fase 2: ventana, filtros, siete secciones y Character & Gear implementados.
+Fase 3: visor nativo con comprobaciones de capacidades implementado; pendiente de
+        validación en tu cliente real. No se ha ejecutado WoW Forever en este entorno.
+Fase 4: selector, búsqueda, fuente, ranura, tooltips y persistencia implementados para
+        Affliction Pre-BiS: 173 entradas por ranura, 157 objetos únicos, 10 cascos.
+Fase 5: inventario por eventos, prioridades, objetivos, rutas, recetas importadas e historial
+        manual integrados. Costes de sastrería no disponibles, receta aprendida y cooldown
+        real siguen pendientes. Los avisos Mooncloth usan exclusivamente una estimación.
+Fase 6: nueve clases y 29 variantes seleccionables. Otros catálogos y builds pendientes.
+
+DATOS Y LÍMITES
+El orden es el de la fuente, NO un ranking. No hay recomendaciones calculadas ni listas
+marcadas como verificadas en juego. Se conserva una huella del archivo importado y un
+importador reproducible en tools/. La importación se hace fuera del juego, nunca por red
+entrando en WoW. La fuente de recetas de encantamiento proporciona costes; los objetos
+fabricados sin costes no se declaran fabricables. Ver docs/import-manifest.json.
+
+Mooncloth conserva del addon anterior 2 Felcloth y 95 horas como datos NO VERIFICADOS.
+El usuario registra cada fabricación real. Un aviso al abrir/actualizar la ventana indica
+cuándo vence esa estimación; no confirma disponibilidad real. Se puede desactivar en Settings.
+Las actividades diarias se reinician por fecha local y las semanales el lunes local. No se
+presentan como misiones oficiales ni como reset del reino. No se consulta banco ni alts.
+
+Las profesiones se detectan por GetProfessions/GetProfessionInfo si están disponibles.
+La especialización detectada sólo se asocia automáticamente cuando coincide con una variante
+conocida; en otros idiomas o en casos ambiguos se conserva la selección manual. Los talentos
+son lectura y snapshots vinculados al equipo, no un calculador completo ni un editor del árbol.
+No se equipan objetos, se fabrican recetas ni se gastan puntos de talento desde el addon.
+
+Las 28 variantes anunciadas por el addon anterior son en realidad 29 al contar las entradas
+originales y las de la referencia. Se mantienen todas, incluidas Feral Tank/DPS y Shockadin.
+
+COMANDOS
+/fwc                     Abrir/cerrar
+/fwc gear | explorer | planner | route | prof | specs | settings
+/fwc refresh             Leer personaje e inventario de nuevo
+/fwc choose <1-17> <n>    Elegir candidato por orden de importación del perfil actual
+/fwc done <1-17>          Alternar adquisición manual del objetivo actual
+/fwc mooncloth           Registrar fabricación manual, sin comprobar éxito ni cooldown real
+/fwc history             Mostrar hasta diez registros
+/fwc diag                Mostrar número de escaneos y errores de compatibilidad registrados
+
+MIGRACIÓN Y PRUEBAS
+La migración guarda legacyBackup una sola vez. Las selecciones por nombre se convierten
+cuando existe un ID importado coincidente. Si falta, se conserva el nombre en unresolved,
+se muestra el caso y no se reemplaza silenciosamente por otro objetivo. El respaldo original
+se conserva aunque luego cambies las selecciones. Las selecciones se guardan por personaje,
+clase, especialización y modo. Lua no puede forzar la escritura de SavedVariables: WoW la
+realiza al salir o usar /reload. Ver docs/PRUEBAS_EN_JUEGO.md y tests/README.md.
+
+NOVEDADES 2.3
+Los iconos junto al modelo son equipo realmente equipado. El símbolo = indica que coincide
+con el objetivo seleccionado; ? indica que no existe una valoración de rendimiento fiable.
+Pulsa un icono para abrir la ranura; pasa el ratón para consultar el objeto real.
+El visor sólo se recarga cuando cambia el equipo o se solicita restauración.
+El seguimiento flotante lista los objetivos añadidos manualmente que faltan; ordénalos con
+Priority. Pulsa el encabezado para plegar/desplegar o arrástralo para moverlo. Pulsa una fila
+para abrir Progression. /fwc tracker muestra/oculta el seguimiento; /fwc planner abre Progression.
+El botón Remove from Planner retira un objeto de la lista. El siguiente paso se basa en
+prioridad y fuente; no es una ruta óptima ni una clasificación de rendimiento.
+Ver docs/NOVEDADES-2.3.md. Los informes anteriores describen la versión 2.2.
+
+NOVEDADES 2.4
+Interfaz más cálida, iconos en explorador y planificador; acciones secundarias en More options.
+El seguimiento presenta iconos, fuentes y progreso de reputación conocido con barra. La barra
+representa el rango ACTUAL hasta el SIGUIENTE rango, no el porcentaje hasta Exaltado. El rango
+objetivo se indica por separado, según la fuente. UPDATE_FACTION actualiza los datos.
+En fuentes de reputación sin coincidencia fiable (incluido el cliente en otro idioma), abre
+los detalles del objeto > More options > Choose faction y selecciona la facción del personaje.
+Sin datos o con requisitos ambiguos muestra Progress unavailable, sin inventar progreso.
+El listado de facciones depende de las que el cliente expone; puede requerir expandir sus
+cabeceras en la ventana de reputaciones. Solo se leen datos, no se cambia la facción seguida.
+Se conservan las funciones y todos los botones secundarios en More options.
+Pruebas simuladas Lua 5.1; aún no se ha probado la presentación en WoW Forever.
+
+NOVEDADES 2.5
+Los iconos junto al personaje usan la textura y tooltip del inventario real cuando el cliente
+lo permite. Haz clic en uno para ver el objetivo y la comparación de esa ranura. La lista
+de objetivos sigue abriendo el explorador, donde Set as Target selecciona la alternativa.
+
+En Settings puedes introducir pesos EP separados por coma, por ejemplo
+ITEM_MOD_INTELLECT_SHORT=0.2,ITEM_MOD_STAMINA_SHORT=0
+Esos valores son exclusivamente un ejemplo de sintaxis, no pesos recomendados. Calcula tus
+pesos para tu personaje y encuentro en WoWSims Forever e introdúcelos por clave de estadística
+del cliente, con unidades compatibles. Se guardan por personaje, clase y especialización.
+Toda clave ITEM_MOD presente en cualquiera de los dos objetos debe tener peso explícito,
+incluso 0 para ignorarla. El panel indica la primera clave que falta. El campo vacío borra
+los pesos. Si faltan datos, pesos, o el EP equipado no es positivo, se muestra EP unavailable.
+El porcentaje es 100*(EP objetivo - EP equipado)/abs(EP equipado), no un porcentaje de DPS.
+Efectos, procs, bonus de conjunto, armas, encantamientos, topes y cambios de equipo pueden no
+reflejarse correctamente; el resultado no certifica BiS. Ver docs/NOVEDADES-2.5.md.
+
+NOVEDADES 2.6 — STATS
+Pestaña nueva Stats y comando /fwc stats: elige ranura y candidato con los desplegables.
+Tabla de estadísticas DEL OBJETO: equipado, candidato, diferencia y peso EP editable por fila.
+Incluye intelecto, stamina, fuerza, spell power, crítico, hit, penetración, etc. Las claves
+adicionales que devuelve el cliente se añaden como filas. No son los totales del personaje.
+Para calcular EP escribe un peso por punto para las estadísticas relevantes y 0 para las
+que quieras ignorar, y pulsa Guardar pesos. No se introducen pesos recomendados inventados.
+Las diferencias numéricas no requieren pesos. El resultado EP sí requiere datos y pesos.
+? significa dato no disponible, incluido resultado vacío del cliente; 0 indica que esa clave
+no aparece en la tabla no vacía recibida (no garantiza que la API exponga todos los efectos).
+Una API que no devuelve cierta estadística no permite inventarla ni equiparar rating y %.
+El botón del objeto equipado en los detalles también abre Stats. Ver docs/NOVEDADES-2.6.md.
