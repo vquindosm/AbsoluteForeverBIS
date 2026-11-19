@@ -34,7 +34,7 @@ function C.ItemInfo(item)
     local fn=C_Item and C_Item.GetItemInfo or GetItemInfo
     local provider=C_Item and type(C_Item.GetItemInfo)=='function' and 'C_Item.GetItemInfo' or 'GetItemInfo'
     if type(fn)~='function' then return {state='unavailable',provider=provider} end
-    local ok,name,link,quality,level,_,_,_,_,equipLoc,icon=pcall(fn,item)
+    local ok,name,link,quality,level,requiredLevel,_,_,_,equipLoc,icon,_,classID,subclassID=pcall(fn,item)
     local supplied=type(item)=='string' and C.ItemID(item) and item or nil
     if not ok then return {state='error',error=tostring(name),link=supplied,provider=provider} end
     if not C.Readable(name) or not C.Readable(link) then return {state='error',error='Restricted item identity',provider=provider} end
@@ -42,9 +42,12 @@ function C.ItemInfo(item)
     if expected and link and C.ItemID(link)~=expected then return {state='error',error='Identity link belongs to another item',link=supplied,provider=provider} end
     if name~=nil and type(name)~='string' then return {state='error',error='Invalid item name',link=supplied,provider=provider} end
     if not C.Readable(quality) then quality=nil end;if not C.Readable(level) then level=nil end
+    if not C.Readable(requiredLevel) or type(requiredLevel)~='number' then requiredLevel=nil end
+    if not C.Readable(classID) or type(classID)~='number' then classID=nil end
+    if not C.Readable(subclassID) or type(subclassID)~='number' then subclassID=nil end
     if not C.Readable(equipLoc) then equipLoc=nil end;if not C.Readable(icon) then icon=nil end
     if not name and A.Services.ItemStats then A.Services.ItemStats.Request(item) end
-    return {name=name,link=supplied or link,baseLink=link,quality=quality,level=level,equipLoc=equipLoc,icon=icon,
+    return {name=name,link=supplied or link,baseLink=link,quality=quality,level=level,requiredLevel=requiredLevel,classID=classID,subclassID=subclassID,equipLoc=equipLoc,icon=icon,
         state=name and 'loaded' or 'pending',provider=provider}
 end
 function C.BagSlots(bag)

@@ -91,3 +91,14 @@ cobertura parcial, reproducción offline, marcas de fuente y fallos de identidad
 Ejecutar también todas las suites anteriores. Las respuestas del jugador son simuladas.
 Las comparativas en docs/validation-3.4 son geometría de frames con iconos simbólicos;
 no son capturas de WoW. El exportador también permite inspeccionar Item Explorer.
+
+
+## Indicadores de botín (3.5)
+
+Ejecutar `lua tests/loot_indicator.lua modern` y variantes legacy/no-model/player-model.
+Los 64 checks por variante usan IDs y respuestas deliberadamente sintéticos: comparación
+fuera de catálogo, enlaces completos, ausencia frente a cero, pesos, restricciones, dos
+anillos/abalorios, 2H con mano izquierda, cambios de equipo en combate, hooks sin duplicados,
+ItemRefTooltip tardío, datos asíncronos y tooltip cambiado, filas recicladas/ScrollBox,
+cierre, activación y preferencias. No es una prueba del cliente Forever ni de un drop real.
+Ejecutar también todas las suites anteriores. Recorrido manual: LOOT-INDICATOR-3.5.md.

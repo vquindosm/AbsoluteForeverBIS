@@ -1,4 +1,4 @@
-FOREVER COMPANION 3.4.0-preview — interfaz 16001
+FOREVER COMPANION 3.5.0-preview — interfaz 16001
 
 Instala la carpeta ForeverWarlockCompanion completa en
 World of Warcraft/_forever_/Interface/AddOns/ y abre /fwc.
@@ -210,3 +210,30 @@ sus controles anteriores y no usan estos índices o referencias como estadístic
 El addon no accede a Internet, compra, equipa ni aplica encantamientos automáticamente.
 Las claves/respuestas privadas siguen fuera del paquete. Leer docs/ITEM-GUIDE-3.4.md,
 ITEM_GUIDE_COVERAGE.json y las comparativas de geometría simulada en docs/validation-3.4.
+
+
+3.5.0 — INDICADORES DE MEJORA EN EL BOTÍN
+Activados por defecto. /fwc loot on | off; también en Settings.
+La ventana de botín estándar muestra una marca junto al objeto y el tooltip desglosa ganancias
+y pérdidas frente al equipo actual. Funciona igual en mazmorras y en mundo abierto, también
+con objetos fuera del catálogo, y en enlaces de chat a través de ItemRefTooltip.
+
+↑ EP = mejora estimada con tus pesos de Stats. ↓ EP = menor puntuación con esos pesos.
+↑ stats / ↓ stats = gana/pierde atributos leídos, sin valoración global de DPS.
+? = comparación incompleta, carga pendiente o uso sin comprobar. + = ranura vacía.
+El detalle enseña cambios concretos como +6 Spell power y -5 Stamina. Mayús amplía los cambios.
+Sin pesos o datos suficientes no se inventa un porcentaje. Efectos, bonus y caps pueden quedar
+fuera de EP: no es una simulación de DPS. Los atributos ausentes no se convierten en cero.
+
+Anillos y abalorios se comparan con las dos ranuras. Un arma de dos manos se compara con el
+arma y mano izquierda actuales; una mano izquierda no se declara mejora directa mientras
+lleves un arma de dos manos. Se respetan los enlaces completos y las variantes del objeto.
+El equipo se consulta en el cliente incluso con inventario cacheado o en combate.
+No se equipa, compra, recoge botín ni se envían mensajes de grupo automáticamente.
+
+La integración usa TooltipDataProcessor si está disponible o hooks del tooltip clásico,
+sin sustituir scripts/texto de Blizzard u otros addons. La insignia del botín admite botones
+clásicos con slot y elementos ScrollBox con GetSlotIndex; interfaces de botín personalizadas
+pueden mostrar sólo el indicador del tooltip. Prueba dentro de WoW aún pendiente.
+Ver docs/LOOT-INDICATOR-3.5.md. Este indicador usa estadísticas del cliente, no puntuaciones
+publicadas por ForeverDB ni referencias offline para declarar una mejora.
