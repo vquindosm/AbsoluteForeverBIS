@@ -1,4 +1,4 @@
-FOREVER COMPANION 3.3.2-preview — interfaz 16001
+FOREVER COMPANION 3.3.3-preview — interfaz 16001
 
 Instala la carpeta ForeverWarlockCompanion completa en
 World of Warcraft/_forever_/Interface/AddOns/ y abre /fwc.
@@ -161,3 +161,22 @@ El mapping de una respuesta autenticada aún no está validado; las once sondas 
 Leer docs/DATA_SOURCES.md, DATA_MODEL.md, UPDATE_CATALOG.md, VENDOR_SLICE_TEST.md
 y DATA_COVERAGE.json. Recetas nuevas de las doce profesiones y misiones: 0 importadas.
 No se declara catálogo completo ni se importan los otros tres casos antes de validar éste en WoW.
+
+
+3.3.3 — FOREVERDB AUTENTICADO
+Data from ForeverDB.net — https://foreverdb.net
+Documentación consultada: https://foreverdb.net/developers
+El catálogo activo usa Catalog/api-vendor-slice.json, normalizado desde cuatro registros
+individuales de objetos y el vendedor 227853. La API confirma la moneda 3469 por 75 unidades
+para Arcanoweave Cloak, precio publicado 0 cobre por compra, NPC y coordenadas 28.5, 75.8.
+El plan consulta C_CurrencyInfo; item 226404 en bolsas no sustituye ese saldo. Una lectura
+no disponible sigue siendo Unknown. La oferta ilimitada publicada no prueba stock actual.
+Reputación requerida, quests y restricciones no publicadas siguen UNKNOWN. Se conservan
+método, objetivo y notas. Los costes actuales sólo prevalecen con ese vendedor abierto.
+
+Los atributos API de Felcloth/Dreamweave y la capa son referencias parciales, con prioridad
+para la lectura del cliente. No se convierten unidades de Hit sin revisar ni se conceden EP
+con referencias parciales. Crédito/enlace visible en los paneles que muestran estos datos.
+La API se consulta fuera de WoW. No se distribuyen claves ni metadatos privados de cuenta.
+Catalog/public-vendor-slice.json es un archivo histórico de 3.3.2, no la fuente del build actual.
+La comprobación dentro de WoW y la importación masiva siguen pendientes.

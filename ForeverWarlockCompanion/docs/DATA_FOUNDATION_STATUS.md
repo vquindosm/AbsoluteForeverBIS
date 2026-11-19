@@ -1,44 +1,43 @@
-# Estado de entrega — 3.3.2-preview
+# Estado de entrega — 3.3.3-preview
 
-Se ha seguido el gate final solicitado: auditar stats/adquisición y después implementar
-importador + un vendedor. No se ha avanzado al catálogo masivo ni a cuatro ejemplos ficticios.
+El acceso autenticado a ForeverDB y el adaptador del vendedor piloto ya están comprobados.
+Data from [ForeverDB.net](https://foreverdb.net). Documentación: https://foreverdb.net/developers.
+Se conserva el gate de un vendedor antes del catálogo masivo y las otras verticales.
 
 | Parte | Implementado / evidencia | Pendiente |
 |---|---|---|
-| Fuentes y licencias | DATA_SOURCES.md y sondas HTTP propias | API autenticada: variable no disponible en este proceso |
-| Modelo | JSON Schema, procedencia por campo, unknown/legacy explícitos | Más adaptadores revisados para respuestas reales |
-| Importador | Cuatro registros públicos factuales, compilador a Lua y SQLite relacional, cobertura y hash | Mapping API autenticado certificado; importación masiva deshabilitada |
-| Stats | Prioridad cliente, referencias offline de mismo build/variante, unidades desconocidas sin conversión; ambas clases de guantes probadas | Verificación local de todos los atributos/modificaciones en WoW |
-| Rating | Se conserva el EP manual anterior, se bloquean referencias/incompletos | StatWeightProvider y perfiles/simulación nuevos; sin pesos oficiales inventados |
-| Requisitos | ALL/ANY/QUANTITY/MANUAL/UNKNOWN, fuentes alternativas, recursos compartidos y procedencia | Ampliar sólo tras validar la vertical de vendedor |
-| Vendedor | Arcanoweave Cloak 272411 por 75 unidades de item 226404; progreso, bloqueo, UI existente, lectura de mercader y persistencia | Reputación/quests/oro base/stock no publicados; prueba en el cliente aún pendiente |
-| Recetas/misiones | Esquema definido; datos anteriores preservados | Nuevas recetas de 12 profesiones y quests: 0 importadas |
-| Cuatro verticales | Una vertical de vendedor implementada con requisitos publicados parciales | Confirmación en juego y luego crafting/quest/dungeon |
+| Acceso | Seis respuestas autenticadas HTTP 200: meta, cuatro items y vendors/227853 | Ampliar endpoints sólo dentro del alcance revisado |
+| Datos | Catalog/api-vendor-slice.json activo, procedencia/hash/atribución por fuente; Lua y SQLite reproducibles | Verificar en cliente y ampliar adaptadores |
+| Vendedor | NPC 227853; coordenadas 28.5/75.8; currency 3469 ×75; 0 cobre publicado por compra | Reputación, quests y otras restricciones no publicadas; stock actual |
+| Progreso | C_CurrencyInfo, no item 226404 en bolsas; mismo objetivo/método/notas | Lectura del cliente real |
+| Mercader | GUID permite nombres localizados; coste/stock de ventana abierta prevalecen temporalmente | Contrastar APIs/precios con el vendedor dentro de WoW |
+| Stats | API del build 1.60.1.70959; Felcloth daño de sombras, Dreamweave poder con hechizos; referencias parciales con fuente visible | Unidades Hit y atributos/modificaciones del cliente real |
+| Rating | EP manual anterior conservado; referencias/incompletos no puntúan | Pesos/simulación nuevos y puntuación global |
+| Seguridad | Clave usada en sesión privada temporal ya cerrada; no distribuida. meta.client queda fuera del catálogo. ZIP rechaza credenciales | Configurar FOREVERDB_API_KEY fuera del addon para futuras actualizaciones |
+| Cobertura | Cuatro items y una oferta; snapshot público anterior preservado como fixture histórico | Recetas nuevas de las doce profesiones y quests: 0 importadas |
 
-No se presenta la lectura de un mercader simulado como observación real. Sus precios/stock
-históricos no se reutilizan como actuales fuera de su ventana abierta. El booleano de compra
-no demuestra todos los requisitos universales. UNKNOWN no equivale a ausencia de requisito.
-La adquisición observada completa el objetivo, manteniendo separada la falta de cobertura de datos.
-Las sumas de recursos compartidos describen demanda total y una única disponibilidad real;
-no reservan ni gastan moneda automáticamente ni prometen completar varios objetivos a la vez.
+Autenticarse no demuestra que todos los campos sean completos o estén verificados localmente.
+Afiliación y reputación de descuento no son requisitos de compra. La oferta ilimitada publicada
+no garantiza stock actual. UNKNOWN no equivale a ausencia de requisito ni a cero.
+La posesión completa el objetivo, sin certificar las restricciones desconocidas de la fuente.
+Las observaciones históricas de mercader no se reutilizan como actuales después de cerrarlo.
 
 ## Validación local
 
-| Variante simulada | Original | v3 | Layout | Stats fase 1 | Foundation |
-|---|---:|---:|---:|---:|---:|
-| modern | 134 | 60 | 201 | 64 | 66 |
-| legacy | 130 | 60 | 201 | 64 | 66 |
-| no-model | 132 | 60 | 201 | 64 | 66 |
-| player-model | 133 | 60 | 201 | 64 | 66 |
+| Variante simulada | Original | v3 | Layout | Stats fase 1 | Público histórico | API |
+|---|---:|---:|---:|---:|---:|---:|
+| modern | 134 | 60 | 201 | 64 | 66 | 41 |
+| legacy | 130 | 60 | 201 | 64 | 66 | 41 |
+| no-model | 132 | 60 | 201 | 64 | 66 | 41 |
+| player-model | 133 | 60 | 201 | 64 | 66 | 41 |
 
-2.093 comprobaciones Lua y 17 tests Python del compilador/importador. Los 42 archivos Lua
-pasan sintaxis Lua 5.1. Los datos originales (157 objetos, 28 recetas), Dashboard y ventana
-principal se compararon byte a byte con 3.3.1: se mantienen sin cambios.
+2.257 comprobaciones Lua y 24 tests Python pasan; 44 archivos pasan sintaxis Lua 5.1.
+Se comprueban saldo real frente a item homónimo, Unknown/0, cambio de fuente en objetivos
+persistidos, notas, GUID localizado, costes temporales, atribución en cada panel y referencias
+estadísticas sin EP. El adaptador rechaza cambios de formato/build/tipos no revisados.
+Los productos se reconstruyen sin red desde el snapshot normalizado y se escanean credenciales.
+Los datos originales de objetos/recetas, Dashboard y MainWindow se mantienen sin cambios.
 
-Los tests parten del registro publicado conservado en Catalog, pero las respuestas del jugador,
-mercader y grafos adversos son controles explícitos. No prueban el cliente real. Recorrido
-necesario: VENDOR_SLICE_TEST.md. La base no se declara completa ni verificada por compilar.
-
-La clave aprobada que el usuario indicó que configuraría no se recibió en la variable
-FOREVERDB_API_KEY del proceso. No se usaron otras credenciales ni se intentó eludir el 401.
-La documentación explica cómo obtener una respuesta en cuarentena sin distribuir la clave.
+Los registros fuente proceden de la API, pero los estados del jugador y mercader de los tests
+son controles simulados. No certifican la ejecución del addon en WoW. Seguir VENDOR_SLICE_TEST.md
+para cerrar ese gate. No se declara una base completa, una mejora EP ni una captura de juego.

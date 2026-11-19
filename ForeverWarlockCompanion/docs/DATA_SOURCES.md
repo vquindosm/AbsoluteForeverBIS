@@ -5,8 +5,8 @@ certifica una base completa ni se importan las doce profesiones antes de validar
 
 | Fuente | Acceso / formato comprobado | Cobertura y actualización | Licencia / reutilización en esta entrega |
 |---|---|---|---|
-| [ForeverDB developers](https://foreverdb.net/developers) | API con clave aprobada; las 11 rutas probadas sin clave devolvieron 401. Documenta JSON `data`/`meta` y paginación. La forma de una respuesta autenticada aún no se ha comprobado. | Build en metadatos; separa cliente, observaciones Forever y legado Classic. | Permite empaquetar datos; exige crédito visible, no revender, respetar límites y no distribuir claves. Se implementa transporte con clave por variable de entorno y cuarentena fuera del addon. |
-| [ForeverDB Arcanoweave](https://foreverdb.net/item/272411), [moneda](https://foreverdb.net/item/226404), [Felcloth](https://foreverdb.net/item/18407), [Dreamweave](https://foreverdb.net/item/10019) | HTML público 200 con datos semánticos extraíbles; sólo cuatro registros factuales, con hash de cada página. | Las páginas indican build 1.60.1.70959, extracción 18-11-2026. Fuente publicada, no inspección local del cliente. | Transcripción mínima de hechos y atribución/enlace; no se copian guías, artículos, código, imágenes ni bases completas. Es la única fuente de registros nuevos distribuida aquí. |
+| [ForeverDB developers](https://foreverdb.net/developers) | API con clave aprobada; las 11 rutas probadas sin clave devolvieron 401. Documenta JSON `data`/`meta` y paginación. Comprobados con clave: meta, cuatro items y vendors/227853 (HTTP 200). | Build en metadatos; separa cliente, observaciones Forever y legado Classic. | Permite empaquetar datos; exige crédito visible, no revender, respetar límites y no distribuir claves. Se implementa transporte con clave por variable de entorno y cuarentena fuera del addon. |
+| [ForeverDB Arcanoweave](https://foreverdb.net/item/272411), [moneda](https://foreverdb.net/item/226404), [Felcloth](https://foreverdb.net/item/18407), [Dreamweave](https://foreverdb.net/item/10019) | HTML público 200 con datos semánticos extraíbles; sólo cuatro registros factuales, con hash de cada página. | Las páginas indican build 1.60.1.70959, extracción 18-11-2026. Fuente publicada, no inspección local del cliente. | Transcripción mínima de hechos y atribución/enlace; no se copian guías, artículos, código, imágenes ni bases completas. Instantánea histórica de 3.3.2; el build actual utiliza el adaptador API. |
 | [gBlaku/wow-forever-kb](https://github.com/gBlaku/wow-forever-kb) | Meta JSON público 200; ofrece JSON/CSV/SQLite sin clave. IDs de item/quest/NPC/spell permiten cruces. | Meta: build 70959, generado 18-11-2026; workflow diario. Mezcla cliente, Questie Forever y vmangos Classic; `estimated` no es verificación Forever. | No se encontró LICENSE general. Declara Questie GPLv3 y vmangos GPLv2 para partes de la procedencia. No se redistribuyen sus archivos/código ni se atribuye una licencia única al conjunto. |
 | [ForeverTome professions](https://forevertome.com/professions) / [términos](https://forevertome.com/terms) | HTML público; no API/exportación oficial verificada en esta revisión. Identificadores de recetas/materiales visibles. | Página: 2.561 recetas, 15 categorías, build 70707. No coincide con asumir doce categorías completas/actuales. | Términos permiten lectura, enlaces y citas razonables con crédito; no implican permiso para clonar la base o guías. Sin importación masiva ni copia de contenido. |
 | [Legacy professions](https://legacyofwarcraft.com/db/forever/professions/index.html) / [términos](https://legacyofwarcraft.com/terms.html) | HTML público con recetas/materiales. No exportación estructurada o licencia de base confirmada. | 2.499 recetas en 12 profesiones. Advierte que precios/habilidad de entrenadores pueden proceder de Classic 1.12, aunque materiales sean del cliente Forever. | No convertir esos campos en Forever verificados. Se usa como referencia de cobertura; no se copia el catálogo. |
@@ -16,13 +16,18 @@ certifica una base completa ni se importan las doce profesiones antes de validar
 
 ## API principal: acceso y actualización
 
-La clave debe configurarse como `FOREVERDB_API_KEY` fuera del addon. No estaba disponible
-en el proceso al realizar esta entrega; no se intentó acceder con credenciales de otra cuenta.
-La aprobación de acceso indicada por el usuario no sustituye la presencia de la variable.
+La clave se utiliza fuera del addon, mediante `FOREVERDB_API_KEY` para futuras actualizaciones.
+En 3.3.3 se comprobó el acceso autenticado con la clave autorizada por el usuario, en una sesión
+privada temporal que ya se cerró. No se guarda en código, catálogo, ZIP ni GitHub.
+Se consultaron seis registros: meta, items/272411, items/226404, items/18407, items/10019 y
+vendors/227853. Todos devolvieron HTTP 200. Los hashes de las cinco respuestas utilizadas se
+conservan en la procedencia; los originales quedan en cuarentena fuera del addon.
+Data from [ForeverDB.net](https://foreverdb.net). Documentación: https://foreverdb.net/developers.
 
 Endpoints investigados: items/lista/detalle, vendors/lista/detalle, quests/lista/detalle,
 professions/lista/slug, dungeons, merchants-favor y classes/name. Evidencia HTTP propia en
-`DATA_ENDPOINT_AUDIT.json`; 401 sólo prueba el bloqueo de autenticación, no la existencia del ID.
+`DATA_ENDPOINT_AUDIT.json` conserva la auditoría histórica sin clave; sus 401 no describen
+el acceso autenticado actual ni prueban la existencia de cada ID.
 
 La documentación indica límites gratuitos de 5.000/día y 30/minuto; plan de pago 10.000/día
 y 60/minuto, con límites compartidos entre claves. El transporte no hace reintentos automáticos,
@@ -30,15 +35,26 @@ no sigue redirecciones ni recorre páginas en masa; ante 429/402 se detiene.
 
 ## Qué se importa, y qué no
 
-`Catalog/public-vendor-slice.json` registra la capa de datos nueva. No sustituye los 157
+`Catalog/api-vendor-slice.json` registra la capa activa. `public-vendor-slice.json` conserva
+la observación pública histórica y sus tests. No sustituye los 157
 objetos ni las 28 recetas anteriores. Cada atributo conserva fuente, build, fecha, evidencia
 y confianza; la importación no cambia automáticamente datos heredados a verificados.
 
-Arcanoweave Cloak: se publica una oferta de Pix Xizzix por 75 Tarnished Undermine Real,
-con nivel requerido 60. El precio de venta de la capa no es su precio de compra. Oro adicional,
-reputación requerida, quests, stock, coordenadas y NPC ID no se deducen de lo no publicado
-en el registro usado. El ID de NPC sólo se registra al observar su GUID en el cliente.
-Una afiliación de vendedor no constituye restricción de facción ni requisito de reputación.
+Arcanoweave Cloak: la respuesta autenticada del vendedor confirma la oferta de Pix Xizzix
+(NPC 227853), por 75 unidades de currency 3469, precio publicado 0 cobre por compra, stack 1,
+y coordenadas 28.5/75.8 en mapId 1434. El precio de venta del objeto no interviene.
+El registro público anterior sólo ofrecía el nombre de la moneda; su asociación al item 226404
+se corrige. Las bolsas no sustituyen C_CurrencyInfo para medir la moneda.
+`limited:false` describe la oferta publicada; el stock actual requiere una lectura de mercader.
+Afiliación Horde y reputationFaction (descuento) no prueban requisitos de compra. Reputación,
+quests y otras restricciones no publicadas siguen UNKNOWN; requirementsComplete sigue false.
+
+Los stats usan pares statId/etiqueta revisados. Hit 31 conserva valor 10 con unidad desconocida,
+sin convertir a rating ni porcentaje. La API no devuelve Armor en estos registros: no se añade
+un cero. Felcloth conserva daño de sombras y Dreamweave poder con hechizos por separado.
+Estas referencias del build 1.60.1.70959 siguen parciales y no puntúan EP. Las cadenas recibidas
+y la atribución se conservan sin limpiar marcas Unicode; meta.client, específico de la cuenta,
+queda fuera del catálogo. Los hashes permiten contrastar con los originales privados.
 
 No se han importado cuatro ejemplos completos ni recetas masivas: ese paso permanece
 bloqueado por el gate de un vendedor comprobado dentro del cliente. Las simulaciones de

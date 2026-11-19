@@ -47,7 +47,7 @@ local function title(node)
  elseif node.op=='ANY' then return 'One of the alternative requirements'
  elseif node.metric=='stock' then return 'Check vendor stock (wait if sold out)'
  elseif node.metric=='level' then return 'Reach level '..tostring(node.amount)
- elseif node.metric=='gold' then return 'Have '..tostring(node.amount)..' copper (observed price)'
+ elseif node.metric=='gold' then return 'Have '..tostring(node.amount)..' copper (purchase price)'
  elseif node.metric=='item' or node.metric=='currency' then return 'Collect '..tostring(node.amount)..' '..(node.name or ('resource '..tostring(node.itemId or node.currencyId)))
  elseif node.metric=='reputation' then return 'Reach reputation rank '..tostring(node.amount)..' with faction '..tostring(node.factionId)
  elseif node.metric=='quest' then return 'Complete quest '..tostring(node.questId)
@@ -172,13 +172,15 @@ function R.Summary(itemId,methodId)
  local lines={value(v.name)..' · '..tostring(value(v.zone) or 'Zone unknown')}
  local coords=value(v.coordinates);lines[#lines+1]=coords and (tostring(coords.x)..', '..tostring(coords.y)) or 'Coordinates: Unknown'
  lines[#lines+1]='Vendor affiliation: '..tostring(value(v.faction) or 'Unknown')..' (not a purchase restriction)'
- lines[#lines+1]='Base gold: '..(known(offer.goldCostCopper) and (tostring(offer.goldCostCopper.value)..' copper') or 'Unknown')
+ lines[#lines+1]='Published gold: '..(known(offer.goldCostCopper) and (tostring(offer.goldCostCopper.value)..' copper per purchase') or 'Unknown')
  for _,cost in ipairs(value(offer.additionalCurrencies) or {}) do local n=R.Current({metric=cost.kind,itemId=cost.itemId,currencyId=cost.currencyId});lines[#lines+1]=(cost.name or 'Currency')..': '..tostring(n or 'Unknown')..' / '..cost.quantity end
  lines[#lines+1]='Required reputation: '..tostring(value(offer.requiredReputationFaction) or 'Unknown')..' / '..tostring(value(offer.requiredReputationRank) or 'Unknown')
- lines[#lines+1]='Extra items / quests / stock: '..(offer.requirementsComplete and 'See verified requirements' or 'Unknown')
+ local limit=value(offer.stockLimit);lines[#lines+1]='Published stock limit: '..(limit=='unlimited_published' and 'Unlimited (current stock not checked)' or tostring(limit or 'Unknown'))
+ lines[#lines+1]='Other buying restrictions: '..(offer.requirementsComplete and 'See published requirements' or 'Unknown')
  if plan.observation then for _,cost in ipairs(plan.observation.costs or {}) do lines[#lines+1]='Current observed cost: '..cost.quantity..' '..R.ResourceName(cost) end;lines[#lines+1]='Current observed price: '..tostring(plan.observation.goldCostCopper or 'Unknown')..' copper';lines[#lines+1]='Current stock: '..(plan.observation.stock==-1 and 'Unlimited (observed)' or tostring(plan.observation.stock or 'Unknown')) end
  lines[#lines+1]='Coverage: '..plan.coverage
- lines[#lines+1]='Data from ForeverDB.net · '..src.sourceURL
+ lines[#lines+1]='Data from ForeverDB.net · https://foreverdb.net'
+ lines[#lines+1]='Source: '..src.sourceURL
  return table.concat(lines,'\n')
 end
 return R

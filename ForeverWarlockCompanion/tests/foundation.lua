@@ -3,7 +3,10 @@
 local M=dofile('tests/wow_mock.lua');local checks=0
 local function check(ok,msg) checks=checks+1;assert(ok,msg) end
 ForeverWarlockCompanionDB={viewClass='WARLOCK',spec='Affliction',mode='Pre-BiS'}
-for line in io.lines('ForeverWarlockCompanion.toc') do if line:match('%.lua$') then dofile((line:gsub('\\','/'))) end end
+for line in io.lines('ForeverWarlockCompanion.toc') do if line:match('%.lua$') then
+ local path=line:gsub('\\','/');dofile(path)
+ if path=='Data/Foundation.lua' then dofile('tests/fixtures/public_foundation.lua') end
+end end
 M.Event('ADDON_LOADED','ForeverWarlockCompanion');SlashCmdList.FWC('settings');M.Layout()
 local A=FWC;local R=A.Services.AcquisitionRequirementsResolver;local O=A.Services.Objectives;local D=A.Data.foundation;local I=A.Services.Inventory
 check(D.items[272411].name.value=='Arcanoweave Cloak','real item identity')
@@ -69,7 +72,7 @@ C_MerchantFrame={GetItemInfo=function() return {price=0,stackCount=1,numAvailabl
 check(A.db.vendorObservations['227853:272411']~=nil,'observation retained as evidence')
 local named=A.Services.MerchantObserver.active[272411];local storedName=named.vendorName;named.vendorName='Localized fixture name';check(not R.Plan(272411).observation,'unmatched localized name does not fabricate identity');check(R.BindObserved(272411) and R.Plan(272411).observation~=nil,'explicit user NPC binding supports localized names');named.vendorName=storedName
 local summary=R.Summary(272411,o.acquisitionMethod)
-check(summary:find('Base gold: Unknown',1,true) and summary:find('Current observed price: 0 copper',1,true),'base unknown and effective zero remain distinct')
+check(summary:find('Published gold: Unknown',1,true) and summary:find('Current observed price: 0 copper',1,true),'published unknown and effective zero remain distinct')
 check(summary:find('Unlimited (observed)',1,true),'unlimited stock preserves native sentinel meaning')
 check(o.requirementsStatus=='unknown','merchant observation does not invent reputation/quest absence')
 cost=100;M.Event('MERCHANT_UPDATE');O.List()

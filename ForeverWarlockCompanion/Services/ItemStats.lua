@@ -142,7 +142,7 @@ function S.WithOffline(item,record)
  local merged=A.Services.Persistence.Copy(record);local used=0;merged.references={}
  for label,stat in pairs(offline.stats or {}) do
   local key=stat.statKey;local allowed=true
-  for _,id in ipairs(stat.provenance or {}) do local p=data.provenance[id];if not p or (p.evidenceType~='published_forever_client_page' and p.evidenceType~='client_verified') then allowed=false end end
+  for _,id in ipairs(stat.provenance or {}) do local p=data.provenance[id];if not p or (p.evidenceType~='published_forever_client_page' and p.evidenceType~='published_forever_api' and p.evidenceType~='client_verified') then allowed=false end end
   if allowed and key and stat.unit~='unknown' and finite(stat.value) and merged.values[key]==nil and not merged.errors[key] then
    merged.values[key]=stat.value;merged.references[key]=stat.provenance;used=used+1
   end

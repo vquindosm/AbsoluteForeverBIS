@@ -63,3 +63,15 @@ real publicado, progreso con jugador simulado, ALL/ANY, bloqueo UNKNOWN, observa
 precio/stock temporal, persistencia, plan legado y referencias de ambos guantes sin EP ficticio.
 Los datos del jugador y grafos adversos son fixtures, no afirmaciones sobre registros nuevos.
 Prueba manual pendiente: docs/VENDOR_SLICE_TEST.md. El build no hace HTTP en Lua.
+
+
+## ForeverDB autenticado (3.3.3)
+
+Ejecutar `lua tests/authenticated_foundation.lua modern` y variantes legacy/no-model/player-model.
+Parte del catálogo normalizado real de la API, con jugador/mercader simulados: moneda 3469,
+bolsas con item de nombre igual, progreso/Unknown/0, actualización del objetivo existente,
+GUID localizado, costes/stock temporales, referencias estadísticas y crédito visible por panel.
+`foundation.lua` conserva el fixture de 3.3.2 público y no modifica el catálogo de producción.
+La suite Python anterior también valida el snapshot API reproducible y el adaptador con
+controles sintéticos de formato, atribución/marcas, cuenta privada, unidades y cambios de esquema.
+No incluye respuestas privadas completas ni claves, y no prueba el cliente del juego.
