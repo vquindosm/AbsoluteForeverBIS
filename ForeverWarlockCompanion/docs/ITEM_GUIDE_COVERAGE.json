@@ -1,0 +1,11 @@
+{
+  "sha256": "532bee1a83da1d76852fa8af2b4d322220655a66cd0418fcd6931ee28db818d0",
+  "catalogItems": 157,
+  "itemsImported": 157,
+  "missingItemIds": [],
+  "requirements": "partial; level is not a full acquisition requirement set",
+  "craftingItems": 29,
+  "enhancements": 17,
+  "liveClientValidated": false,
+  "ranking": "published guide context only; no player EP or DPS"
+}

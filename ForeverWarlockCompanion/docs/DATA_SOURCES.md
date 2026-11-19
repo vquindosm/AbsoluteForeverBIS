@@ -59,3 +59,30 @@ queda fuera del catálogo. Los hashes permiten contrastar con los originales pri
 No se han importado cuatro ejemplos completos ni recetas masivas: ese paso permanece
 bloqueado por el gate de un vendedor comprobado dentro del cliente. Las simulaciones de
 jugador en tests están diferenciadas de los registros de fuentes reales.
+
+
+## Ampliación 3.4: fichas y mejoras solicitadas
+
+La petición posterior autoriza ampliar las fichas de objetos y las recomendaciones de mejoras.
+Se consultaron los 157 IDs del catálogo existente, tres arcanos/inscripciones por spell ID,
+el consumible Mystic Rugged Armor Kit y las páginas de profesiones necesarias para extraer
+únicamente 29 objetos fabricables y 17 mejoras seleccionadas. No se publica el catálogo completo
+de cada profesión ni se declara verificada la ejecución en WoW.
+
+`Catalog/item-guide.json` conserva los hechos y hashes; `Data/ItemGuide.lua` se genera offline.
+El modelo anterior de vendedor sigue en Foundation. Se mantienen por separado requisitos de
+llevar un objeto, habilidad/materiales de fabricación y requisitos de aplicación de la mejora.
+No se interpreta recipe.requiredLevel como nivel del elaborador: ese mapping no está confirmado.
+
+La [guía Aflicción JcE 60](https://foreverdb.net/bis/warlock/affliction) aporta sólo IDs e índices
+numéricos publicados y el contexto de recomendaciones. No se copia su prosa o código. Sus fuentes
+pueden incluir bandas y sus índices no son un cálculo de EP/DPS para el personaje ni una lista
+Pre-BiS verificada. No se unen variantes de Deathmist Mask por nombre: 22074 y 226909 son IDs distintos.
+Los tres objetos de disponibilidad incierta/build anterior lo indican en sus fichas.
+
+Las recetas distinguen vendedores/instructores seenInForever de los datos de Classic.
+Los drops sin esa evidencia se presentan como Classic y pendientes de confirmar en Forever.
+Las fórmulas de vendedor mantienen moneda, cantidad, precio por compra, facción y coordenadas;
+la afiliación no se convierte en restricción de uso, ni reputationFaction en requisito de compra.
+Los textos originales y sus marcas de procedencia se conservan. No se publica meta.client.
+Data from [ForeverDB.net](https://foreverdb.net).

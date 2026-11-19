@@ -8,6 +8,8 @@ assert root not in dest.parents, 'Choose a destination outside the addon directo
 # Compile only the reviewed local snapshot; never fetch network data during release.
 from data.catalog import compile_catalog
 compile_catalog(root/'Catalog'/'api-vendor-slice.json',root/'Data'/'Foundation.lua',root/'Catalog'/'foundation.sqlite',root/'docs'/'DATA_COVERAGE.json')
+from data.item_guide import compile_guide
+compile_guide(report_path=root/'docs'/'ITEM_GUIDE_COVERAGE.json')
 files=[]
 for file in sorted(root.rglob('*')):
  if not file.is_file() or '.git' in file.parts or '__pycache__' in file.parts:continue

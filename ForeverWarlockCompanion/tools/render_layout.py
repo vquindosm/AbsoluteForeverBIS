@@ -75,14 +75,15 @@ def render(path):
   for c in frames:walk(c,clip)
  root=next(n for n in nodes.values() if n['p'] not in nodes);walk(root,(0,0,canvas.width,canvas.height));return canvas.convert('RGB')
 
-def main(before,after,dest):
+def main(before,after,dest,before_label='3.2',after_label='3.3'):
  dest=Path(dest);dest.mkdir(parents=True,exist_ok=True)
- for screen in ('dashboard','equipment','item','objectives'):
+ for screen in ('dashboard','equipment','item','objectives','explorer'):
+  if not Path(before+'-'+screen+'.tsv').exists() or not Path(after+'-'+screen+'.tsv').exists():continue
   old=render(before+'-'+screen+'.tsv');new=render(after+'-'+screen+'.tsv');w=1100;h=round(old.height*w/old.width)
   board=Image.new('RGB',(w*2,h+120),(13,14,21));d=ImageDraw.Draw(board)
   d.text((22,10),'PRUEBA DE DISTRIBUCIÓN · API SIMULADA · NO ES UNA CAPTURA DE WOW',font=font(20,True),fill='#e8c878')
-  d.text((22,42),'Datos de prueba. Iconos, fuentes y modelo 3D reales pendientes de validación en el cliente.',font=font(16),fill='#c2c4d0')
-  for i,(im,label) in enumerate(((old,'ANTES · 3.2'),(new,'DESPUÉS · 3.3 · '+screen.upper()))):
+  d.text((22,42),'Estado del jugador simulado. Iconos, fuentes y modelo 3D pendientes de validación en el cliente.',font=font(16),fill='#c2c4d0')
+  for i,(im,label) in enumerate(((old,'ANTES · '+before_label),(new,'DESPUÉS · '+after_label+' · '+screen.upper()))):
    d.text((i*w+22,77),label,font=font(20,True),fill='#eee7d6');board.paste(im.resize((w,h),Image.Resampling.LANCZOS),(i*w,112))
   board.save(dest/(screen+'-comparison.png'))
 if __name__=='__main__': main(*sys.argv[1:])

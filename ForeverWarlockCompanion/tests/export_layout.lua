@@ -7,9 +7,9 @@ local A=FWC
 A.Services.Objectives.Track(22267,'Head');A.Services.Objectives.Track(14111,'Head');A.Services.Objectives.Track(18691,'Neck');A.Services.Objectives.Track(14153,'Chest')
 local ids={};for i,f in ipairs(M.frames) do ids[f]=i end
 local function escaped(s) return tostring(s or ''):gsub('\\','\\\\'):gsub('\t','\\t'):gsub('\n','\\n') end
-local dest=arg[2] or '/tmp/fwc-layout';local routes={{'Dashboard','dashboard'},{'Character & Gear','equipment'},{A.UI.window.panels['Item Details'] and 'Item Details' or 'Item Explorer','item'},{'Progression','objectives'}}
+local dest=arg[2] or '/tmp/fwc-layout';local routes={{'Dashboard','dashboard'},{'Character & Gear','equipment'},{A.UI.window.panels['Item Details'] and 'Item Details' or 'Item Explorer','item'},{'Progression','objectives'},{'Item Explorer','explorer'}}
 for _,route in ipairs(routes) do
- A.UI.SetTab(route[1],{slot='Head',itemId=14111});M.Layout();for i,f in ipairs(M.frames) do ids[f]=i end
+ A.UI.SetTab(route[1],{slot='Head',itemId=22267});M.Layout();for i,f in ipairs(M.frames) do ids[f]=i end
  local root=A.UI.window;local x,w=root:Bounds(true);local y,h=root:Bounds(false)
  local file=assert(io.open(dest..'-'..route[2]..'.tsv','w'));file:write('ROOT\t'..x..'\t'..y..'\t'..w..'\t'..h..'\n')
  for _,f in ipairs(M.frames) do

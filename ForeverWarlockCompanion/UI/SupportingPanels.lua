@@ -236,7 +236,7 @@ function S.RenderSettings()
     local merchant=A.Services.MerchantObserver.active[272411];f.vendorBind:SetEnabled(merchant~=nil)
     if merchant then lines[#lines+1]='Observed NPC: '..tostring(merchant.vendorName)..' (#'..tostring(merchant.npcId)..'). Link observed NPC is an explicit user mapping, not verification of the source database.' end
     lines[#lines+1]=A.Services.AcquisitionRequirementsResolver.Summary(272411)
-    lines[#lines+1]='Offline scope: one vendor offer; recipes and quests not imported. See docs/DATA_SOURCES.md. Data from ForeverDB.net · https://foreverdb.net'
+    lines[#lines+1]='Offline item guide: 157 item references, 17 enhancements and recipes/materials for 29 crafted items. Vendor requirements remain a partial pilot. See docs/ITEM-GUIDE-3.4.md. Data from ForeverDB.net · https://foreverdb.net'
     lines[#lines+1]=A.Services.ItemStats.Report()
     f.text:SetText(table.concat(lines,"\n\n"))
 end

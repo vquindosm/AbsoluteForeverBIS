@@ -1,5 +1,5 @@
 -- Bootstrap only. Folder/DB names stay unchanged for upgrades from 2.x.
-FWC = { version = "3.3.3-preview", UI = {}, Services = {}, Data = {}, diagnostics = {} }
+FWC = { version = "3.4.0-preview", UI = {}, Services = {}, Data = {}, diagnostics = {} }
 local A = FWC
 function A:Log(message)
     self.diagnostics[#self.diagnostics + 1] = tostring(message)

@@ -1,6 +1,6 @@
 # AbsoluteForeverBIS — Forever Companion
 
-Proyecto de addon para **World of Warcraft Forever**, versión actual **3.3.3-preview**.
+Proyecto de addon para **World of Warcraft Forever**, versión actual **3.4.0-preview**.
 El código del addon está en [`ForeverWarlockCompanion/`](ForeverWarlockCompanion/).
 
 ## Instalación
@@ -12,13 +12,16 @@ Sustituye la versión anterior y ejecuta `/reload`; abre la interfaz con `/fwc`.
 ## Estado
 
 Incluye Dashboard, Equipment, Stats, profesiones, objetivos, tracker, importador offline
-y un piloto de adquisición de Arcanoweave Cloak. La validación dentro de WoW sigue pendiente.
+y un piloto de adquisición de Arcanoweave Cloak. Las fichas añaden alternativas visuales,
+requisitos publicados para los 157 objetos y 17 mejoras con fórmulas, materiales y orígenes.
+La validación dentro de WoW sigue pendiente.
 Los datos incompletos permanecen UNKNOWN y las referencias offline no conceden EP ficticio.
 El acceso autenticado y el adaptador del piloto están comprobados. El catálogo masivo y la
 validación en el cliente siguen pendientes. Las claves sólo se usan fuera del addon.
 
 Datos del piloto y referencias offline: [Data from ForeverDB.net](https://foreverdb.net).
 
+- [Fichas, mejoras y requisitos de 3.4](ForeverWarlockCompanion/docs/ITEM-GUIDE-3.4.md)
 - [Guía completa](ForeverWarlockCompanion/README.txt)
 - [Estado y cobertura](ForeverWarlockCompanion/docs/DATA_FOUNDATION_STATUS.md)
 - [Fuentes y condiciones de uso](ForeverWarlockCompanion/docs/DATA_SOURCES.md)
@@ -35,7 +38,7 @@ del addon según `tests/README.md`. El addon no necesita Python, SQLite ni HTTP 
 Para generar el ZIP instalable, desde `ForeverWarlockCompanion/`:
 
 ```sh
-python3 tools/build_zip.py /tmp/ForeverCompanion-3.3.3-preview.zip
+python3 tools/build_zip.py /tmp/ForeverCompanion-3.4.0-preview.zip
 ```
 
 No subas archivos `.env`, claves de API, SavedVariables personales ni respuestas privadas de API.

@@ -1,7 +1,7 @@
 ## Interface: 16001
 ## Title: Forever Companion
 ## Notes: Equipment planning, native model preview and progression. Imported lists are unranked.
-## Version: 3.3.3-preview
+## Version: 3.4.0-preview
 ## SavedVariablesPerCharacter: ForeverWarlockCompanionDB
 
 ForeverWarlockCompanion.lua
@@ -9,6 +9,7 @@ Data.lua
 Data\Affliction.lua
 Data\Recipes.lua
 Data\Foundation.lua
+Data\ItemGuide.lua
 Services\Compatibility.lua
 Services\ItemStats.lua
 Services\Persistence.lua
@@ -21,6 +22,7 @@ Services\NavigationService.lua
 Services\AcquisitionRequirementsResolver.lua
 Services\MerchantObserver.lua
 Services\AcquisitionResolver.lua
+Services\ItemGuide.lua
 Services\ObjectiveService.lua
 Services\ProgressService.lua
 Services\MaterialAggregator.lua

@@ -75,3 +75,19 @@ GUID localizado, costes/stock temporales, referencias estadísticas y crédito v
 La suite Python anterior también valida el snapshot API reproducible y el adaptador con
 controles sintéticos de formato, atribución/marcas, cuenta privada, unidades y cambios de esquema.
 No incluye respuestas privadas completas ni claves, y no prueba el cliente del juego.
+
+
+## Fichas de objetos y mejoras (3.4)
+
+Ejecutar `lua tests/item_guide.lua modern` y variantes legacy/no-model/player-model.
+Comprueba los 157 objetos, niveles, origen de fórmula según facción, progreso de materiales,
+arcanos de origen desconocido, fuentes Classic, compatibilidad por ranura/nivel de objeto,
+índices de guía separados de EP, IDs distintos con el mismo nombre y las nuevas secciones
+sin solapamiento a tres tamaños. Incluye selección de alternativas, expandir/cerrar mejora,
+limpieza al cambiar objeto/perfil y reutilización de filas.
+
+`python3 -m unittest discover -s tests -p gear_guide.py` valida los hechos normalizados,
+cobertura parcial, reproducción offline, marcas de fuente y fallos de identidad/procedencia.
+Ejecutar también todas las suites anteriores. Las respuestas del jugador son simuladas.
+Las comparativas en docs/validation-3.4 son geometría de frames con iconos simbólicos;
+no son capturas de WoW. El exportador también permite inspeccionar Item Explorer.

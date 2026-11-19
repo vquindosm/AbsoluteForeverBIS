@@ -1,4 +1,4 @@
-FOREVER COMPANION 3.3.3-preview — interfaz 16001
+FOREVER COMPANION 3.4.0-preview — interfaz 16001
 
 Instala la carpeta ForeverWarlockCompanion completa en
 World of Warcraft/_forever_/Interface/AddOns/ y abre /fwc.
@@ -180,3 +180,33 @@ con referencias parciales. Crédito/enlace visible en los paneles que muestran e
 La API se consulta fuera de WoW. No se distribuyen claves ni metadatos privados de cuenta.
 Catalog/public-vendor-slice.json es un archivo histórico de 3.3.2, no la fuente del build actual.
 La comprobación dentro de WoW y la importación masiva siguen pendientes.
+
+
+3.4.0 — FICHAS VISUALES, ENCANTAMIENTOS Y REQUISITOS
+Data from ForeverDB.net — https://foreverdb.net
+Equipment conserva al personaje 3D y sus ranuras. El detalle del objeto cambia su composición:
+atributos junto a dos alternativas con icono; debajo, mejoras recomendadas; después, requisitos
+de equipamiento y origen, separados de la comparación y los pasos. Las alternativas se pueden
+pulsar y hoverean el tooltip del juego. Las acciones secundarias siguen dentro de More options.
+
+157 objetos consultados individualmente en la API: atributos, nivel requerido, vinculación,
+unicidad y advertencias de disponibilidad/build. Todas las fichas tienen requisitos publicados
+y señalan restricciones extra no confirmadas. Nivel de equipo y habilidad para fabricar son
+conceptos separados; no se exige Sastrería 295 para llevar la Toga del Vacío por inferencia.
+
+17 mejoras de referencia para Aflicción JcE 60: encantamientos, arcanos, inscripción y kit.
+Pulsa una mejora para expandir su fórmula, materiales en bolsas, vendedores/coordenadas y
+costes cuando están publicados. Hay fuentes distintas por facción, orígenes Classic señalados
+y opciones de utilidad para la capa. El kit requiere nivel de objeto 35; no nivel de personaje 35.
+El origen desconocido de un arcano no se convierte en un vendedor o quest inventado.
+Los materiales para 29 objetos fabricables también se muestran en Dónde conseguirlo.
+
+El índice publicado de la guía ForeverDB tiene contexto propio: Aflicción JcE nivel 60,
+todas las fuentes, que pueden incluir bandas. No cambia el orden del catálogo Pre-BiS,
+no es EP de tu personaje y no demuestra porcentaje de mejora o DPS. Identidades por ID,
+sin unir objetos distintos por compartir nombre. El EP y la comparación del cliente conservan
+sus controles anteriores y no usan estos índices o referencias como estadísticas confirmadas.
+
+El addon no accede a Internet, compra, equipa ni aplica encantamientos automáticamente.
+Las claves/respuestas privadas siguen fuera del paquete. Leer docs/ITEM-GUIDE-3.4.md,
+ITEM_GUIDE_COVERAGE.json y las comparativas de geometría simulada en docs/validation-3.4.
