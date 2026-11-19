@@ -1,7 +1,7 @@
 ## Interface: 16001
 ## Title: Forever Companion
 ## Notes: Equipment planning, native model preview and progression. Imported lists are unranked.
-## Version: 3.3.2-preview
+## Version: 3.3.3-preview
 ## SavedVariablesPerCharacter: ForeverWarlockCompanionDB
 
 ForeverWarlockCompanion.lua

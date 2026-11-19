@@ -1,7 +1,8 @@
-# Prueba verificable de vendedor — 3.3.2-preview
+# Prueba verificable de vendedor — 3.3.3-preview
 
 Caso real publicado: [Arcanoweave Cloak 272411](https://foreverdb.net/item/272411), Pix Xizzix,
-75 [Tarnished Undermine Real 226404](https://foreverdb.net/item/226404), requiere nivel 60.
+75 Tarnished Undermine Real, currency 3469, requiere nivel 60.
+Data from [ForeverDB.net](https://foreverdb.net). API: vendors/227853, build 1.60.1.70959.
 Son datos publicados por la fuente sobre Forever, no una observación de nuestro cliente.
 El JSON conserva sus hashes/build/fechas. No contiene los cuatro casos completos ni una base masiva.
 
@@ -11,13 +12,13 @@ Instalar dependencias de tools/data/requirements.txt. Desde la carpeta del addon
 
 ```sh
 python3 -m unittest discover -s tests -p data_foundation.py
-lua tests/foundation.lua modern
-lua tests/foundation.lua legacy
-lua tests/foundation.lua no-model
-lua tests/foundation.lua player-model
+lua tests/authenticated_foundation.lua modern
+lua tests/authenticated_foundation.lua legacy
+lua tests/authenticated_foundation.lua no-model
+lua tests/authenticated_foundation.lua player-model
 ```
 
-Ejecutar también run.lua, v3.lua, visual_layout.lua y phase1_stats.lua con las mismas variantes.
+El fixture público histórico sigue cubierto por foundation.lua. Ejecutar también run.lua, v3.lua, visual_layout.lua y phase1_stats.lua con las mismas variantes.
 El test del importador usa el JSON real conservado y reconstruye Lua/SQLite sin red. Las
 respuestas de jugador/mercader y los grafos alternativos adversos son controles de prueba,
 no registros reales añadidos al catálogo. No certifican lectura, posición o precios dentro del cliente.
@@ -26,8 +27,8 @@ no registros reales añadidos al catálogo. No certifican lectura, posición o p
 
 1. Guardar copia de SavedVariables, instalar toda la carpeta y ejecutar /reload.
    Abrir Settings > Track vendor: Arcanoweave Cloak. Debe mostrarse el precio publicado en moneda,
-   no inventar oro/reputación, y enlazar a ForeverDB.net. Comprobar que el layout no se ha rediseñado.
-2. Revisar la moneda disponible en bolsas y el siguiente paso. Si hay 40 monedas, debe mostrar
+   mostrar 0 cobre publicado y reputación desconocida, y enlazar a ForeverDB.net. Comprobar que el layout no se ha rediseñado.
+2. Revisar currency 3469 con C_CurrencyInfo (no item 226404 en bolsas) y el siguiente paso. Si hay 40 monedas, debe mostrar
    40/75. Sin acceso a una lectura válida debe mostrar Unknown, nunca un cero de relleno.
 3. Abrir My Objectives e Item Details; los pasos y la fuente deben coincidir. Los requisitos
    no publicados forman un aviso UNKNOWN, no una lista de quests fabricadas. La afiliación
@@ -35,9 +36,9 @@ no registros reales añadidos al catálogo. No certifican lectura, posición o p
 4. Acudir al vendedor real, abrir su ventana y después el addon. Settings > Inspect open vendor
    solicita otra lectura. Si las APIs lo permiten, se registra GUID/NPC ID, enlace del objetivo,
    precio efectivo en cobre, costes y stock. No se compra ni gasta desde el addon.
-   Si el nombre localizado no coincide y no hay NPC ID externo confirmado, se conserva la
-   observación sin asociarla automáticamente. Revisa el NPC/GUID mostrado y usa Link observed NPC
-   sólo si corresponde: guarda una asociación manual por personaje, no verifica la base externa.
+   El ID 227853 publicado permite asociar un nombre localizado mediante GUID. Un NPC con otro
+   ID no debe sustituir el coste de esta oferta. Link observed NPC sigue disponible para
+   fuentes sin ID publicado; una asociación manual no verifica la base externa.
 5. Comparar lo observado con el vendedor. Un cero explícito de precio se distingue de oro
    desconocido. -1 en stock sólo se traduce a ilimitado por el significado de esa respuesta API.
    Si la API anuncia coste extendido pero no devuelve sus filas, no se debe mostrar gratis.
@@ -53,7 +54,7 @@ no registros reales añadidos al catálogo. No certifican lectura, posición o p
    plan anterior y observaciones; el mercader cerrado no se trata como abierto tras recargar.
 10. Para stats, comprobar Felcloth Gloves 18407 y Dreamweave Gloves 10019 con diagnósticos.
     La referencia offline sólo se aplica a igual build y variante base. * significa referencia
-    publicada parcial, no valor confirmado por la API. Nunca concede EP ni delta de mejora.
+    publicada parcial, no valor confirmado por nuestro cliente. Nunca concede EP ni delta de mejora.
     Un valor explícito del cliente, incluido 0, prevalece sobre esa referencia.
 
 ## Evidencia para cerrar el gate

@@ -1,0 +1,625 @@
+{
+  "schemaVersion": 1,
+  "provenance": {
+    "fdb-api-items-272411": {
+      "sourceName": "ForeverDB.net",
+      "sourceURL": "https://foreverdb.net/api/v1/items/272411",
+      "sourceBuild": "1.60.1.70959",
+      "importedAt": "2026-11-19T18:58:20+00:00",
+      "evidenceType": "published_forever_api",
+      "verifiedStatus": "publisher_reported_not_locally_verified",
+      "redistributionBasis": "ForeverDB developer terms permit attributed bundled addon data; single reviewed slice",
+      "documentationURL": "https://foreverdb.net/developers",
+      "attribution": "Data from ForeverDB.net (https://foreverdb.net). You must credit ForeverDB.net, with a visible link to https://foreverdb.net, wherever you show this data.",
+      "creditURL": "https://foreverdb.net",
+      "sha256": "99edef0227797178fef69bc80fb53c5d28c8f9379a4533d9bb92a3906897fea5"
+    },
+    "fdb-api-items-226404": {
+      "sourceName": "ForeverDB.net",
+      "sourceURL": "https://foreverdb.net/api/v1/items/226404",
+      "sourceBuild": "1.60.1.70959",
+      "importedAt": "2026-11-19T18:58:20+00:00",
+      "evidenceType": "published_forever_api",
+      "verifiedStatus": "publisher_reported_not_locally_verified",
+      "redistributionBasis": "ForeverDB developer terms permit attributed bundled addon data; single reviewed slice",
+      "documentationURL": "https://foreverdb.net/developers",
+      "attribution": "Data from ForeverDB.net (https://foreverdb.net). You must credit ForeverDB.net, with a visible link to https://foreverdb.net, wherever you show this data.",
+      "creditURL": "https://foreverdb.net",
+      "sha256": "99d22d2b270a03b47d187183b3afa183c3484294dcf18535f43129f17f076c95"
+    },
+    "fdb-api-items-18407": {
+      "sourceName": "ForeverDB.net",
+      "sourceURL": "https://foreverdb.net/api/v1/items/18407",
+      "sourceBuild": "1.60.1.70959",
+      "importedAt": "2026-11-19T18:58:20+00:00",
+      "evidenceType": "published_forever_api",
+      "verifiedStatus": "publisher_reported_not_locally_verified",
+      "redistributionBasis": "ForeverDB developer terms permit attributed bundled addon data; single reviewed slice",
+      "documentationURL": "https://foreverdb.net/developers",
+      "attribution": "Data from ForeverDB.net (https://foreverdb.net). You must credit ForeverDB.net, with a visible link to https://foreverdb.net, wherever you show this data.",
+      "creditURL": "https://foreverdb.net",
+      "sha256": "3450a87fb783f6690db00316ab1523c5755fedfcf77e9348991f913dfa523c0c"
+    },
+    "fdb-api-items-10019": {
+      "sourceName": "ForeverDB.net",
+      "sourceURL": "https://foreverdb.net/api/v1/items/10019",
+      "sourceBuild": "1.60.1.70959",
+      "importedAt": "2026-11-19T18:58:20+00:00",
+      "evidenceType": "published_forever_api",
+      "verifiedStatus": "publisher_reported_not_locally_verified",
+      "redistributionBasis": "ForeverDB developer terms permit attributed bundled addon data; single reviewed slice",
+      "documentationURL": "https://foreverdb.net/developers",
+      "attribution": "Data from ForeverDB.net (https://foreverdb.net). You must credit ForeverDB.net, with a visible link to https://foreverdb.net, wherever you show this data.",
+      "creditURL": "https://foreverdb.net",
+      "sha256": "07322d94706bb728403432e3a9088770f8caece962f68d49f7a061f7f20507ed"
+    },
+    "fdb-api-vendors-227853": {
+      "sourceName": "ForeverDB.net",
+      "sourceURL": "https://foreverdb.net/api/v1/vendors/227853",
+      "sourceBuild": "1.60.1.70959",
+      "importedAt": "2026-11-19T18:58:20+00:00",
+      "evidenceType": "published_forever_api",
+      "verifiedStatus": "publisher_reported_not_locally_verified",
+      "redistributionBasis": "ForeverDB developer terms permit attributed bundled addon data; single reviewed slice",
+      "documentationURL": "https://foreverdb.net/developers",
+      "attribution": "Data from ForeverDB.net (https://foreverdb.net). You must credit ForeverDB.net, with a visible link to https://foreverdb.net, wherever you show this data.",
+      "creditURL": "https://foreverdb.net",
+      "sha256": "ae56895e5d99430af03c95fcfd407f836bdfae8e0ed6e718643108641232a133"
+    }
+  },
+  "items": {
+    "272411": {
+      "itemId": 272411,
+      "name": {
+        "status": "KNOWN",
+        "value": "Arcanoweave Cloak",
+        "provenance": [
+          "fdb-api-items-272411"
+        ]
+      },
+      "quality": {
+        "status": "KNOWN",
+        "value": 3,
+        "provenance": [
+          "fdb-api-items-272411"
+        ]
+      },
+      "slot": {
+        "status": "KNOWN",
+        "value": "Back",
+        "provenance": [
+          "fdb-api-items-272411"
+        ]
+      },
+      "requiredLevel": {
+        "status": "KNOWN",
+        "value": 60,
+        "provenance": [
+          "fdb-api-items-272411"
+        ]
+      },
+      "stats": {
+        "Spell Power": {
+          "value": 16,
+          "statId": 45,
+          "statKey": "ITEM_MOD_SPELL_POWER_SHORT",
+          "unit": "spell_power",
+          "provenance": [
+            "fdb-api-items-272411"
+          ]
+        },
+        "Hit": {
+          "value": 10,
+          "statId": 31,
+          "statKey": null,
+          "unit": "unknown",
+          "provenance": [
+            "fdb-api-items-272411"
+          ]
+        },
+        "Intellect": {
+          "value": 8,
+          "statId": 5,
+          "statKey": "ITEM_MOD_INTELLECT_SHORT",
+          "unit": "points",
+          "provenance": [
+            "fdb-api-items-272411"
+          ]
+        }
+      },
+      "effects": {
+        "status": "KNOWN",
+        "value": [],
+        "provenance": [
+          "fdb-api-items-272411"
+        ]
+      },
+      "equipRestrictions": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-api-items-272411"
+        ]
+      },
+      "availability": {
+        "status": "KNOWN",
+        "value": {
+          "betaEvent": false,
+          "speculation": false,
+          "speculationReasons": []
+        },
+        "provenance": [
+          "fdb-api-items-272411"
+        ]
+      },
+      "buildVersion": "1.60.1.70959",
+      "statsCoverage": "partial",
+      "sourceConfidence": "publisher_reported",
+      "provenance": [
+        "fdb-api-items-272411"
+      ]
+    },
+    "226404": {
+      "itemId": 226404,
+      "name": {
+        "status": "KNOWN",
+        "value": "Tarnished Undermine Real",
+        "provenance": [
+          "fdb-api-items-226404"
+        ]
+      },
+      "quality": {
+        "status": "KNOWN",
+        "value": 2,
+        "provenance": [
+          "fdb-api-items-226404"
+        ]
+      },
+      "slot": {
+        "status": "KNOWN",
+        "value": "Non-equippable",
+        "provenance": [
+          "fdb-api-items-226404"
+        ]
+      },
+      "requiredLevel": {
+        "status": "KNOWN",
+        "value": 1,
+        "provenance": [
+          "fdb-api-items-226404"
+        ]
+      },
+      "stats": {},
+      "effects": {
+        "status": "KNOWN",
+        "value": [],
+        "provenance": [
+          "fdb-api-items-226404"
+        ]
+      },
+      "equipRestrictions": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-api-items-226404"
+        ]
+      },
+      "availability": {
+        "status": "KNOWN",
+        "value": {
+          "betaEvent": false,
+          "speculation": true,
+          "speculationReasons": [
+            "Season of Discovery item that is still in the client files but has not been touched by Forever."
+          ]
+        },
+        "provenance": [
+          "fdb-api-items-226404"
+        ]
+      },
+      "buildVersion": "1.60.1.70959",
+      "statsCoverage": "partial",
+      "sourceConfidence": "publisher_reported",
+      "provenance": [
+        "fdb-api-items-226404"
+      ]
+    },
+    "18407": {
+      "itemId": 18407,
+      "name": {
+        "status": "KNOWN",
+        "value": "Felcloth Gloves",
+        "provenance": [
+          "fdb-api-items-18407"
+        ]
+      },
+      "quality": {
+        "status": "KNOWN",
+        "value": 3,
+        "provenance": [
+          "fdb-api-items-18407"
+        ]
+      },
+      "slot": {
+        "status": "KNOWN",
+        "value": "Hands",
+        "provenance": [
+          "fdb-api-items-18407"
+        ]
+      },
+      "requiredLevel": {
+        "status": "KNOWN",
+        "value": 57,
+        "provenance": [
+          "fdb-api-items-18407"
+        ]
+      },
+      "stats": {
+        "Stamina": {
+          "value": 9,
+          "statId": 7,
+          "statKey": "ITEM_MOD_STAMINA_SHORT",
+          "unit": "points",
+          "provenance": [
+            "fdb-api-items-18407"
+          ]
+        },
+        "Shadow Damage Done": {
+          "value": 33,
+          "statId": 88,
+          "statKey": "ITEM_MOD_DAMAGE_SHADOW_SHORT",
+          "unit": "spell_damage",
+          "provenance": [
+            "fdb-api-items-18407"
+          ]
+        }
+      },
+      "effects": {
+        "status": "KNOWN",
+        "value": [],
+        "provenance": [
+          "fdb-api-items-18407"
+        ]
+      },
+      "equipRestrictions": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-api-items-18407"
+        ]
+      },
+      "availability": {
+        "status": "KNOWN",
+        "value": {
+          "betaEvent": false,
+          "speculation": false,
+          "speculationReasons": []
+        },
+        "provenance": [
+          "fdb-api-items-18407"
+        ]
+      },
+      "buildVersion": "1.60.1.70959",
+      "statsCoverage": "partial",
+      "sourceConfidence": "publisher_reported",
+      "provenance": [
+        "fdb-api-items-18407"
+      ]
+    },
+    "10019": {
+      "itemId": 10019,
+      "name": {
+        "status": "KNOWN",
+        "value": "Dreamweave Gloves",
+        "provenance": [
+          "fdb-api-items-10019"
+        ]
+      },
+      "quality": {
+        "status": "KNOWN",
+        "value": 3,
+        "provenance": [
+          "fdb-api-items-10019"
+        ]
+      },
+      "slot": {
+        "status": "KNOWN",
+        "value": "Hands",
+        "provenance": [
+          "fdb-api-items-10019"
+        ]
+      },
+      "requiredLevel": {
+        "status": "KNOWN",
+        "value": 40,
+        "provenance": [
+          "fdb-api-items-10019"
+        ]
+      },
+      "stats": {
+        "Spirit": {
+          "value": 7,
+          "statId": 6,
+          "statKey": "ITEM_MOD_SPIRIT_SHORT",
+          "unit": "points",
+          "provenance": [
+            "fdb-api-items-10019"
+          ]
+        },
+        "Intellect": {
+          "value": 4,
+          "statId": 5,
+          "statKey": "ITEM_MOD_INTELLECT_SHORT",
+          "unit": "points",
+          "provenance": [
+            "fdb-api-items-10019"
+          ]
+        },
+        "Spell Power": {
+          "value": 18,
+          "statId": 45,
+          "statKey": "ITEM_MOD_SPELL_POWER_SHORT",
+          "unit": "spell_power",
+          "provenance": [
+            "fdb-api-items-10019"
+          ]
+        }
+      },
+      "effects": {
+        "status": "KNOWN",
+        "value": [],
+        "provenance": [
+          "fdb-api-items-10019"
+        ]
+      },
+      "equipRestrictions": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-api-items-10019"
+        ]
+      },
+      "availability": {
+        "status": "KNOWN",
+        "value": {
+          "betaEvent": false,
+          "speculation": false,
+          "speculationReasons": []
+        },
+        "provenance": [
+          "fdb-api-items-10019"
+        ]
+      },
+      "buildVersion": "1.60.1.70959",
+      "statsCoverage": "partial",
+      "sourceConfidence": "publisher_reported",
+      "provenance": [
+        "fdb-api-items-10019"
+      ]
+    }
+  },
+  "vendors": {
+    "pix-xizzix": {
+      "vendorKey": "pix-xizzix",
+      "npcId": {
+        "status": "KNOWN",
+        "value": 227853,
+        "provenance": [
+          "fdb-api-vendors-227853"
+        ]
+      },
+      "name": {
+        "status": "KNOWN",
+        "value": "Pix Xizzix",
+        "provenance": [
+          "fdb-api-vendors-227853"
+        ]
+      },
+      "faction": {
+        "status": "KNOWN",
+        "value": "Horde",
+        "provenance": [
+          "fdb-api-vendors-227853"
+        ]
+      },
+      "zone": {
+        "status": "KNOWN",
+        "value": "Stranglethorn Vale",
+        "provenance": [
+          "fdb-api-vendors-227853"
+        ]
+      },
+      "coordinates": {
+        "status": "KNOWN",
+        "value": {
+          "x": 28.5,
+          "y": 75.8,
+          "mapId": 1434
+        },
+        "provenance": [
+          "fdb-api-vendors-227853"
+        ]
+      },
+      "inventory": [
+        "pix:272411"
+      ],
+      "provenance": [
+        "fdb-api-vendors-227853"
+      ]
+    }
+  },
+  "vendorOffers": {
+    "pix:272411": {
+      "offerId": "pix:272411",
+      "vendorId": "pix-xizzix",
+      "itemId": 272411,
+      "goldCostCopper": {
+        "status": "KNOWN",
+        "value": 0,
+        "provenance": [
+          "fdb-api-vendors-227853"
+        ]
+      },
+      "priceBasis": "published_per_purchase",
+      "purchaseStack": {
+        "status": "KNOWN",
+        "value": 1,
+        "provenance": [
+          "fdb-api-vendors-227853"
+        ]
+      },
+      "additionalCurrencies": {
+        "status": "KNOWN",
+        "value": [
+          {
+            "kind": "currency",
+            "currencyId": 3469,
+            "quantity": 75,
+            "provenance": [
+              "fdb-api-vendors-227853"
+            ],
+            "name": "Tarnished Undermine Real"
+          }
+        ],
+        "provenance": [
+          "fdb-api-vendors-227853"
+        ]
+      },
+      "requiredItems": {
+        "status": "KNOWN",
+        "value": [],
+        "provenance": [
+          "fdb-api-vendors-227853"
+        ]
+      },
+      "stockLimit": {
+        "status": "KNOWN",
+        "value": "unlimited_published",
+        "provenance": [
+          "fdb-api-vendors-227853"
+        ]
+      },
+      "availabilityStatus": {
+        "status": "KNOWN",
+        "value": "seen_in_forever",
+        "provenance": [
+          "fdb-api-vendors-227853"
+        ]
+      },
+      "requiredReputationFaction": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-api-vendors-227853"
+        ]
+      },
+      "requiredReputationRank": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-api-vendors-227853"
+        ]
+      },
+      "questPrerequisites": {
+        "status": "UNKNOWN",
+        "value": null,
+        "provenance": [
+          "fdb-api-vendors-227853"
+        ]
+      },
+      "requirementsComplete": false,
+      "provenance": [
+        "fdb-api-vendors-227853"
+      ]
+    }
+  },
+  "recipes": {},
+  "quests": {},
+  "acquisitions": {
+    "vendor:272411:pix": {
+      "acquisitionId": "vendor:272411:pix",
+      "itemId": 272411,
+      "type": "Vendor",
+      "sourceId": "pix:272411",
+      "conditions": {
+        "op": "ALL",
+        "children": [
+          {
+            "op": "UNKNOWN",
+            "reason": "Reputation, quest prerequisites and other buying restrictions are not fully published; inspect the vendor."
+          }
+        ]
+      },
+      "confidence": "published_forever_observation_partial_requirements",
+      "provenance": [
+        "fdb-api-vendors-227853"
+      ]
+    }
+  },
+  "coverage": {
+    "professions": {
+      "Alchemy": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Blacksmithing": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Enchanting": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Engineering": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Leatherworking": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Tailoring": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Herbalism": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Mining": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Skinning": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Cooking": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "First Aid": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      },
+      "Fishing": {
+        "imported": 0,
+        "status": "NOT_IMPORTED"
+      }
+    },
+    "quests": {
+      "imported": 0,
+      "status": "NOT_IMPORTED"
+    },
+    "vendorSlice": {
+      "offers": 1,
+      "requirementsComplete": false,
+      "liveClientValidated": false,
+      "source": "authenticated_api"
+    },
+    "stats": {
+      "items": 4,
+      "status": "PARTIAL; unreviewed stat units remain unknown; no EP"
+    }
+  }
+}

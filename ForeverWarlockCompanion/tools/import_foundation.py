@@ -5,7 +5,7 @@ import argparse,datetime,hashlib,html,json,os,pathlib,re,sys,urllib.request,urll
 sys.path.insert(0,str(pathlib.Path(__file__).resolve().parent/'data'))
 from catalog import ROOT,atomic,compile_catalog,secret_check
 BASE='https://foreverdb.net'
-UA='ForeverCompanion-OfflineImporter/3.3.2 (+addon catalog research)'
+UA='ForeverCompanion-OfflineImporter/3.3.3 (+addon catalog research)'
 class NoRedirect(urllib.request.HTTPRedirectHandler):
  def redirect_request(self,*args,**kwargs):return None
 
@@ -63,9 +63,13 @@ def main():
  ap=argparse.ArgumentParser();sub=ap.add_subparsers(dest='command',required=True)
  p=sub.add_parser('public-slice');p.add_argument('--out-dir',default=str(ROOT/'Catalog'))
  p=sub.add_parser('fetch-api');p.add_argument('endpoint');p.add_argument('--out-dir',required=True)
+ p=sub.add_parser('api-slice');p.add_argument('--input-dir',required=True);p.add_argument('--output',default=str(ROOT/'Catalog'/'api-vendor-slice.json'));p.add_argument('--imported-at')
  p=sub.add_parser('compile');p.add_argument('input');p.add_argument('--lua',default=str(ROOT/'Data'/'Foundation.lua'));p.add_argument('--sqlite',required=True);p.add_argument('--report',default=str(ROOT/'docs'/'DATA_COVERAGE.json'))
  args=ap.parse_args()
  if args.command=='public-slice':print('Imported minimal factual slice:',collect(args.out_dir))
+ elif args.command=='api-slice':
+  from foreverdb_api import normalize
+  print('Normalized reviewed API slice:',normalize(args.input_dir,args.output,args.imported_at))
  elif args.command=='fetch-api':
   if not re.fullmatch(r'(items|vendors|quests)/\d+|professions(?:/[a-z-]+)?|dungeons|merchants-favor|classes/[a-z]+',args.endpoint):raise ValueError('Endpoint not allowlisted; bulk import gated')
   key=os.environ.get('FOREVERDB_API_KEY')

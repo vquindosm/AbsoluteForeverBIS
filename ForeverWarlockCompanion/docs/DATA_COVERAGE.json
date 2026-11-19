@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sha256": "68f7a98f9166ddc208e0a0e9553c71fa47b29e50ebf432b182859812e080fe32",
+  "sha256": "0b7438bb6d48562ef5b175a353706b4aa43f140685f0babd0ff6af4ae50cdefc",
   "scope": "single vendor slice; no mass import",
   "entities": {
     "items": 4,
@@ -68,11 +68,12 @@
     "vendorSlice": {
       "offers": 1,
       "requirementsComplete": false,
-      "liveClientValidated": false
+      "liveClientValidated": false,
+      "source": "authenticated_api"
     },
     "stats": {
       "items": 4,
-      "status": "PARTIAL; units/effects/build must be checked"
+      "status": "PARTIAL; unreviewed stat units remain unknown; no EP"
     }
   }
 }

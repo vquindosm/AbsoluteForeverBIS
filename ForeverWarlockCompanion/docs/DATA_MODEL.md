@@ -44,3 +44,16 @@ Una asociación manual opcional de NPC se guarda como vendorSourceBindings por p
 Permite usar la observación en locales cuyo nombre difiere del registro público; requiere
 una elección explícita del usuario con el NPC/GUID mostrado. No transforma npcId UNKNOWN
 del catálogo en un ID verificado ni certifica requisitos de compra.
+
+
+## Adaptador API 3.3.3
+
+Catalog/api-vendor-slice.json es la entrada activa. El JSON público anterior es histórico.
+La procedencia API incluye hash de envelope, atribución recibida y documentación revisada;
+no incluye meta.client ni credenciales. Se conservan cadenas y marcas de la fuente.
+Un coste currency usa currencyId y C_CurrencyInfo, un coste item usa itemId e inventario;
+los nombres iguales no permiten intercambiar esas identidades. purchaseStack conserva la
+unidad de compra y priceBasis identifica el precio publicado, no un precio base universal.
+stockLimit=unlimited_published describe el catálogo, mientras el stock de la ventana abierta
+sigue siendo una observación distinta. El adaptador no declara ausencia de restricciones
+por campos de descuento/facción ni por el hecho de autenticarse correctamente.
