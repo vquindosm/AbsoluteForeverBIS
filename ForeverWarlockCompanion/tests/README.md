@@ -102,3 +102,13 @@ anillos/abalorios, 2H con mano izquierda, cambios de equipo en combate, hooks si
 ItemRefTooltip tardío, datos asíncronos y tooltip cambiado, filas recicladas/ScrollBox,
 cierre, activación y preferencias. No es una prueba del cliente Forever ni de un drop real.
 Ejecutar también todas las suites anteriores. Recorrido manual: LOOT-INDICATOR-3.5.md.
+
+## Tooltip compacto y API externa (3.6)
+
+Ejecutar `lua tests/loot_visual.lua modern` y variantes legacy/no-model/player-model.
+Usa respuestas sintéticas para reproducir la forma del caso de las botas: pérdidas de
+atributos ausentes del objeto nuevo, dirección del delta, error/carga, enlace completo,
+puntuación opcional por perfil, fuente manual, baseline cero, callbacks agrupados y
+líneas dentro del tooltip sin duplicar ni borrar contenido de otros addons.
+Ejecutar las suites anteriores. No renderiza WoW ni verifica datos de objetos reales.
+El recorrido manual pendiente figura en docs/LOOT-TOOLTIP-3.6.md.

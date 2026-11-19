@@ -188,6 +188,45 @@ function S.Delta(before,after,key)
  if x~=nil and y~=nil then return y-x end
  return nil,(xstate=='error' or ystate=='error') and 'Read error' or (xstate=='pending' or ystate=='pending') and 'Data pending' or (xstate=='absent' or ystate=='absent') and 'Not comparable' or 'Unknown'
 end
+-- A missing entry in GetItemStats alone proves nothing. The client's pairwise
+-- comparison can explicitly report losses for stats missing from the new item.
+-- Calibrate its direction against common numeric stats, rather than assuming
+-- all client generations subtract arguments in the same order.
+function S.NativeComparison(before,after)
+ local fn=C_Item and C_Item.GetItemStatDelta or GetItemStatDelta
+ if type(fn)~='function' or not before or not after or before.state~='confirmed' or after.state~='confirmed' or type(before.link)~='string' or type(after.link)~='string' then return nil end
+ local ok,raw=pcall(fn,before.link,after.link)
+ if not ok or not A.Compat.Readable(raw) or type(raw)~='table' then return nil end
+ local deltas={}
+ for key,value in pairs(raw) do
+  if not A.Compat.Readable(key) or type(key)~='string' or not A.Compat.Readable(value) or not finite(value) then return nil end
+  key=S.Normalize(key)
+  if deltas[key]~=nil and deltas[key]~=value then return nil end
+  deltas[key]=value
+ end
+ local direction
+ for key,x in pairs(before.values) do
+  local y=after.values[key]
+  if finite(y) and y~=x then
+   local d=deltas[key];if not d then return nil end
+   local sign=math.abs(d-(y-x))<0.000001 and 1 or math.abs(d+(y-x))<0.000001 and -1 or nil
+   if not sign or direction and direction~=sign then return nil end;direction=sign
+  elseif finite(y) and deltas[key] and math.abs(deltas[key])>0.000001 then return nil end
+ end
+ if not direction then return nil end -- No numeric anchor: retain strict fallback.
+ local a,b={},{}
+ for k,v in pairs(before.values) do a[k]=v end
+ for k,v in pairs(after.values) do b[k]=v end
+ for key,value in pairs(deltas) do
+  local d=value*direction;deltas[key]=d
+  if a[key]~=nil and b[key]==nil then
+   local inferred=a[key]+d;if inferred<0 then return nil end;b[key]=inferred
+  elseif b[key]~=nil and a[key]==nil then
+   local inferred=b[key]-d;if inferred<0 then return nil end;a[key]=inferred
+  end
+ end
+ return {before=a,after=b,deltas=deltas,source='client pairwise comparison'}
+end
 function S.Weights(weights)
  if weights~=nil and type(weights)~='table' then return nil,'Invalid weight table' end
  local result={}

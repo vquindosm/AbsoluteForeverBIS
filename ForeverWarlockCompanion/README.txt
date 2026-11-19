@@ -1,4 +1,4 @@
-FOREVER COMPANION 3.5.0-preview — interfaz 16001
+FOREVER COMPANION 3.6.0-preview — interfaz 16001
 
 Instala la carpeta ForeverWarlockCompanion completa en
 World of Warcraft/_forever_/Interface/AddOns/ y abre /fwc.
@@ -237,3 +237,33 @@ clásicos con slot y elementos ScrollBox con GetSlotIndex; interfaces de botín 
 pueden mostrar sólo el indicador del tooltip. Prueba dentro de WoW aún pendiente.
 Ver docs/LOOT-INDICATOR-3.5.md. Este indicador usa estadísticas del cliente, no puntuaciones
 publicadas por ForeverDB ni referencias offline para declarar una mejora.
+
+
+3.6.0 — TOOLTIP COMPACTO Y PERFIL DE FOREVER LEVELING BIS
+El resumen pasa al interior del tooltip nativo: iconos de atributos, ganancias verdes,
+pérdidas rojas y dos atributos por fila. Ya no crea un panel ancho separado en clientes
+con las líneas estándar del tooltip. Mayús amplía el desglose. No inventa vida, maná,
+regeneración o crítico derivados con fórmulas de otra versión del juego.
+
+GetItemStatDelta permite recuperar pérdidas explícitas que GetItemStats no expone como
+ceros: por ejemplo perder poder con hechizos o aguante al cambiar a un objeto sin ellos.
+Los datos pendientes, errores y referencias offline siguen sin convertirse en cero.
+La dirección de la comparación nativa se valida con atributos comunes a los dos objetos.
+
+Forever Leveling BiS es opcional. Si ofrece API pública v2, se consultan sus puntuaciones
+para el perfil activo y los enlaces completos del objeto actual y del candidato. Los sufijos
+aleatorios se conservan. Se muestra puntuación, cambio absoluto y porcentaje cuando el
+equipo actual tiene puntuación positiva. No se publica un porcentaje del mejor BiS ni un
+ranking que la API no proporciona. Los cambios de configuración de armas requieren cautela.
+
+Settings > Botín: Automático usa tus pesos EP si existen; después intenta Forever Leveling BiS.
+Puedes elegir expresamente Forever Leveling BiS o sólo tus pesos EP. El perfil del addon
+externo se identifica en el tooltip; puede diferir del seleccionado en Forever Companion.
+Sin proveedor/pesos suficientes se muestran los cambios de atributos sin valoración global.
+Desactivar sus flechas de bolsas no desactiva la puntuación de Forever Companion.
+
+API utilizada: https://github.com/thunder426/ForeverLevelingBiS-API
+No se distribuyen código, pesos ni datos privados de ese addon; sólo se consulta su API.
+Los datos de adquisición y fichas siguen atribuidos a ForeverDB.net — https://foreverdb.net.
+Validación local con APIs simuladas; prueba visual y datos del cliente Forever pendientes.
+Recorrido manual y límites: docs/LOOT-TOOLTIP-3.6.md.

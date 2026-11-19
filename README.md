@@ -1,6 +1,6 @@
 # AbsoluteForeverBIS — Forever Companion
 
-Proyecto de addon para **World of Warcraft Forever**, versión actual **3.5.0-preview**.
+Proyecto de addon para **World of Warcraft Forever**, versión actual **3.6.0-preview**.
 El código del addon está en [`ForeverWarlockCompanion/`](ForeverWarlockCompanion/).
 
 ## Instalación
@@ -16,6 +16,10 @@ y un piloto de adquisición de Arcanoweave Cloak. Las fichas añaden alternativa
 requisitos publicados para los 157 objetos y 17 mejoras con fórmulas, materiales y orígenes.
 El botín incorpora indicadores de mejora y comparación por atributo al pasar el ratón.
 Se activa por defecto; `/fwc loot off` lo desactiva y `/fwc loot on` lo activa.
+El tooltip integra iconos y cambios de atributos en verde/rojo dentro del marco del juego.
+La comparación nativa por pareja recupera pérdidas que no aparecen como ceros en las tablas
+de atributos. Opcionalmente usa la API pública de Forever Leveling BiS para puntuar con su
+perfil activo, conservando tus pesos EP cuando los has configurado. Selección en Settings.
 La validación dentro de WoW sigue pendiente.
 Los datos incompletos permanecen UNKNOWN y las referencias offline no conceden EP ficticio.
 El acceso autenticado y el adaptador del piloto están comprobados. El catálogo masivo y la
@@ -23,6 +27,7 @@ validación en el cliente siguen pendientes. Las claves sólo se usan fuera del 
 
 Datos del piloto y referencias offline: [Data from ForeverDB.net](https://foreverdb.net).
 
+- [Tooltip e integración con Forever Leveling BiS](ForeverWarlockCompanion/docs/LOOT-TOOLTIP-3.6.md)
 - [Indicadores y comparación del botín](ForeverWarlockCompanion/docs/LOOT-INDICATOR-3.5.md)
 - [Fichas, mejoras y requisitos de 3.4](ForeverWarlockCompanion/docs/ITEM-GUIDE-3.4.md)
 - [Guía completa](ForeverWarlockCompanion/README.txt)
@@ -41,7 +46,7 @@ del addon según `tests/README.md`. El addon no necesita Python, SQLite ni HTTP 
 Para generar el ZIP instalable, desde `ForeverWarlockCompanion/`:
 
 ```sh
-python3 tools/build_zip.py /tmp/ForeverCompanion-3.5.0-preview.zip
+python3 tools/build_zip.py /tmp/ForeverCompanion-3.6.0-preview.zip
 ```
 
 No subas archivos `.env`, claves de API, SavedVariables personales ni respuestas privadas de API.

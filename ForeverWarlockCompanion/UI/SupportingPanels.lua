@@ -186,7 +186,10 @@ function S.CreateSettings(parent)
     f.theme:SetSize(230,26);f.theme:SetPoint('TOPLEFT',16,-154)
     f.lootIndicators=W.Button(f,'',function() A.UI.LootIndicator.SetEnabled(not A.UI.LootIndicator.Enabled());S.RenderSettings() end)
     f.lootIndicators:SetPoint('LEFT',f.theme,'RIGHT',12,0);f.lootIndicators:SetSize(260,26)
-    f.weightLabel=W.Label(f,"EP weights for this class / spec (client stat keys; comma separated)");f.weightLabel:SetPoint('TOPLEFT',16,-62)
+    f.weightLabel=W.Label(f,"Tus pesos EP (opcional)");f.weightLabel:SetPoint('TOPLEFT',16,-62)
+    f.lootScore=W.Menu(f,'Puntuación del botín',{{label='Automática (EP propio / FLB)',value='auto'},{label='Forever Leveling BiS',value='flb'},{label='Sólo mis pesos EP',value='manual'}},function(value)
+        A.Services.Persistence.Profile().lootScoreSource=value;A.UI.LootIndicator.Refresh();S.RenderSettings()
+    end);f.lootScore:SetSize(265,24);f.lootScore:SetPoint('TOPRIGHT',-16,-52)
     f.weights=W.Edit(f);f.weights:SetPoint('TOPLEFT',16,-82);f.weights:SetPoint('TOPRIGHT',-150,-82)
     f.saveWeights=W.Button(f,'Save EP',function()
         local weights,err=A.Services.Planner.ParseWeights(f.weights:GetText())
@@ -217,6 +220,7 @@ function S.RenderSettings()
     f.lootIndicators:SetText('Indicadores de botín: '..(A.UI.LootIndicator.Enabled() and 'On' or 'Off'))
     f.itemDiagnostics:SetText('Item stat diagnostics: '..(A.db.settings.itemStatDiagnostics and 'On' or 'Off'))
     local profile=A.Services.Persistence.Profile()
+    f.lootScore:SetText('Botín: '..(({auto='Automático',flb='Forever Leveling BiS',manual='Mis pesos EP'})[profile.lootScoreSource or 'auto'] or 'Automático'))
     if f.weightProfile~=profile then f.weightProfile=profile;f.weights:SetText(profile.epWeightsText or '');f.weightInfo:SetText('Example syntax: ITEM_MOD_INTELLECT_SHORT=0.2,ITEM_MOD_STAMINA_SHORT=0') end
     f.reminders:SetText("Mooncloth estimate reminders: "..(A.db.settings.moonclothReminders==false and "Off" or "On"))
     local _,build,_,interface=A.Compat.Call(GetBuildInfo)
@@ -241,6 +245,6 @@ function S.RenderSettings()
     lines[#lines+1]=A.Services.AcquisitionRequirementsResolver.Summary(272411)
     lines[#lines+1]='Offline item guide: 157 item references, 17 enhancements and recipes/materials for 29 crafted items. Vendor requirements remain a partial pilot. See docs/ITEM-GUIDE-3.4.md. Data from ForeverDB.net · https://foreverdb.net'
     lines[#lines+1]=A.Services.ItemStats.Report()
-    lines[#lines+1]='Loot indicator: '..A.UI.LootIndicator.mode..'. /fwc loot on | off. Uses full live item links and your EP weights; incomplete comparisons remain marked.'
+    lines[#lines+1]='Loot indicator: '..A.UI.LootIndicator.mode..'. /fwc loot on | off. Native stat differences; source: own EP or optional Forever Leveling BiS API v2. Full instance links and actual worn equipment.'
     f.text:SetText(table.concat(lines,"\n\n"))
 end

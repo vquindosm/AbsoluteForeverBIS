@@ -66,7 +66,16 @@ function L.One(slot,link,info,after,eligible,eligibilityReason)
   out.state='empty';out.reason='Ranura vacía; opción para equipar';return out
  end
  if not out.loadout and payload(link)==payload(current.link) then out.state='same';out.reason='Mismo objeto y variante equipados';return out end
- local before=out.before;local complete=before and before.state=='confirmed' and after.state=='confirmed'
+ local before=out.before
+ local native=not out.loadout and S.NativeComparison(before,after)
+ if native then
+  -- Reconstruction is local to this verified pair. Never alter sparse item
+  -- caches or offline references, or silently zero-fill unrelated attributes.
+  before=setmetatable({values=native.before},{__index=before})
+  after=setmetatable({values=native.after},{__index=after})
+  out.nativeDelta=true
+ end
+ local complete=before and before.state=='confirmed' and after.state=='confirmed'
  local gains,losses=0,0
  for _,entry in ipairs(S.Keys(before,after)) do
   local x,xstate=S.Value(before,entry.key);local y,ystate=S.Value(after,entry.key)
@@ -75,6 +84,18 @@ function L.One(slot,link,info,after,eligible,eligibilityReason)
    if delta~=nil then
     if delta~=0 then out.deltas[#out.deltas+1]={key=entry.key,label=entry.label,delta=delta};if delta>0 then gains=gains+1 else losses=losses+1 end end
    else complete=false;out.unknown[#out.unknown+1]={label=entry.label,before=x,after=y} end
+  end
+ end
+ if native then
+  local known={};for _,d in ipairs(out.deltas) do known[d.key]=true end
+  for key,delta in pairs(native.deltas) do
+   if delta~=0 and not known[key] then
+    out.deltas[#out.deltas+1]={key=key,label=_G[key] or key,delta=delta}
+    if delta>0 then gains=gains+1 else losses=losses+1 end
+    if S.Value(before,key)==nil and S.Value(after,key)==nil then
+     complete=false;out.unknown[#out.unknown+1]={key=key,label=_G[key] or key}
+    end
+   end
   end
  end
  local _,class=A.Compat.Call(UnitClass,'player')
@@ -97,8 +118,20 @@ function L.One(slot,link,info,after,eligible,eligibilityReason)
  elseif complete and type(weights)=='table' and next(weights) then out.score,out.reason=A.Services.Planner.WeightedComparison(before.values,after.values,weights)
  elseif complete then out.reason='Sin pesos EP; sólo se comparan atributos'
  else out.reason='Datos incompletos; lo ausente no se supone cero' end
+ if out.score then out.score.absolute=out.score.after-out.score.before;out.score.source='Tus pesos EP';out.score.provider='manual' end
+ -- A documented external scoring engine can score sparse native stat tables
+ -- without manufacturing their missing values. Weapons that change both hands
+ -- still require the loadout comparison above; a per-item API is insufficient.
+ local mode=profile.lootScoreSource or 'auto'
+ if mode=='flb' then out.score=nil end
+ local providerReady=before and (before.state=='confirmed' or before.state=='empty') and (after.state=='confirmed' or after.state=='empty')
+ if mode~='manual' and (mode=='flb' or type(weights)~='table' or not next(weights)) and not out.loadout and providerReady then
+  local score,why=A.Services.LootScore.Compare(link,current.link,slot)
+  if score then out.score=score;out.reason=nil
+  elseif mode=='flb' then out.score=nil;out.reason=why end
+ end
  if out.score then
-  local delta=out.score.delta
+  local delta=out.score.delta or out.score.absolute
   out.state=delta>0.01 and 'upgrade' or delta<-.01 and 'downgrade' or 'equal'
  elseif not complete then out.state='partial'
  elseif gains>0 and losses==0 then out.state='stats-up'
