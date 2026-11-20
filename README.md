@@ -1,6 +1,6 @@
 # AbsoluteForeverBIS — Forever Companion
 
-Proyecto de addon para **World of Warcraft Forever**, versión actual **3.6.0-preview**.
+Proyecto de addon para **World of Warcraft Forever**, versión actual **3.7.0-pilot**.
 El código del addon está en [`ForeverWarlockCompanion/`](ForeverWarlockCompanion/).
 
 ## Instalación
@@ -21,6 +21,9 @@ La comparación nativa por pareja recupera pérdidas que no aparecen como ceros 
 de atributos. Opcionalmente usa la API pública de Forever Leveling BiS para puntuar con su
 perfil activo, conservando tus pesos EP cuando los has configurado. Selección en Settings.
 La validación dentro de WoW sigue pendiente.
+El inspector 2.0 se activa exclusivamente para Fel Cape (279269): atributos visuales,
+comparación común, receta con existencias y costes separados. El rating usa pesos EP
+propios válidos; el resto de fichas conserva su presentación durante la validación del piloto.
 Los datos incompletos permanecen UNKNOWN y las referencias offline no conceden EP ficticio.
 El acceso autenticado y el adaptador del piloto están comprobados. El catálogo masivo y la
 validación en el cliente siguen pendientes. Las claves sólo se usan fuera del addon.
@@ -28,6 +31,9 @@ validación en el cliente siguen pendientes. Las claves sólo se usan fuera del 
 Datos del piloto y referencias offline: [Data from ForeverDB.net](https://foreverdb.net).
 
 - [Tooltip e integración con Forever Leveling BiS](ForeverWarlockCompanion/docs/LOOT-TOOLTIP-3.6.md)
+- [Inspector 2.0: Fel Cape y prueba en WoW](ForeverWarlockCompanion/docs/ITEM-INSPECTOR-3.7.md)
+- [Preview antes/después](ForeverWarlockCompanion/docs/validation-3.7/item-comparison.png)
+- [Preview de adquisición y costes](ForeverWarlockCompanion/docs/validation-3.7/acquisition-comparison.png)
 - [Indicadores y comparación del botín](ForeverWarlockCompanion/docs/LOOT-INDICATOR-3.5.md)
 - [Fichas, mejoras y requisitos de 3.4](ForeverWarlockCompanion/docs/ITEM-GUIDE-3.4.md)
 - [Guía completa](ForeverWarlockCompanion/README.txt)
@@ -46,7 +52,7 @@ del addon según `tests/README.md`. El addon no necesita Python, SQLite ni HTTP 
 Para generar el ZIP instalable, desde `ForeverWarlockCompanion/`:
 
 ```sh
-python3 tools/build_zip.py /tmp/ForeverCompanion-3.6.0-preview.zip
+python3 tools/build_zip.py /tmp/ForeverCompanion-3.7.0-pilot.zip
 ```
 
 No subas archivos `.env`, claves de API, SavedVariables personales ni respuestas privadas de API.

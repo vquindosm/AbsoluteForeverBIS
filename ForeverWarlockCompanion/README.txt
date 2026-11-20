@@ -1,4 +1,4 @@
-FOREVER COMPANION 3.6.0-preview — interfaz 16001
+FOREVER COMPANION 3.7.0-pilot — interfaz 16001
 
 Instala la carpeta ForeverWarlockCompanion completa en
 World of Warcraft/_forever_/Interface/AddOns/ y abre /fwc.
@@ -267,3 +267,29 @@ No se distribuyen código, pesos ni datos privados de ese addon; sólo se consul
 Los datos de adquisición y fichas siguen atribuidos a ForeverDB.net — https://foreverdb.net.
 Validación local con APIs simuladas; prueba visual y datos del cliente Forever pendientes.
 Recorrido manual y límites: docs/LOOT-TOOLTIP-3.6.md.
+
+
+3.7.0 — ITEM INSPECTOR 2.0 · PILOTO FEL CAPE
+Se activa sólo para Fel Cape (279269). Los demás objetos conservan su ficha actual.
+Cabecera con rareza, ilvl, posesión y fuente; atributos con iconos; comparación contra
+la capa realmente equipada; receta con cantidades/existencias/faltantes; precios separados.
+Crit 14 permanece en su unidad publicada, sin convertirlo automáticamente en porcentaje.
+Origen del patrón pendiente de confirmar. No se exige Sastrería 300 para equipar la capa.
+
+Se distinguen materiales de fabricación, compra al vendedor, reventa al vendedor y mercado.
+Los 99s 99c publicados son REVENTA. No se utiliza ese importe como compra o valor de subasta.
+La afinidad de guía de Aflicción es una referencia JcE 60, no una mejora personal.
+Data from ForeverDB.net — https://foreverdb.net
+
+El servicio UpgradeComparison usa claves estables y comparación nativa entre enlaces
+completos. Se comparte entre ficha, indicadores y tooltip; caché invalidada por eventos.
+El piloto requiere pesos EP propios y cobertura válida. Sin ellos: Upgrade score unavailable
+y EP: Not calculated. La integración opcional de Forever Leveling BiS sigue disponible
+para los otros objetos, sin sustituir los pesos requeridos para este caso piloto.
+Indicadores del piloto: verde/rojo con diferencia EP, neutro dentro del umbral y ? sin cálculo.
+Settings permite ajustar el umbral absoluto de EP y desactivar la extensión del tooltip.
+No es una simulación de DPS ni un ranking absoluto. IDs/API/procedencia están en Advanced Details.
+
+Previews de los frames Lua en docs/validation-3.7: objeto publicado con equipo/bolsas simulados,
+iconos y fuentes aproximados. No son capturas de WoW. Prueba real y generalización de las
+fichas pendientes; instrucciones y criterios en docs/ITEM-INSPECTOR-3.7.md.

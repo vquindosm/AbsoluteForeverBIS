@@ -67,6 +67,11 @@ function E.Render()
         row.title:ClearAllPoints();row.title:SetPoint("TOPLEFT",58,-7);row.title:SetPoint("TOPRIGHT",-8,-7)
         row.sub:ClearAllPoints();row.sub:SetPoint("TOPLEFT",58,-41);row.sub:SetPoint("TOPRIGHT",-8,-41);row.sub:SetHeight(70)
         row.title:SetText(W.Color(item)..item.name.."|r")
+        if A.Services.ItemInspector.IsPilot(item) then
+            if not row.rating then row.rating=W.Label(row,'','GameFontNormal');row.rating:SetPoint('TOPRIGHT',-8,-9);row.rating:SetSize(85,22);row.rating:SetJustifyH('RIGHT') end
+            row.rating:Show();row.title:SetPoint('TOPRIGHT',-96,-7)
+            row.ratingState=A.UI.ItemInspector.PaintRating(row.rating,A.Services.UpgradeComparison.ForSlot(entry.slot,item))
+        elseif row.rating then row.rating:Hide();row.ratingState=nil end
         local target=A.Services.Catalog.Target(entry.slot)
         row.sub:SetText(guide.Summary(item,3)..'\n'..guide.ShortSource(item)..'\n'..A.Services.Inventory.Status(item)..(target and target.id==item.id and ' · Objetivo' or '')..' · '..guide.ScoreLabel(entry.slot,item))
         W.Active(row,A.UI.selectedItem==item.id and A.UI.selectedSlot==entry.slot)

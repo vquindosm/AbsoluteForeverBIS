@@ -84,10 +84,10 @@ check(text:find('-9 Spell power',1,true) and text:find('-17 Stamina',1,true),'om
 check(text:find('Aflicción',1,true) and text:find('3.7',1,true) and text:find('-73%',1,true) and text:find('Forever Leveling BiS',1,true),'compact profile, score, percentage and source')
 check(not text:find('Pesos EP en',1,true) and not text:find('health',1,true),'no technical instructions or unverified derived health formula in compact view')
 for _,mode in ipairs({'normal','reverse'}) do
- nativeMode=mode;check(I.Compare(boots).comparisons[1].nativeDelta,'both native subtraction directions validated by common stats: '..mode)
+ nativeMode=mode;S.Invalidate(nil,true);check(I.Compare(boots).comparisons[1].nativeDelta,'both native subtraction directions validated by common stats: '..mode)
 end
 for _,mode in ipairs({'throw','nil','secret','conflict','nan'}) do
- nativeMode=mode;row=I.Compare(boots).comparisons[1]
+ nativeMode=mode;S.Invalidate(nil,true);row=I.Compare(boots).comparisons[1]
  check(not row.nativeDelta and #row.unknown==2,'failed or inconsistent native comparison does not invent zero: '..mode)
  check(row.score and row.score.provider=='flb','independent provider handles sparse native records: '..mode)
 end
@@ -101,13 +101,13 @@ check(not I.Compare(boots).comparisons[1].nativeDelta,'no common nonzero anchor:
 values[910001].ITEM_MOD_INTELLECT_SHORT=originalInt;values[910001].ITEM_MOD_SPIRIT_SHORT=originalSpirit;values[910001].RESISTANCE0_NAME=originalArmor
 S.Invalidate(nil,true);nativeMode='omit';row=I.Compare(boots).comparisons[1]
 check(row.nativeDelta and #row.unknown==1 and row.unknown[1].label=='Spell power','a missing pairwise delta cannot zero-fill a missing item stat')
-nativeMode='normal'
+nativeMode='normal';S.Invalidate(nil,true)
 P.epWeights={ITEM_MOD_INTELLECT_SHORT=.3,ITEM_MOD_SPIRIT_SHORT=.15,ITEM_MOD_SPELL_POWER_SHORT=1,ITEM_MOD_STAMINA_SHORT=.2}
 row=I.Compare(boots).comparisons[1]
 check(row.score.provider=='manual' and math.abs(row.score.absolute+10.15)<1e-8,'automatic mode preserves explicitly entered weights and validated losses')
-nativeMode='extra';row=I.Compare(boots).comparisons[1]
+nativeMode='extra';S.Invalidate(nil,true);row=I.Compare(boots).comparisons[1]
 check(not row.complete and not row.score,'native-only change without absolute values cannot silently disappear from manual EP')
-nativeMode='normal'
+nativeMode='normal';S.Invalidate(nil,true)
 P.lootScoreSource='flb';check(I.Compare(boots).comparisons[1].score.provider=='flb','explicit provider selection overrides manual weights')
 P.lootScoreSource='manual';check(I.Compare(boots).comparisons[1].score.provider=='manual','manual source explicitly available')
 P.lootScoreSource='flb';baseline=0;row=I.Compare(boots).comparisons[1]

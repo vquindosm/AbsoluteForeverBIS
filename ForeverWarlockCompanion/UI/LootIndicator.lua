@@ -14,7 +14,7 @@ local statIcons={ITEM_MOD_INTELLECT_SHORT='Spell_Holy_MagicalSentry',ITEM_MOD_ST
  ITEM_MOD_CRIT_SPELL_RATING_SHORT='Spell_Fire_Incinerate',ITEM_MOD_CRIT_RATING_SHORT='Ability_CriticalStrike',
  ITEM_MOD_ATTACK_POWER_SHORT='Ability_MeleeDamage',ITEM_MOD_MANA_REGENERATION_SHORT='Spell_Nature_ManaRegenTotem'}
 local specs={affliction={'Aflicción','Spell_Shadow_DeathCoil'},demonology={'Demonología','Spell_Shadow_Metamorphosis'},destruction={'Destrucción','Spell_Shadow_RainOfFire'}}
-local marker=icon('INV_Misc_Book_09')..'|cffffd16aForever Companion|r'
+local marker=icon('INV_Misc_Book_09')..'|cffffd16aForever Companion · Upgrade|r'
 local function statLabel(d)
  -- Let the client supply localized terminology. Do not call percentage-based
  -- Forever stats "rating" just because a historical global key contains RATING.
@@ -24,6 +24,7 @@ end
 function L.Enabled() return A.db and A.db.settings.lootIndicators~=false end
 function L.Lines(result)
  if not result then return nil end
+ if result.itemId==279269 then return A.UI.ItemInspector.UpgradeLines(result,marker) end
  local lines={marker}
  if result.state=='pending' then lines[#lines+1]=paint(result.reason,'pending');return table.concat(lines,'\n') end
  local shift=A.Compat.Call(IsShiftKeyDown)==true;local limit=shift and 16 or 6;local more=false;local scored=false

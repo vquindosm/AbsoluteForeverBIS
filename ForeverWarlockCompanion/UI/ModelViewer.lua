@@ -41,7 +41,6 @@ function V.Create(parent)
             if GameTooltip and eq and eq.id then
                 A.Compat.Method(GameTooltip,'SetOwner',self,'ANCHOR_RIGHT')
                 if not A.Compat.Method(GameTooltip,'SetInventoryItem','player',slot.inventory) then A.Compat.Tooltip(self,eq.link or eq.id) else A.Compat.Method(GameTooltip,'Show') end
-                A.Compat.Method(GameTooltip,'AddLine','Stats: '..A.Services.ItemStats.Describe(A.Services.ItemStats.Equipped(slot.key)));A.Compat.Method(GameTooltip,'Show')
             end
         end)
         button:SetScript('OnLeave',function() if GameTooltip then GameTooltip:Hide() end end)
@@ -71,7 +70,9 @@ function V.UpdateEquipment()
             local target=A.Services.Catalog.Target(slot.key)
             b.icon:SetTexture(V.mode=='Planned' and target and target.icon or nativeIcon or (item and item.icon) or "Interface\\Icons\\INV_Misc_QuestionMark")
             local score=target and A.Services.Planner.SlotScore(slot.key,target)
-            b.badge:SetText(score and string.format('%+.0f%%',score.delta) or (eq and eq.id and target and eq.id==target.id and '=' or '—'))
+            if A.Services.ItemInspector.IsPilot(target) then
+                b.ratingState=A.UI.ItemInspector.PaintRating(b.badge,A.Services.UpgradeComparison.ForSlot(slot.key,target))
+            else b.ratingState=nil;b.badge:SetText(score and string.format('%+.0f%%',score.delta) or (eq and eq.id and target and eq.id==target.id and '=' or '—')) end
             local data=A.Services.ItemStats.Equipped(slot.key);b.dataState=data.state
         end
     end

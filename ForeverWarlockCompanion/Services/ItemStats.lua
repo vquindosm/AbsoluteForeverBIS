@@ -54,6 +54,7 @@ function S.Tracks(id)
  return false
 end
 function S.Invalidate(id,retry)
+ if A.Services.UpgradeComparison then A.Services.UpgradeComparison.Invalidate(id) end
  for key,r in pairs(S.records) do if not id or r.itemId==id then S.records[key]=nil end end
  if retry then if id then S.requests[id]=nil else S.requests={} end end
 end

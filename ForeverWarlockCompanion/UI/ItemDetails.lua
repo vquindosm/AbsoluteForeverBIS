@@ -45,6 +45,7 @@ function D.Create(parent)
   for i=1,count do local d=A.Compat.Call(api.GetFactionDataByIndex,i);if type(d)=='table' and A.Compat.Readable(d.name) and A.Compat.Readable(d.factionID) and type(d.name)=='string' and type(d.factionID)=='number' and (not d.isHeader or d.isHeaderWithRep) then choices[#choices+1]={label=d.name,value=d.factionID} end end;return choices
  end,function(id) if f.item then local p=A.Services.Persistence.Profile();p.factions=p.factions or {};p.factions[f.item.id]=id~=0 and id or nil;A:Refresh() end end)
  function f:LayoutBody()
+  if self.inspectorActive then A.UI.ItemInspector.Layout(self);return end
   local width=math.max(180,self.scroll:GetWidth());local two=width>=560;local half=(width-12)/2;local y=0
   local function place(panel,x,top,w,h) panel:ClearAllPoints();panel:SetPoint('TOPLEFT',body,'TOPLEFT',x,-top);panel:SetSize(w,h) end
   local statsH=math.max(170,self.stats.text:GetStringHeight()+50);local alternativesH=236;local topH=math.max(statsH,alternativesH)
@@ -100,6 +101,10 @@ end
 function D.Render(f,slot,item)
  local W=A.UI.Widgets;f.slot=slot or 'Head';f.item=item
  for _,b in ipairs(f.buttons) do b:SetEnabled(item~=nil) end;f.equipped:SetEnabled(A.Data.slotByKey[f.slot]~=nil);f.priority:SetEnabled(item~=nil)
+ f.inspectorActive=A.Services.ItemInspector.IsPilot(item)
+ for _,panel in ipairs({f.stats,f.comparison,f.source,f.stepsSection,f.requirements,f.enchantSection,f.alternativesSection,f.advanced}) do panel:SetShown(not f.inspectorActive) end
+ if f.inspectorActive then A.UI.ItemInspector.Render(f,f.slot,item);return end
+ if f.inspector then f.inspector:Hide();f.pilotCredit:Hide() end
  if not item then
   f.enchantRows={};f.enchantOpen=false;f.enchantId=nil;f.lastItem=nil
   f.enchants:Render({},function() end);f.alternativeCards:Render({},function() end);f.enchantInfo:SetText('');f.requirements.text:SetText('Selecciona un objeto para ver sus requisitos.')

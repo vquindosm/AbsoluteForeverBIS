@@ -65,67 +65,20 @@ function L.One(slot,link,info,after,eligible,eligibilityReason)
  if current.empty and not out.loadout then
   out.state='empty';out.reason='Ranura vacía; opción para equipar';return out
  end
- if not out.loadout and payload(link)==payload(current.link) then out.state='same';out.reason='Mismo objeto y variante equipados';return out end
+ if after.itemId~=279269 and not out.loadout and payload(link)==payload(current.link) then out.state='same';out.reason='Mismo objeto y variante equipados';return out end
  local before=out.before
- local native=not out.loadout and S.NativeComparison(before,after)
- if native then
-  -- Reconstruction is local to this verified pair. Never alter sparse item
-  -- caches or offline references, or silently zero-fill unrelated attributes.
-  before=setmetatable({values=native.before},{__index=before})
-  after=setmetatable({values=native.after},{__index=after})
-  out.nativeDelta=true
- end
- local complete=before and before.state=='confirmed' and after.state=='confirmed'
- local gains,losses=0,0
- for _,entry in ipairs(S.Keys(before,after)) do
-  local x,xstate=S.Value(before,entry.key);local y,ystate=S.Value(after,entry.key)
-  if x~=nil or y~=nil or xstate=='error' or ystate=='error' then
-   local delta=S.Delta(before,after,entry.key)
-   if delta~=nil then
-    if delta~=0 then out.deltas[#out.deltas+1]={key=entry.key,label=entry.label,delta=delta};if delta>0 then gains=gains+1 else losses=losses+1 end end
-   else complete=false;out.unknown[#out.unknown+1]={label=entry.label,before=x,after=y} end
-  end
- end
- if native then
-  local known={};for _,d in ipairs(out.deltas) do known[d.key]=true end
-  for key,delta in pairs(native.deltas) do
-   if delta~=0 and not known[key] then
-    out.deltas[#out.deltas+1]={key=key,label=_G[key] or key,delta=delta}
-    if delta>0 then gains=gains+1 else losses=losses+1 end
-    if S.Value(before,key)==nil and S.Value(after,key)==nil then
-     complete=false;out.unknown[#out.unknown+1]={key=key,label=_G[key] or key}
-    end
-   end
-  end
- end
- local _,class=A.Compat.Call(UnitClass,'player')
  local profile=A.Services.Persistence.Profile();local weights=profile.epWeights
- local normalized=S.Weights(weights)
- if (not class or class==A.db.viewClass) and normalized then
-  for _,entry in ipairs(S.Keys(before,after,normalized)) do
-   if normalized[entry.key] and normalized[entry.key]~=0 then
-    local x=S.Value(before,entry.key);local y=S.Value(after,entry.key)
-    if x==nil or y==nil then
-     complete=false
-     local found=false;for _,u in ipairs(out.unknown) do if u.label==entry.label then found=true end end
-     if not found then out.unknown[#out.unknown+1]={key=entry.key,label=entry.label,before=x,after=y} end
-    end
-   end
-  end
- end
- out.complete=complete;out.gains=gains;out.losses=losses
- if class and class~=A.db.viewClass then out.reason='El perfil seleccionado corresponde a otra clase'
- elseif complete and type(weights)=='table' and next(weights) then out.score,out.reason=A.Services.Planner.WeightedComparison(before.values,after.values,weights)
- elseif complete then out.reason='Sin pesos EP; sólo se comparan atributos'
- else out.reason='Datos incompletos; lo ausente no se supone cero' end
- if out.score then out.score.absolute=out.score.after-out.score.before;out.score.source='Tus pesos EP';out.score.provider='manual' end
+ local options=out.loadout and {before=before,after=after,loadout=true} or nil
+ local compared=A.Services.UpgradeComparison.Compare(current.link,link,A.db.viewClass,A.db.spec,weights,options)
+ for _,key in ipairs({'deltas','unknown','complete','gains','losses','score','reason','nativeDelta','coverage','warnings','confidence','calculationStatus','normalizedEquippedStats','normalizedCandidateStats'}) do out[key]=compared[key] end
+ local complete=out.complete;local gains,losses=out.gains,out.losses
  -- A documented external scoring engine can score sparse native stat tables
  -- without manufacturing their missing values. Weapons that change both hands
  -- still require the loadout comparison above; a per-item API is insufficient.
  local mode=profile.lootScoreSource or 'auto'
- if mode=='flb' then out.score=nil end
+ if mode=='flb' and after.itemId~=279269 then out.score=nil end
  local providerReady=before and (before.state=='confirmed' or before.state=='empty') and (after.state=='confirmed' or after.state=='empty')
- if mode~='manual' and (mode=='flb' or type(weights)~='table' or not next(weights)) and not out.loadout and providerReady then
+ if after.itemId~=279269 and mode~='manual' and (mode=='flb' or type(weights)~='table' or not next(weights)) and not out.loadout and providerReady then
   local score,why=A.Services.LootScore.Compare(link,current.link,slot)
   if score then out.score=score;out.reason=nil
   elseif mode=='flb' then out.score=nil;out.reason=why end

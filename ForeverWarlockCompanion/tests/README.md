@@ -112,3 +112,12 @@ puntuación opcional por perfil, fuente manual, baseline cero, callbacks agrupad
 líneas dentro del tooltip sin duplicar ni borrar contenido de otros addons.
 Ejecutar las suites anteriores. No renderiza WoW ni verifica datos de objetos reales.
 El recorrido manual pendiente figura en docs/LOOT-TOOLTIP-3.6.md.
+
+## Item Inspector 2.0 (3.7 piloto)
+
+`lua tests/item_inspector.lua modern` y variantes legacy/no-model/player-model comprueban
+la ficha real publicada de Fel Cape, receta y cantidades, costes separados, bolsas simuladas,
+identificadores estables, deltas frente a capa de prueba, EP configurado, falta de pesos,
+aliases/solapamientos, caché, perfiles, rating y geometría a 280/360/510 px. No certifica el
+cliente. El fixture no se carga en el TOC. `tests/export_inspector.lua` exporta la geometría
+para las previews antes/después. El recorrido de aceptación está en docs/ITEM-INSPECTOR-3.7.md.
