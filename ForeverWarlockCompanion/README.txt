@@ -1,4 +1,4 @@
-FOREVER COMPANION 3.8.0-preview — interfaz 16001
+FOREVER COMPANION 3.9.0-preview — interfaz 16001
 
 Instala la carpeta ForeverWarlockCompanion completa en
 World of Warcraft/_forever_/Interface/AddOns/ y abre /fwc.
@@ -322,3 +322,23 @@ La extensión reserva espacio bajo el nombre y restaura sus anclajes al ocultars
 líneas nativas ni reconstruye el tooltip. /fwc loot off | on y Settings permiten desactivarla.
 Preview antes/después en docs/validation-3.8; usa equipo/pesos simulados y no es una captura
 del cliente. Recorrido de prueba y metodología: docs/UPGRADE-TOOLTIP-3.8.md.
+
+
+3.9.0 — TARJETA DE COMPARACIÓN INFERIOR
+La tarjeta se coloca debajo del tooltip, con fondo/borde verdes si mejora y rojos si
+empeora. Incluye icono de clase, icono/perfil de especialización, porcentaje y diferencia
+GS/EP. La etiqueta BiS queda separada; los cálculos y las fuentes de pesos se conservan.
+El medidor tiene cero en el centro: verde a la derecha y rojo a la izquierda. Su escala
+visual satura en ±100%; los números muestran la variación calculada completa. No mide
+porcentaje de proximidad al mejor BiS.
+
+Se elimina el desplazamiento de las líneas nativas y la modificación de altura de 3.8,
+que podía abrir un hueco grande en la parte superior en el cliente real. La nueva tarjeta
+sólo mueve y dimensiona sus propios frames. Si falta espacio inferior usa un lateral;
+si tampoco cabe, se oculta para no tapar las estadísticas.
+
+La URL de la base de datos ya no aparece al final del score. Los créditos y enlaces
+siguen dentro de la plataforma, en Settings, Item Explorer y las fichas correspondientes.
+Se conserva /fwc loot off | on y la selección de fuente en Settings.
+Preview antes/después y caso rojo en docs/validation-3.9. Son frames con datos de jugador
+simulados, no capturas de WoW. Instrucciones: docs/UPGRADE-TOOLTIP-3.9.md.

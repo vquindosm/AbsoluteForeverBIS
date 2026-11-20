@@ -133,3 +133,12 @@ datos restringidos. Los puestos de control 1/3/4/5/6/7 son fixtures, no registro
 Las suites anteriores se adaptan al hover sin bloque detallado; conservan sus comprobaciones
 del cálculo y muestran el indicador sólo cuando hay mejora válida. Preview y recorrido:
 docs/UPGRADE-TOOLTIP-3.8.md. No se ha ejecutado el motor nativo WoW en estas pruebas.
+
+## Tarjeta inferior (3.9)
+
+`tests/upgrade_banner.lua` valida ahora la tarjeta independiente: fondos/bordes
+verde/rojo, clase/spec, medidor con cero central, números positivos/negativos, tema,
+anchura, colisiones y prueba que prohíbe acceder a las fuentes nativas. No se cambia
+la altura ni el número de líneas del tooltip. Ejecutar las cuatro variantes y las
+suites anteriores. `export_upgrade_tooltip.lua` exporta también el frame inferior;
+el argumento `down` genera el control negativo. Recorrido: UPGRADE-TOOLTIP-3.9.md.

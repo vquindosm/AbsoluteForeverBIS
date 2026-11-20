@@ -1,5 +1,6 @@
 -- Before/after geometry from the same published item and synthetic player.
 local M=dofile('tests/inspector_fixture.lua');local F=dofile('tests/tooltip_fixture.lua')
+if arg[3]=='down' then M.wornStats.ITEM_MOD_DAMAGE_SHADOW_SHORT=40 end
 local tip=F.Attach(GameTooltip,'GameTooltip',{'|cffa335eeFel Cape|r','Item Level 65','Binds when equipped','Back · Cloth','50 Armor','+16 Stamina','+15 Shadow Damage','+14 Critical Strike','Requires Level 60'})
 tip:SetPoint('TOPLEFT',UIParent,'TOPLEFT',30,-30)
 local bg=tip:CreateTexture(nil,'BACKGROUND');bg:SetAllPoints(tip);bg:SetColorTexture(.025,.025,.045,.98)
@@ -32,6 +33,12 @@ local dest=arg[2] or '/tmp/fwc-tooltip'
 local function escape(s) return tostring(s or ''):gsub('\\','\\\\'):gsub('\t','\\t'):gsub('\n','\\n') end
 local ids={};for n,node in ipairs(M.frames) do ids[node]=n end
 local x,w=tip:Bounds(true);local y,h=tip:Bounds(false)
+local card=A.UI.LootIndicator.tooltips[tip].indicator
+if card and card:IsShown() then
+ local cx,cw=card:Bounds(true);local cy,ch=card:Bounds(false)
+ local right,top=math.max(x+w,cx+cw),math.max(y+h,cy+ch)
+ x=math.min(x,cx);y=math.min(y,cy);w=right-x;h=top-y
+end
 local file=assert(io.open(dest..'.tsv','w'));file:write('ROOT\t'..x..'\t'..y..'\t'..w..'\t'..h..'\n')
 for _,node in ipairs(M.frames) do
  local parent=node;local shown,inside=true,false

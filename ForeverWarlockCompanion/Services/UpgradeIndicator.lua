@@ -30,16 +30,25 @@ function I.Build(result)
  local best
  for _,row in ipairs(result.comparisons or {}) do
   local s=row.score
-  if row.eligible==true and not row.compatibility and row.state=='upgrade' and s and finite(s.before) and s.before>0 and finite(s.delta) and s.delta>0 and finite(s.absolute) and s.absolute>0 then
+  if row.eligible==true and not row.compatibility and (row.state=='upgrade' or row.state=='downgrade') and s and finite(s.before) and s.before>0 and finite(s.delta) and s.delta~=0 and finite(s.absolute) and s.absolute~=0 and (s.delta>0)==(s.absolute>0) then
    if not best or s.delta>best.score.delta then best=row end
   end
  end
  if not best then return nil end
  local rank=I.Rank(result,best);local color=I.Color(rank)
- local title='Item Improvement'..(rank and (' - '..rank..' BiS') or '')
- local function positive(n) return n<.01 and string.format('+%.2g',n) or n<.1 and string.format('+%.2f',n) or string.format('+%.1f',n) end
- local text=title..'\n'..positive(best.score.delta)..'% · '..positive(best.score.absolute)..' GS/EP'
- if rank then text=text..' · https://foreverdb.net' end
- return {text='|cff'..color..text..'|r',color=color,rank=rank,row=best}
+ local upgrade=best.score.absolute>0
+ local title=(upgrade and 'Item Improvement' or 'Item Downgrade')..(rank and (' - '..rank..' BiS') or '')
+ local function signed(n) local v=math.abs(n);return v<.01 and string.format('%+.2g',n) or v<.1 and string.format('%+.2f',n) or string.format('%+.1f',n) end
+ local gains=signed(best.score.delta)..'% · '..signed(best.score.absolute)..' GS/EP'
+ local className,class=A.Compat.Call(UnitClass,'player')
+ if not A.Compat.Readable(className) or type(className)~='string' then className='Character' end
+ if not A.Compat.Readable(class) or type(class)~='string' then class=nil end
+ local spec=best.score.provider=='flb' and best.score.spec or A.db.spec
+ if not A.Compat.Readable(spec) or type(spec)~='string' then spec=nil end
+ local specLabel=type(spec)=='string' and spec:gsub('^%l',string.upper) or 'Profile'
+ for _,name in ipairs(A.Data.classes[class] or {}) do if name:lower():gsub('%s','')==specLabel:lower():gsub('%s','') then specLabel=name;break end end
+ return {text=title..'\n'..gains,color=color,rank=rank,row=best,upgrade=upgrade,
+  class=class,className=className,spec=spec,specLabel=specLabel,gains=gains,
+  stateColor=upgrade and '78e49a' or 'ef9797',meter=math.max(-1,math.min(1,best.score.delta/100))}
 end
 return I

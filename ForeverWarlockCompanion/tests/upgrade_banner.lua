@@ -21,7 +21,7 @@ local function result() return A.Services.LootComparison.Compare(M.cape) end
 local model=B.Build(result())
 check(model.rank==2 and model.color=='a335ee','published Fel Cape position 2 has epic color')
 check(model.text:find('Item Improvement - 2 BiS',1,true) and model.text:find('+317.5%',1,true) and model.text:find('+18.1 GS/EP',1,true),'rank, percentage and score are independent verified calculations')
-check(model.text:find('https://foreverdb.net',1,true),'rank source has visible attribution link')
+check(not model.text:find('foreverdb',1,true),'credit is inside addon rather than appended to score')
 check(not model.text:find('Stamina',1,true) and not model.text:find('Compared',1,true),'no verbose stat or comparison block')
 local record=A.Data.itemGuide.recommendations.Back[279269];local position=record.position
 for _,test in ipairs({{1,'ff8000'},{2,'a335ee'},{3,'a335ee'},{4,'0070dd'},{5,'0070dd'},{6,'1eff00'},{7,'1eff00'}}) do
@@ -40,55 +40,66 @@ local saved=M.cape;M.cape='item:279269:0:0:0:0:0:-19:9:60';S.Invalidate(nil,true
 check(not B.Build(result()).rank,'random suffix never borrows base-item BiS rank');M.cape=saved;S.Invalidate(nil,true)
 tip:SetHyperlink(M.cape)
 local state=T.tooltips[tip];local banner=state.indicator;local count=tip.lines
-check(banner and banner:IsShown() and state.layout,'indicator attached under native name')
+check(banner and banner:IsShown(),'comparison card shown')
 local point,relative,relativePoint=banner:GetPoint(1)
-check(point=='TOPLEFT' and relative==GameTooltipTextLeft1 and relativePoint=='BOTTOMLEFT','indicator anchored directly below item name')
+check(point=='TOPLEFT' and relative==tip and relativePoint=='BOTTOMLEFT','card anchored below tooltip, never below its title font')
 local _,_,_,_,titleY=GameTooltipTextLeft1:GetPoint(1)
 local _,_,_,_,secondY=GameTooltipTextLeft2:GetPoint(1)
-check(titleY==-10 and secondY==-28-state.layout.extra,'title unchanged; second native line moved below indicator')
-check(tip.lines==#tip.nativeRows,'no extra native comparison lines')
+check(titleY==-10 and secondY==-28,'native name and stat anchors never shifted')
+check(tip.lines==#tip.nativeRows and tip:GetHeight()==20+18*tip.lines,'native height and line count untouched')
+check(banner.background.color[2]>banner.background.color[1] and banner.edges[1].color[2]>banner.edges[1].color[1],'upgrade tints whole background and border green')
+A.UI.DesignSystem.Apply('Modern Azeroth');check(banner.background.color[2]>banner.background.color[1],'main theme cannot overwrite card performance colors')
+check(banner.classIcon.texture:find('UI-CharacterCreate-Classes',1,true) and banner.classIcon.texCoord[1]==.75,'native Warlock class icon uses correct atlas coordinates')
+check(banner.identity:GetText()=='Warlock · Affliction' and banner.specIcon.texture:find('DeathCoil',1,true),'class and active specialization identified')
+check(banner.text:GetText():find('+317.5%',1,true) and banner.text:GetText():find('+18.1 GS/EP',1,true),'unchanged numeric gains')
+check(not banner.text:GetText():find('foreverdb',1,true),'database suffix removed from card')
+check(banner.rank:GetText():find('2 BiS',1,true),'published BiS tier retained separately')
+check(banner.fill:GetWidth()==(banner:GetWidth()-20)/2,'meter saturates at 100 percent without changing numeric gain')
+local meterPoint= banner.fill:GetPoint(1);check(meterPoint=='LEFT','positive meter extends right from zero')
+tip:SetWidth(500);T.Refresh();check(banner:GetWidth()==500,'card matches a wide native tooltip');tip:SetWidth(360);T.Refresh()
 local height=tip:GetHeight();local frames=#M.frames
 for n=1,20 do T.Refresh() end
-check(tip:GetHeight()==height and tip.lines==count and #M.frames==frames,'repeated tooltip refresh cannot grow height, lines or frames')
-tip:AddLine('Other addon content');T.Refresh();local grown=tip:GetHeight()
-check(grown==height+18 and _G['GameTooltipTextLeft'..tip.lines]:GetText()=='Other addon content','another addon can append content without cumulative spacing')
+check(tip:GetHeight()==height and tip.lines==count and #M.frames==frames,'refresh cannot grow native tooltip or allocate duplicate cards')
+tip:AddLine('Other addon content');T.Refresh()
+check(tip:GetHeight()==height+18 and _G['GameTooltipTextLeft'..tip.lines]:GetText()=='Other addon content','another addon can append content unchanged')
 T.SetEnabled(false)
 local _,_,_,_,restored=GameTooltipTextLeft2:GetPoint(1)
-check(not banner:IsShown() and restored==-28 and tip:GetHeight()==20+18*tip.lines,'disable restores native anchors and preserves extra native line')
-T.SetEnabled(true);check(banner:IsShown() and tip:GetHeight()==grown,'enable restores one indicator only')
--- Native engine rebuilds its anchors without an OnTooltipCleared callback.
+check(not banner:IsShown() and restored==-28 and tip:GetHeight()==height+18,'disable removes only own card')
+T.SetEnabled(true);check(banner:IsShown() and tip:GetHeight()==height+18,'enable reuses card without reserving native space')
 tip:PaintNative(M.cape)
-if M.scenario=='legacy' then
- local frame=T.placementFrame;local update=frame and frame:GetScript('OnUpdate');if update then update(frame,.01) end
-else M.Flush() end
-check(tip:GetHeight()==20+18*tip.lines+state.layout.extra,'native relayout is not mistaken for an existing owned offset: '..tip:GetHeight()..' vs '..(20+18*tip.lines+state.layout.extra))
--- Dependent native anchors must move once, not once per ancestor.
-T.SetEnabled(false);GameTooltipTextLeft3:ClearAllPoints();GameTooltipTextLeft3:SetPoint('TOPLEFT',GameTooltipTextLeft2,'BOTTOMLEFT',0,-3)
-T.SetEnabled(true)
-local _,_,_,_,chainY=GameTooltipTextLeft3:GetPoint(1)
-check(chainY==-3,'relative native line chain is not double shifted')
-T.SetEnabled(false)
-tip:SetHyperlink(M.cape);T.SetEnabled(true)
--- Third-party changes are not overwritten by clearing our overlay.
-GameTooltipTextLeft2:ClearAllPoints();GameTooltipTextLeft2:SetPoint('TOPLEFT',tip,'TOPLEFT',17,-91)
-T.SetEnabled(false);local _,_,_,x,y=GameTooltipTextLeft2:GetPoint(1)
-check(x==17 and y==-91,'clear preserves anchors no longer owned by this addon')
-tip:PaintNative(M.cape);T.SetEnabled(true)
-local weights=p.epWeights;p.epWeights={};T.Refresh();check(not banner:IsShown(),'no valid score means no improvement banner')
-ForeverLevelingBiS_API={version=2,GetSpec=function() return 'affliction','held','WARLOCK' end,ScoreItem=function(link) return link==M.worn and 5.7 or 23.8,false end}
-T.Refresh();check(banner:IsShown() and B.Build(result()).rank==2,'optional active FLB profile can supply a valid Fel Cape comparison')
-p.lootScoreSource='manual';T.Refresh();check(not banner:IsShown(),'explicit manual-only source does not use external scores')
-p.lootScoreSource='auto';ForeverLevelingBiS_API=nil
-p.epWeights=weights;T.Refresh();check(banner:IsShown(),'valid weights restore banner')
-M.canUse=false;T.Refresh();check(not banner:IsShown(),'unusable item never gets an improvement banner');M.canUse=true
-p.epWeights.ITEM_MOD_DAMAGE_SHADOW_SHORT=-1;T.Refresh();check(not banner:IsShown(),'negative gain suppressed');p.epWeights.ITEM_MOD_DAMAGE_SHADOW_SHORT=1
+if M.scenario=='legacy' then local f=T.placementFrame;if f:GetScript('OnUpdate') then f:GetScript('OnUpdate')(f,.01) end else M.Flush() end
+check(tip:GetHeight()==20+18*tip.lines and banner:IsShown(),'native reflow does not cause an offset or enlarged top area')
+-- Layout never reads or writes native font anchors, including unusual clients.
+local getName,numLines=tip.GetName,tip.NumLines;tip.GetName=nil;tip.NumLines=nil
+local font=GameTooltipTextLeft2;local getText,clearPoints=font.GetText,font.ClearAllPoints
+font.GetText=function() error('native text must not be read') end
+font.ClearAllPoints=function() error('native anchors must not be changed') end
+T.Refresh();check(banner:IsShown(),'card works without native line APIs and never touches native fonts')
+font.GetText=getText;font.ClearAllPoints=clearPoints;tip.GetName=getName;tip.NumLines=numLines
+-- If the bottom of the screen is crowded, use the available side, never the top.
+tip.GetBottom=function() return 4 end;tip.GetRight=function() return 100 end;tip.GetLeft=function() return 20 end
+T.Refresh();check(banner.placement=='right' and banner:IsShown(),'bottom collision uses right side')
+tip.GetRight=function() return UIParent:GetWidth()-4 end;tip.GetLeft=function() return 700 end
+T.Refresh();check(banner.placement=='left' and banner:IsShown(),'right edge collision uses left side')
+tip.GetLeft=function() return 0 end;T.Refresh();check(not banner:IsShown(),'no free space hides card rather than covering native stats')
+tip.GetBottom=nil;tip.GetRight=nil;tip.GetLeft=nil;T.Refresh()
+local weights=p.epWeights;p.epWeights={};T.Refresh();check(not banner:IsShown(),'invalid score hides card')
+ForeverLevelingBiS_API={version=2,GetSpec=function() return 'destruction','held','WARLOCK' end,ScoreItem=function(link) return link==M.worn and 5.7 or 23.8,false end}
+T.Refresh();check(banner:IsShown() and banner.identity:GetText():find('Destruction',1,true) and banner.specIcon.texture:find('RainOfFire',1,true),'external active spec drives class/spec display')
+p.lootScoreSource='manual';T.Refresh();check(not banner:IsShown(),'manual-only source excludes external scores')
+p.lootScoreSource='auto';ForeverLevelingBiS_API=nil;p.epWeights=weights;T.Refresh()
+M.canUse=false;T.Refresh();check(not banner:IsShown(),'unusable item has no card');M.canUse=true
+-- A stronger, positively weighted worn item creates a genuine downgrade control.
+M.wornStats.ITEM_MOD_DAMAGE_SHADOW_SHORT=40;S.Invalidate(nil,true);T.Refresh()
+check(banner:IsShown() and not banner.model.upgrade,'valid downgrade shown')
+check(banner.background.color[1]>banner.background.color[2] and banner.edges[1].color[1]>banner.edges[1].color[2],'downgrade tints entire background and border red')
+check(banner.text:GetText():find('-47.9%',1,true) and banner.text:GetText():find('-21.9 GS/EP',1,true),'negative percent and score use the original scoring model')
+check(banner.fill:GetPoint(1)=='RIGHT' and math.abs(banner.fill:GetWidth()-(banner:GetWidth()-20)/2*math.abs(banner.model.meter))<1e-8,'negative meter extends left from midpoint')
+M.wornStats.ITEM_MOD_DAMAGE_SHADOW_SHORT=nil;S.Invalidate(nil,true)
 tip.IsProtected=function() return true end;tip:PaintNative(M.cape);T.Refresh()
-check(not banner:IsShown() and tip:GetHeight()==20+18*tip.lines,'protected tooltip is untouched');tip.IsProtected=nil
-tip:PaintNative(M.cape);GameTooltipTextLeft2:SetText('SECRET');T.Refresh()
-check(not banner:IsShown(),'restricted native text prevents layout mutation')
-tip:SetHyperlink(M.cape);tip:Hide();check(not banner:IsShown(),'hide removes overlay')
-tip:Show();check(banner:IsShown(),'show reuses overlay')
-tip:SetHyperlink('spell:123');check(not banner:IsShown(),'non-item tooltip clears overlay')
-if M.scenario=='legacy' then check(originalCalls>0,'legacy native tooltip hook preserved') end
+check(not banner:IsShown() and tip:GetHeight()==20+18*tip.lines,'protected tooltip untouched');tip.IsProtected=nil
+tip:SetHyperlink(M.cape);tip:Hide();check(not banner:IsShown(),'hide removes card');tip:Show();check(banner:IsShown(),'show reuses card')
+tip:SetHyperlink('spell:123');check(not banner:IsShown(),'non-item tooltip clears card')
+if M.scenario=='legacy' then check(originalCalls>0,'native legacy hook preserved') end
 check(#A.diagnostics==0,'no Lua diagnostics: '..table.concat(A.diagnostics,'; '))
-M.print('PASS upgrade banner: '..checks..' checks · '..M.scenario..' · source position + synthetic client/weights/layout')
+M.print('PASS upgrade card: '..checks..' checks · '..M.scenario..' · published position / synthetic client and frames')

@@ -1,6 +1,6 @@
 # AbsoluteForeverBIS — Forever Companion
 
-Proyecto de addon para **World of Warcraft Forever**, versión actual **3.8.0-preview**.
+Proyecto de addon para **World of Warcraft Forever**, versión actual **3.9.0-preview**.
 El código del addon está en [`ForeverWarlockCompanion/`](ForeverWarlockCompanion/).
 
 ## Instalación
@@ -14,11 +14,10 @@ Sustituye la versión anterior y ejecuta `/reload`; abre la interfaz con `/fwc`.
 Incluye Dashboard, Equipment, Stats, profesiones, objetivos, tracker, importador offline
 y un piloto de adquisición de Arcanoweave Cloak. Las fichas añaden alternativas visuales,
 requisitos publicados para los 157 objetos y 17 mejoras con fórmulas, materiales y orígenes.
-El botín incorpora indicadores de mejora. El hover muestra un indicador compacto bajo el nombre,
-con puesto BiS publicado, porcentaje de mejora y diferencia GS/EP, sólo ante una mejora calculada.
+El hover añade una tarjeta compacta debajo del tooltip: verde si mejora, roja si empeora,
+con iconos de clase/especialización, medidor, porcentaje y diferencia GS/EP.
+El tooltip conserva sus líneas, anclajes y altura. Los créditos permanecen dentro del addon.
 Se activa por defecto; `/fwc loot off` lo desactiva y `/fwc loot on` lo activa.
-Los colores siguen la escala: 1 naranja, 2–3 morado, 4–5 azul y resto verde.
-Sin ranking compatible la mejora aparece en verde, sin inventar un puesto BiS.
 La comparación nativa por pareja recupera pérdidas que no aparecen como ceros en las tablas
 de atributos. Opcionalmente usa la API pública de Forever Leveling BiS para puntuar con su
 perfil activo, conservando tus pesos EP cuando los has configurado. Selección en Settings.
@@ -33,6 +32,9 @@ validación en el cliente siguen pendientes. Las claves sólo se usan fuera del 
 Datos del piloto y referencias offline: [Data from ForeverDB.net](https://foreverdb.net).
 
 - [Tooltip e integración con Forever Leveling BiS](ForeverWarlockCompanion/docs/LOOT-TOOLTIP-3.6.md)
+- [Tarjeta de comparación 3.9](ForeverWarlockCompanion/docs/UPGRADE-TOOLTIP-3.9.md)
+- [Antes/después de la tarjeta](ForeverWarlockCompanion/docs/validation-3.9/tooltip-comparison.png)
+- [Preview de empeoramiento](ForeverWarlockCompanion/docs/validation-3.9/tooltip-downgrade.png)
 - [Indicador BiS compacto 3.8](ForeverWarlockCompanion/docs/UPGRADE-TOOLTIP-3.8.md)
 - [Tooltip antes/después](ForeverWarlockCompanion/docs/validation-3.8/tooltip-comparison.png)
 - [Inspector 2.0: Fel Cape y prueba en WoW](ForeverWarlockCompanion/docs/ITEM-INSPECTOR-3.7.md)
@@ -56,7 +58,7 @@ del addon según `tests/README.md`. El addon no necesita Python, SQLite ni HTTP 
 Para generar el ZIP instalable, desde `ForeverWarlockCompanion/`:
 
 ```sh
-python3 tools/build_zip.py /tmp/ForeverCompanion-3.8.0-preview.zip
+python3 tools/build_zip.py /tmp/ForeverCompanion-3.9.0-preview.zip
 ```
 
 No subas archivos `.env`, claves de API, SavedVariables personales ni respuestas privadas de API.

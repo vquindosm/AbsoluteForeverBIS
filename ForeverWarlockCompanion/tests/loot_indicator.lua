@@ -143,7 +143,7 @@ local late=add('INVTYPE_HEAD',stats(50,6,10));local lateId=tonumber(late:match('
 GameTooltip:SetHyperlink(late);check(not panel:IsShown(),'pending native data does not invent an improvement')
 GameTooltip:SetHyperlink(down);pending[lateId]=nil;M.Event('ITEM_DATA_LOAD_RESULT',lateId,true);M.Advance();T.Refresh()
 check(T.tooltips[GameTooltip].link==down and not panel.text:GetText():find('+520.0%',1,true),'late callback respects current tooltip item')
-GameTooltip:SetHyperlink(late);check(panel.text:GetText():find('Item Improvement',1,true),'loaded item resolves to live comparison')
+GameTooltip:SetHyperlink(late);check(panel.text:GetText():find('GS/EP',1,true),'loaded item resolves to live comparison')
 local clear=GameTooltip:GetScript('OnTooltipCleared');clear(GameTooltip);GameTooltip.unitTip=true
 check(not panel:IsShown(),'changing tooltip to a unit clears indicator')
 GameTooltip:SetHyperlink(up);GameTooltip:Hide();check(not panel:IsShown(),'tooltip hide clears own panel')

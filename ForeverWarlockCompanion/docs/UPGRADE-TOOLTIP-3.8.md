@@ -1,5 +1,9 @@
 # Indicador de mejora 3.8
 
+Actualización 3.9: la captura del usuario mostró un fallo de reflow de este diseño en el
+cliente. Se sustituye por la [tarjeta inferior independiente](UPGRADE-TOOLTIP-3.9.md),
+con estados verde/rojo y sin modificar las fuentes o la altura del tooltip nativo.
+
 La extensión de Forever Companion muestra un solo indicador bajo el nombre del objeto.
 Sustituye el bloque de atributos, comparación y notas del hover anterior. La comparación
 completa sigue disponible en el inspector y Stats. El inspector visual continúa limitado
