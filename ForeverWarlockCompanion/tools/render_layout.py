@@ -45,7 +45,7 @@ def render(path):
      d.rectangle((x,y,r-1,b-1),fill=(40,25,54,255),outline=(130,96,46,255));d.text((x+w/2,y+h/2),'◇',font=font(min(20,max(8,h//2))),anchor='mm',fill=(208,168,83,255))
   elif n['kind']=='FontString' and n['text']:
    match=re.search(r'\|c([0-9a-fA-F]{8})',n['text']);color=('#'+match[1][2:]) if match else ('#e2bf70' if n['font'].startswith('GameFontNormal') else '#dddce2')
-   text=re.sub(r'\|c[0-9a-fA-F]{8}|\|r','',n['text']);size=19 if 'Large' in n['font'] else 13 if n['font']=='GameFontNormal' else 11
+   text=re.sub(r'\|T.*?\|t','◆ ',n['text']);text=re.sub(r'\|c[0-9a-fA-F]{8}|\|r','',text);size=19 if 'Large' in n['font'] else 13 if n['font']=='GameFontNormal' else 11
    ft=font(size,'Normal' in n['font']);lines=[]
    for original in text.split('\n'):
     words=original.split();line=''

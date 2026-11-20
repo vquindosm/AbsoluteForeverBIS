@@ -1,4 +1,4 @@
-FOREVER COMPANION 3.7.0-pilot — interfaz 16001
+FOREVER COMPANION 3.8.0-preview — interfaz 16001
 
 Instala la carpeta ForeverWarlockCompanion completa en
 World of Warcraft/_forever_/Interface/AddOns/ y abre /fwc.
@@ -293,3 +293,32 @@ No es una simulación de DPS ni un ranking absoluto. IDs/API/procedencia están 
 Previews de los frames Lua en docs/validation-3.7: objeto publicado con equipo/bolsas simulados,
 iconos y fuentes aproximados. No son capturas de WoW. Prueba real y generalización de las
 fichas pendientes; instrucciones y criterios en docs/ITEM-INSPECTOR-3.7.md.
+
+
+3.8.0 — INDICADOR DE MEJORA BAJO EL NOMBRE
+El hover sustituye el bloque detallado de comparación por un solo indicador compacto:
+Item Improvement - 2 BiS
++porcentaje% · +puntos GS/EP · https://foreverdb.net
+Sólo se muestra con mejora numérica positiva, equipo actual conocido y uso confirmado.
+Sin mejora, sin pesos/proveedor válidos, con carga pendiente o con ranura vacía no se añade nada.
+
+Colores: 1 BiS naranja legendario; 2/3 morado épico; 4/5 azul raro; resto verde.
+El puesto procede de la referencia publicada compatible con clase, especialización, nivel
+y build. La cobertura actual es Aflicción JcE 60 y 47 posiciones publicadas. No se ordenan
+los objetos del catálogo para inventar un ranking. Sin puesto conocido se indica mejora
+en verde, sin número BiS. Las reglas 4/5 y posteriores están disponibles para datos publicados
+futuros. Fel Cape conserva su posición publicada 2 para el perfil compatible.
+Data from ForeverDB.net — https://foreverdb.net
+
+GS/EP es la puntuación ponderada del objeto que usa Forever Companion: diferencia de EP
+propio o de la API activa de Forever Leveling BiS. No es GearScore de otro addon ni DPS.
+El porcentaje compara ese mismo modelo contra el objeto realmente equipado, no contra
+el mejor BiS. Settings selecciona la fuente. Automático conserva los pesos propios cuando
+existen; en su ausencia puede usar Forever Leveling BiS API v2, también con Fel Cape.
+La comparación completa permanece en la ficha y Stats. No se amplía aún el inspector
+visual al resto de objetos.
+
+La extensión reserva espacio bajo el nombre y restaura sus anclajes al ocultarse. No añade
+líneas nativas ni reconstruye el tooltip. /fwc loot off | on y Settings permiten desactivarla.
+Preview antes/después en docs/validation-3.8; usa equipo/pesos simulados y no es una captura
+del cliente. Recorrido de prueba y metodología: docs/UPGRADE-TOOLTIP-3.8.md.

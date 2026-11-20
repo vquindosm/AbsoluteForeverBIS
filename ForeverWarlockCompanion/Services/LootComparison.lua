@@ -76,9 +76,9 @@ function L.One(slot,link,info,after,eligible,eligibilityReason)
  -- without manufacturing their missing values. Weapons that change both hands
  -- still require the loadout comparison above; a per-item API is insufficient.
  local mode=profile.lootScoreSource or 'auto'
- if mode=='flb' and after.itemId~=279269 then out.score=nil end
+ if mode=='flb' then out.score=nil end
  local providerReady=before and (before.state=='confirmed' or before.state=='empty') and (after.state=='confirmed' or after.state=='empty')
- if after.itemId~=279269 and mode~='manual' and (mode=='flb' or type(weights)~='table' or not next(weights)) and not out.loadout and providerReady then
+ if mode~='manual' and (mode=='flb' or type(weights)~='table' or not next(weights)) and not out.loadout and providerReady then
   local score,why=A.Services.LootScore.Compare(link,current.link,slot)
   if score then out.score=score;out.reason=nil
   elseif mode=='flb' then out.score=nil;out.reason=why end

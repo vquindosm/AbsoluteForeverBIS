@@ -42,15 +42,15 @@ check(not overlap.score and overlap.warnings[1]=='overlapping-stat-contributions
 local loot=A.Services.LootComparison.Compare(M.cape).comparisons[1]
 check(loot.score and math.abs(loot.score.absolute-r.score.absolute)<1e-8 and #loot.deltas==#r.deltas,'tooltip and inspector consume same comparison result')
 local tip=A.UI.LootIndicator.Lines(A.Services.LootComparison.Compare(M.cape))
-check(tip:find('Forever Companion · Upgrade',1,true) and tip:find('Compared with: Frost Leather Cloak',1,true),'compact native tooltip extension header and actual item')
-check(tip:find('+15 Shadow damage',1,true) and tip:find('-11 Frost damage',1,true),'tooltip positive and negative deltas')
+check(tip:find('Item Improvement',1,true) and not tip:find('Compared with',1,true),'hover reduced to improvement indicator')
+check(tip:find('+18.1 GS/EP',1,true) and tip:find('+317.5%',1,true),'hover numeric score and percent match shared calculation')
 local oldWorn=M.worn;M.worn=M.cape;M.equipped[15]=279269;P.epWeights.ITEM_MOD_DAMAGE_FROST_SHORT=0;reset()
 local same=A.Services.LootComparison.Compare(M.cape).comparisons[1]
 check(same.complete and same.score and same.score.absolute==0,'same Fel Cape uses shared calculation and confirmed zero EP')
 check(U.Rating(U.ForSlot('Back',item))=='NEAR EQUAL','same pilot item has neutral rating with configured weights')
 M.worn=oldWorn;M.equipped[15]=910010;P.epWeights.ITEM_MOD_DAMAGE_FROST_SHORT=.5;reset()
 P.epWeights={};tip=A.UI.LootIndicator.Lines(A.Services.LootComparison.Compare(M.cape))
-check(tip:find('EP: Not calculated',1,true) and not tip:find('C_Item',1,true),'no configured weights: no EP or technical notes')
+check(tip==nil,'unavailable score leaves native hover without extra banner')
 M.itemPending=true;reset();model=A.Services.ItemInspector.Model('Back',item)
 check(#model.stats==3 and model.publishedStats and not model.comparison.score,'published stat card remains useful while native comparison pending')
 M.itemPending=false;reset()

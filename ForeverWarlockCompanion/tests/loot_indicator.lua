@@ -38,6 +38,7 @@ CanDualWield=function() return false end
 M.equipped={[1]=tonumber(base:match('%d+'))}
 local postcalls={};local originalCalls=0;local registrations=0
 local function makeTooltip(tip)
+ dofile('tests/tooltip_fixture.lua').Attach(tip,tip==GameTooltip and 'GameTooltip' or 'ItemRefTooltip')
  local originalSet=tip.SetHyperlink
  tip.HasScript=function(_,event) return event~='OnTooltipSetItem' or M.scenario=='legacy' end
  tip.HookScript=function(self,event,fn)
@@ -77,21 +78,21 @@ local r=I.Compare(up);local row=r.comparisons[1]
 check(row.state=='upgrade' and row.score.before==10 and row.score.after==32,'actual equipped item compared with external catalog item')
 check(math.abs(row.score.delta-220)<.00001,'EP change uses actual baseline and selected weights')
 check(#row.deltas==3 and row.deltas[1].delta==10,'per-attribute gains and losses')
-check(T.Lines(r):find('+6 Spell power',1,true) and T.Lines(r):find('-5 Stamina',1,true),'tooltip explains gain and tradeoff')
-check(T.Lines(r):find('no es DPS',1,true),'EP explicitly not DPS')
+check(T.Lines(r):find('+220.0%',1,true) and not T.Lines(r):find('Stamina',1,true),'hover shows only percentage and score')
+check(T.Lines(r):find('GS/EP',1,true),'score model explicitly labelled GS/EP')
 P.epWeights.ITEM_MOD_HIT_SPELL_RATING_SHORT=1
 check(I.Compare(up).comparisons[1].state=='partial' and not I.Compare(up).comparisons[1].score,'nonzero weighted stat absent on both sides is not silently ignored')
 P.epWeights.ITEM_MOD_HIT_SPELL_RATING_SHORT=nil
 check(I.Compare(down).comparisons[1].state=='downgrade','weighted downgrade')
 P.epWeights={};r=I.Compare(up);check(r.comparisons[1].state=='mixed','no weights: mixed stats do not imply global upgrade')
-check(T.Lines(r):find('Sin valoración global',1,true),'no-weight status explicit')
+check(T.Lines(r)==nil,'no-weight tooltip has no improvement banner')
 local dominated=add('INVTYPE_HEAD',stats(20,6,10));r=I.Compare(dominated)
 check(r.comparisons[1].state=='stats-up' and not r.comparisons[1].score,'unweighted dominance limited to read attributes')
 check(select(1,I.Badge(r))=='↑ stats','stats arrow distinct from EP arrow')
 P.epWeights={ITEM_MOD_INTELLECT_SHORT=1,ITEM_MOD_SPELL_POWER_SHORT=2,ITEM_MOD_STAMINA_SHORT=0}
 r=I.Compare(missing);check(r.comparisons[1].state=='partial' and not r.comparisons[1].score,'missing side never zero-filled for score')
 check(#r.comparisons[1].unknown==2,'unexposed attrs retained as unknown')
-check(T.Lines(r):find('equipado 0',1,true),'explicit equipped zero remains distinguishable from unknown')
+check(r.comparisons[1].unknown[1].before==0,'explicit zero retained in comparison service')
 local zero=add('INVTYPE_HEAD',stats(10,0,10));check(I.Compare(zero).comparisons[1].state=='equal','explicit numeric equality')
 check(I.Compare(base).comparisons[1].state=='same','same exact equipped payload')
 local colored='|cff0070dd|H'..base..'|h[display differs]|h|r';check(I.Compare(colored).comparisons[1].state=='same','cosmetic link decoration does not change variant')
@@ -108,7 +109,7 @@ C_PlayerInfo=oldCanUse;canEquip=true
 M.equipped[11]=tonumber(ringA:match('%d+'));M.equipped[12]=tonumber(ringB:match('%d+'))
 r=I.Compare(ring);check(#r.comparisons==2 and r.comparisons[1].state=='upgrade' and r.comparisons[2].state=='downgrade','ring compared independently with both slots')
 M.equipped[12]=tonumber(ring:match('%d+'));r=I.Compare(ring)
-check(r.comparisons[1].eligible==nil and select(2,I.Badge(r))=='partial' and T.Lines(r):find('Único-equipado',1,true),'second identical ring copy needs unique-equipped check before green marker')
+check(r.comparisons[1].eligible==nil and select(2,I.Badge(r))=='partial' and T.Lines(r)==nil,'second identical ring copy needs unique-equipped check before green marker')
 M.equipped[12]=tonumber(ringB:match('%d+'))
 M.equipped[13]=M.equipped[11];M.equipped[14]=M.equipped[12];check(#I.Compare(trinket).comparisons==2,'both trinket slots compared')
 M.equipped[12]=nil;r=I.Compare(ring);check(r.comparisons[2].state=='empty' and not r.comparisons[2].score,'empty slot is not infinite percentage improvement')
@@ -129,25 +130,25 @@ local stale=A.Services.Inventory.snapshot.equipped.Head.id
 M.equipped[1]=tonumber(up:match('%d+'));M.combat=true
 check(I.Compare(up).comparisons[1].state=='same' and A.Services.Inventory.snapshot.equipped.Head.id==stale,'fresh equipped links used in combat without a bag scan')
 M.combat=false;M.equipped[1]=tonumber(base:match('%d+'))
-GameTooltip:SetHyperlink(up);local panel=T.tooltips[GameTooltip].panel
+GameTooltip:SetHyperlink(up);local panel=T.tooltips[GameTooltip].indicator
 check(panel and panel:IsShown() and panel.text:GetText():find('+220.0%',1,true),'visible comparison without opening addon window')
 check(A.UI.window==nil,'loot indicator does not require main window')
 local nativeText=GameTooltip:GetText();local panelIdentity=panel
 for i=1,8 do GameTooltip:SetHyperlink(up);T.Refresh() end
-check(T.tooltips[GameTooltip].panel==panelIdentity and GameTooltip:GetText()==nativeText,'tooltip panel reused without replacing native text')
+check(T.tooltips[GameTooltip].indicator==panelIdentity and GameTooltip:GetText()==nativeText,'tooltip panel reused without replacing native text')
 if M.scenario=='legacy' then check(originalCalls>0,'legacy hook preserves other tooltip script')
 else check(registrations==1,'modern processor registered only once') end
 -- An old async result cannot repaint the next item under the cursor.
 local late=add('INVTYPE_HEAD',stats(50,6,10));local lateId=tonumber(late:match('%d+'));pending[lateId]=true;S.Invalidate(lateId,true)
-GameTooltip:SetHyperlink(late);check(T.tooltips[GameTooltip].panel.text:GetText():find(M.scenario=='legacy' and 'Datos del objeto no disponibles' or 'Cargando',1,true),'uncached/unsupported item data state visible')
+GameTooltip:SetHyperlink(late);check(not panel:IsShown(),'pending native data does not invent an improvement')
 GameTooltip:SetHyperlink(down);pending[lateId]=nil;M.Event('ITEM_DATA_LOAD_RESULT',lateId,true);M.Advance();T.Refresh()
 check(T.tooltips[GameTooltip].link==down and not panel.text:GetText():find('+520.0%',1,true),'late callback respects current tooltip item')
-GameTooltip:SetHyperlink(late);check(panel.text:GetText():find('Mejora estimada',1,true),'loaded item resolves to live comparison')
+GameTooltip:SetHyperlink(late);check(panel.text:GetText():find('Item Improvement',1,true),'loaded item resolves to live comparison')
 local clear=GameTooltip:GetScript('OnTooltipCleared');clear(GameTooltip);GameTooltip.unitTip=true
 check(not panel:IsShown(),'changing tooltip to a unit clears indicator')
 GameTooltip:SetHyperlink(up);GameTooltip:Hide();check(not panel:IsShown(),'tooltip hide clears own panel')
 ItemRefTooltip=CreateFrame('GameTooltip',nil,UIParent);makeTooltip(ItemRefTooltip);T.Init();ItemRefTooltip:SetHyperlink(up)
-check(T.tooltips[ItemRefTooltip].panel:IsShown(),'chat item-link tooltip supported when frame appears late')
+check(T.tooltips[ItemRefTooltip].indicator:IsShown(),'chat item-link tooltip supported when frame appears late')
 local foreign=CreateFrame('GameTooltip',nil,UIParent);makeTooltip(foreign);T.Watch(foreign)
 check(T.tooltips[foreign]==nil,'shopping/custom tooltips do not receive recursive comparisons')
 -- Buttons deliberately have row index != loot index, matching scrolling Blizzard rows.
@@ -178,7 +179,7 @@ b:Click();check(T.Enabled(),'settings enables indicators again')
 local originalHook=GameTooltip.HookScript;GameTooltip.HookScript=nil
 -- Existing successful hooks remain functional; unsupported new frames are skipped.
 local unsupported=CreateFrame('GameTooltip',nil,UIParent);ItemRefTooltip=unsupported;T.Init();T.Watch(unsupported)
-check(not T.tooltips[unsupported].panel,'unsupported lifecycle does not create stale content')
+check(not T.tooltips[unsupported].indicator,'unsupported lifecycle does not create stale content')
 GameTooltip.HookScript=originalHook
 local badStats=gear[tonumber(up:match('%d+'))].stats;gear[tonumber(up:match('%d+'))].stats={ITEM_MOD_INTELLECT_SHORT='SECRET'};S.Invalidate(nil,true)
 check(I.Compare(up).comparisons[1].state=='partial','restricted stats never produce positive overall score')

@@ -47,12 +47,7 @@ ForeverLevelingBiS_API=f
 local postcall
 Enum.TooltipDataType={Item=1}
 if M.scenario~='legacy' then TooltipDataProcessor={AddTooltipPostCall=function(_,fn) postcall=fn end} end
-local tip=GameTooltip;tip.GetName=function() return 'GameTooltip' end
-tip.lines=0;tip.NumLines=function(self) return self.lines end
-tip.AddLine=function(self,text)
- self.lines=self.lines+1;local key='GameTooltipTextLeft'..self.lines
- local font=_G[key] or self:CreateFontString();_G[key]=font;font:SetText(text)
-end
+local tip=dofile('tests/tooltip_fixture.lua').Attach(GameTooltip,'GameTooltip')
 tip.GetItem=function(self) return 'control',self.link end
 tip.HasScript=function(_,event) return event~='OnTooltipSetItem' or M.scenario=='legacy' end
 tip.HookScript=function(self,event,fn)
@@ -79,10 +74,10 @@ check(row.score.provider=='flb' and row.state=='downgrade' and math.abs(row.scor
 check(math.abs(row.score.delta+72.794117647)<1e-6,'percentage uses actual positive equipped score')
 check(scoreCalls[1][1]==base and scoreCalls[2][1]==boots and scoreCalls[2][2]==false,'suffix preserved; API saved-set GetGain not substituted')
 local text=T.Lines(result)
-check(text:find('|TInterface\\Icons\\',1,true) and text:find('|cffef9797',1,true) and text:find('|cff78e49a',1,true),'stat icons and loss/gain colors')
-check(text:find('-9 Spell power',1,true) and text:find('-17 Stamina',1,true),'omitted sparse stats displayed as explicit native losses')
-check(text:find('Aflicción',1,true) and text:find('3.7',1,true) and text:find('-73%',1,true) and text:find('Forever Leveling BiS',1,true),'compact profile, score, percentage and source')
-check(not text:find('Pesos EP en',1,true) and not text:find('health',1,true),'no technical instructions or unverified derived health formula in compact view')
+check(text==nil,'downgrade produces no hover banner')
+check(#row.deltas==5,'full attribute differences still available to inspector')
+check(row.score.spec=='affliction','score retains provider profile identity')
+check(row.score.source=='Forever Leveling BiS','score retains provider attribution metadata')
 for _,mode in ipairs({'normal','reverse'}) do
  nativeMode=mode;S.Invalidate(nil,true);check(I.Compare(boots).comparisons[1].nativeDelta,'both native subtraction directions validated by common stats: '..mode)
 end
@@ -112,14 +107,14 @@ P.lootScoreSource='flb';check(I.Compare(boots).comparisons[1].score.provider=='f
 P.lootScoreSource='manual';check(I.Compare(boots).comparisons[1].score.provider=='manual','manual source explicitly available')
 P.lootScoreSource='flb';baseline=0;row=I.Compare(boots).comparisons[1]
 check(row.score and row.score.delta==nil and row.score.absolute==candidate,'zero baseline gives absolute score only, no infinite percentage')
-check(T.Lines(I.Compare(boots)):find('3.7',1,true),'zero baseline formats safely')
+check(T.Lines(I.Compare(boots))==nil,'zero baseline cannot display a percentage improvement')
 baseline=13.6
 loading=true;check(not I.Compare(boots).comparisons[1].score,'external loading result not declared an upgrade');loading=false
 scoreFailure=true;check(not I.Compare(boots).comparisons[1].score,'external exception contained');scoreFailure=false
 candidate=0/0;check(not I.Compare(boots).comparisons[1].score,'external non-finite score rejected');candidate=3.7
 f.version=1;check(not I.Compare(boots).comparisons[1].score,'unsupported external API version ignored');f.version=2
 activeClass='MAGE';check(not I.Compare(boots).comparisons[1].score,'external wrong class profile rejected');activeClass='WARLOCK'
-activeSpec='destruction';check(T.Lines(I.Compare(boots)):find('Destrucción',1,true),'actual external profile identified instead of FWC view selection');activeSpec='affliction'
+activeSpec='destruction';check(I.Compare(boots).comparisons[1].score.spec=='destruction','external profile preserved in scoring metadata');activeSpec='affliction'
 ForeverLevelingBiS_API=nil;check(not I.Compare(boots).comparisons[1].score,'explicit missing provider never silently falls back to another score')
 P.lootScoreSource='auto';check(I.Compare(boots).comparisons[1].score.provider=='manual','optional dependency absent: configured EP remains usable')
 P.epWeights={};check(not I.Compare(boots).comparisons[1].score and I.Compare(boots).comparisons[1].state=='mixed','no API/no weights still gives honest mixed attribute comparison')
@@ -127,27 +122,26 @@ ForeverLevelingBiS_API=f
 local savedValues=values[910002];values[910002]={};S.Invalidate(nil,true)
 check(I.Compare(boots).comparisons[1].score.provider=='flb','loaded gear with no exposed native stats can still use independent score API')
 values[910002]=savedValues;S.Invalidate(nil,true)
-tip:SetHyperlink(boots)
-local own=T.tooltips[tip].inline
-check(own and not T.tooltips[tip].panel and tip.lines==4,'comparison embedded into exactly two native lines, no detached panel')
-check(_G.GameTooltipTextLeft1:GetText()=='Native item name' and _G.GameTooltipTextLeft2:GetText()=='Other addon footer','native and other addon text preserved')
-local count=#M.frames
+candidate=20;tip:SetHyperlink(boots)
+local own=T.tooltips[tip].indicator
+check(own and own:IsShown() and tip.lines==2,'one overlay under name; native line count unchanged')
+check(_G.GameTooltipTextLeft1:GetText()=='Native item name' and _G.GameTooltipTextLeft2:GetText()=='Other addon footer','native and other addon texts preserved')
+local count=#M.frames;local height=tip:GetHeight()
 for i=1,10 do T.Refresh() end
-check(tip.lines==4 and #M.frames==count,'live refresh reuses native lines with no row or frame growth')
+check(tip.lines==2 and #M.frames==count and tip:GetHeight()==height,'refresh reuses overlay without height or frame growth')
 check(registrations==1,'external change callback registered once')
-candidate=20;callback();callback();M.Flush()
+candidate=30;callback();callback();M.Flush()
 local timer=A.Services.LootScore.timerFrame
 if timer and timer:GetScript('OnUpdate') then timer:GetScript('OnUpdate')(timer,.01) end
-check(own.body:GetText():find('+47%',1,true),'debounced external profile changes refresh current comparison')
-candidate=3.7
+check(own.text:GetText():find('+120.6%',1,true),'debounced profile change refreshes percentage')
 tip:AddLine('Later addon content');T.Refresh()
-check(_G.GameTooltipTextLeft5:GetText()=='Later addon content' and tip.lines==5,'later addon rows not overwritten by refresh')
+check(_G.GameTooltipTextLeft3:GetText()=='Later addon content' and tip.lines==3,'later addon rows not overwritten')
 T.SetEnabled(false)
-check(own.header:GetText()=='' and own.body:GetText()=='' and _G.GameTooltipTextLeft5:GetText()=='Later addon content','disabling clears only owned content')
-T.SetEnabled(true);check(tip.lines==5 and own.header:GetText()~='','reenabling reuses cleared owned rows')
-tip:Hide();check(own.body:GetText()=='','hide removes stale comparison');tip:Show()
-check(tip.lines==5 and own.body:GetText():find('3.7',1,true),'same visible item can show again without accumulating rows')
-tip:SetHyperlink(base);check(tip.lines==4 and T.tooltips[tip].inline.body:GetText():find('Ya equipado',1,true),'item change rebuilds native-owned footer for correct item')
-tip:SetHyperlink('spell:123');check(not T.tooltips[tip].inline,'non-item tooltip never retains comparison')
+check(not own:IsShown() and _G.GameTooltipTextLeft3:GetText()=='Later addon content','disabling removes only own overlay')
+T.SetEnabled(true);check(tip.lines==3 and own:IsShown(),'reenabling never appends a native line')
+tip:Hide();check(not own:IsShown(),'hide clears own banner');tip:Show()
+check(tip.lines==3 and own:IsShown(),'same item shows again without duplicate lines')
+candidate=3.7;tip:SetHyperlink(boots);check(not own:IsShown(),'changing to downgrade removes banner')
+tip:SetHyperlink('spell:123');check(not own:IsShown(),'non-item tooltip never retains banner')
 check(#A.diagnostics==0,'no compatibility errors: '..table.concat(A.diagnostics,'; '))
 M.print('PASS loot visual: '..checks..' checks · '..M.scenario..' · synthetic APIs, no game rendering')

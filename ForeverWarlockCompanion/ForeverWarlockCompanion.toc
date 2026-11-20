@@ -1,7 +1,7 @@
 ## Interface: 16001
 ## Title: Forever Companion
 ## Notes: Equipment planning, native model preview and progression. Imported lists are unranked.
-## Version: 3.7.0-pilot
+## Version: 3.8.0-preview
 ## SavedVariablesPerCharacter: ForeverWarlockCompanionDB
 ## OptionalDeps: ForeverLevelingBiS
 
@@ -22,6 +22,7 @@ Services\ProfessionTracker.lua
 Services\GearPlanner.lua
 Services\LootScore.lua
 Services\UpgradeComparison.lua
+Services\UpgradeIndicator.lua
 Services\LootComparison.lua
 Services\NavigationService.lua
 Services\AcquisitionRequirementsResolver.lua
@@ -47,5 +48,6 @@ UI\ObjectivesPanel.lua
 UI\ContentPanel.lua
 UI\MainWindow.lua
 UI\Tracker.lua
+UI\UpgradeTooltip.lua
 UI\LootIndicator.lua
 Events.lua

@@ -121,3 +121,15 @@ identificadores estables, deltas frente a capa de prueba, EP configurado, falta 
 aliases/solapamientos, caché, perfiles, rating y geometría a 280/360/510 px. No certifica el
 cliente. El fixture no se carga en el TOC. `tests/export_inspector.lua` exporta la geometría
 para las previews antes/después. El recorrido de aceptación está en docs/ITEM-INSPECTOR-3.7.md.
+
+## Indicador bajo el nombre (3.8)
+
+`lua tests/upgrade_banner.lua modern` y variantes legacy/no-model/player-model prueban
+colores por puesto, contexto de referencia, sufijos, mejora positiva, perfil externo
+opcional, porcentaje/GS, anclaje bajo el nombre, preservación de textos, restore, filas
+añadidas por otra extensión, reconstrucción nativa, anchors dependientes, protección y
+datos restringidos. Los puestos de control 1/3/4/5/6/7 son fixtures, no registros nuevos.
+`tests/tooltip_fixture.lua` representa líneas nativas con anclajes independientes.
+Las suites anteriores se adaptan al hover sin bloque detallado; conservan sus comprobaciones
+del cálculo y muestran el indicador sólo cuando hay mejora válida. Preview y recorrido:
+docs/UPGRADE-TOOLTIP-3.8.md. No se ha ejecutado el motor nativo WoW en estas pruebas.

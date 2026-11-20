@@ -1,5 +1,9 @@
 # Item Inspector 2.0 — Fel Cape, piloto 3.7
 
+Actualización 3.8: el usuario ha aprobado la presentación de Fel Cape. El hover ahora usa
+el [indicador compacto](UPGRADE-TOOLTIP-3.8.md); los pasos sobre el bloque detallado de 3.7
+se conservan aquí como historial. La ficha y su comparación EP propia se mantienen.
+
 El inspector nuevo se activa **exclusivamente para Fel Cape (279269)**. No se rediseñan
 Dashboard, navegación, Talents ni la distribución de Equipment. El resto de fichas conserva
 su presentación hasta validar el piloto en el cliente. Los componentes nuevos y el cálculo

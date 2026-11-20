@@ -152,15 +152,4 @@ function I.Render(owner,slot,item)
  owner.priority:SetText('Priority: '..({'High','Normal','Low'})[profile.priorities[item.id] or 2])
  owner:LayoutActions()
 end
-function I.UpgradeLines(result,marker)
- local lines={marker}
- for _,r in ipairs(result.comparisons) do
-  lines[#lines+1]='Compared with: '..(r.before and r.before.name or 'Unknown / empty')
-  for n,d in ipairs(A.Services.UpgradeComparison.DisplayDeltas(r)) do if n<=8 then lines[#lines+1]=tint(string.format('%+g ',d.delta)..label(d),d.delta>0) end end
-  if not r.complete then lines[#lines+1]='|cffe5c575Partial comparison|r' end
-  if r.state=='blocked' or r.state=='loadout' or r.compatibility then lines[#lines+1]=r.reason or r.compatibility or 'Equipment change required' end
-  lines[#lines+1]=r.score and string.format('EP: %+.1f (%+.1f%%) · not DPS',r.score.absolute,r.score.delta) or 'EP: Not calculated'
- end
- return table.concat(lines,'\n')
-end
 return I
