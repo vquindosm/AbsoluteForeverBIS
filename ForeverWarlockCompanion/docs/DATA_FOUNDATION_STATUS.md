@@ -1,4 +1,48 @@
-# Estado de entrega — 3.3.3-preview
+# Estado de entrega — 3.5.0-preview
+
+Indicadores de mejora en botín y tooltips implementados. Ver [LOOT-INDICATOR-3.5.md](LOOT-INDICATOR-3.5.md).
+Usan enlaces completos y estadísticas del cliente para objetos dentro o fuera del catálogo;
+los índices de guía y referencias offline no alimentan esta valoración.
+
+Se muestran diferencias por atributo, EP opcional con pesos del perfil y advertencias de datos
+incompletos. Se comparan ambas ranuras de anillos/abalorios y la configuración de arma/mano izquierda.
+La preferencia se guarda por personaje y no requiere abrir la ventana principal.
+
+Validación local: 3.477 comprobaciones Lua en cuatro variantes, 33 tests Python y sintaxis
+Lua 5.1 de 50 archivos. Incluye 64 pruebas nuevas por variante con respuestas sintéticas.
+El ZIP se recompila offline y se comprueba que no contenga claves.
+La integración real con los tooltips y la ventana de botín del cliente sigue pendiente.
+
+Se conserva la atribución a [ForeverDB.net](https://foreverdb.net) para los datos importados
+de los módulos anteriores. Esta entrega no realiza consultas nuevas a la API.
+
+---
+
+# Base anterior — 3.4.0-preview (registro histórico)
+
+La ampliación de fichas, requisitos y mejoras solicitada después de 3.3.3 está implementada.
+Data from [ForeverDB.net](https://foreverdb.net). Detalle: [ITEM-GUIDE-3.4.md](ITEM-GUIDE-3.4.md).
+
+- 157 objetos con datos API y nivel requerido publicado; restricciones extra parciales.
+- 17 mejoras de referencia con fórmulas, materiales, procedencia y vendedores cuando se conocen.
+- Recetas/materiales para 29 objetos fabricables, separados de los requisitos para equipar.
+- Nuevas tarjetas de alternativas y sección de mejoras; se mantienen las funciones existentes.
+- Cobertura del módulo: [ITEM_GUIDE_COVERAGE.json](ITEM_GUIDE_COVERAGE.json).
+- Motor anterior de vendedor: Foundation conserva su informe DATA_COVERAGE.json por separado.
+
+Validación local: 3.221 comprobaciones Lua en cuatro variantes y 33 tests Python. Las nuevas
+241 comprobaciones por variante cubren los 157 objetos y sus flujos de presentación. Sintaxis
+Lua 5.1 verificada; compilación offline y escaneo de credenciales antes del ZIP.
+Comparativas de geometría simulada en validation-3.4; no son capturas ni pruebas del cliente.
+La validación dentro de WoW sigue pendiente. No hay una base de requisitos universal completa,
+ni una valoración de DPS, ni importación completa de profesiones.
+
+La clave autorizada sólo se utilizó en una sesión privada ya cerrada. No se publica ni se
+incluye en el addon/ZIP. Las cadenas y marcas de la fuente se conservan; meta.client queda fuera.
+
+---
+
+# Base anterior — 3.3.3-preview (registro histórico)
 
 El acceso autenticado a ForeverDB y el adaptador del vendedor piloto ya están comprobados.
 Data from [ForeverDB.net](https://foreverdb.net). Documentación: https://foreverdb.net/developers.

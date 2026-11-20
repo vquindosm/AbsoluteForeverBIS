@@ -59,3 +59,27 @@ La base SQLite es un producto de compilación/consulta, no una dependencia del c
 
 Cobertura actual: `docs/DATA_COVERAGE.json`. Mientras recipes/quests estén sin importar, no
 anunciar catálogo completo ni generar cadenas, precios, reputaciones o pesos de relleno.
+
+
+## Fichas y mejoras: 3.4
+
+La ampliación solicitada usa un adaptador separado. Con FOREVERDB_API_KEY configurada de
+forma privada fuera del addon:
+
+```sh
+python3 tools/import_item_guide.py fetch --out-dir /tmp/fwc-guide-private
+python3 tools/import_item_guide.py normalize --input-dir /tmp/fwc-guide-private --guide-html /tmp/fwc-guide-private/affliction-bis.html
+python3 tools/import_item_guide.py compile
+```
+
+`fetch` sólo consulta los IDs del catálogo y las rutas de profesiones/spells indicadas en el
+adaptador, con pausa de 2,1 s y sin reintentos automáticos. `--only-missing` sirve para reanudar
+la misma importación, no para mezclar inadvertidamente builds. Una actualización de cobertura o
+paginación de profesiones requiere revisar esos límites; no se ofrece un barrido ilimitado.
+La cuarentena retiene bytes originales con permisos privados. No copiarla al repositorio.
+
+`normalize` selecciona campos y recetas pertinentes, preserva marcas/cadenas y atribución y
+registra omisiones/coverage parcial. Los datos desconocidos permanecen null; no hay pesos o
+precios inventados. `compile` genera Data/ItemGuide.lua y docs/ITEM_GUIDE_COVERAGE.json.
+El empaquetador compila ambas entradas revisadas sin red y rechaza claves o archivos privados.
+Ver la semántica y prueba manual en ITEM-GUIDE-3.4.md antes de declarar validación en juego.

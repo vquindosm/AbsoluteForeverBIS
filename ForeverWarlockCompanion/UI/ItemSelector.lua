@@ -16,10 +16,11 @@ function E.Create(parent)
         for source in pairs(set) do choices[#choices+1]=source end;table.sort(choices);return choices
     end,function(value) A.UI.source=value;E.Render() end)
     f.source:SetPoint("TOPRIGHT",-12,-62)
-    f.list=W.List(f.left,82);f.list:SetPoint("TOPLEFT",12,-104);f.list:SetPoint("BOTTOMRIGHT",-28,38)
+    f.list=W.List(f.left,122);f.list:SetPoint("TOPLEFT",12,-104);f.list:SetPoint("BOTTOMRIGHT",-28,64)
     f.empty=W.Label(f.left,"");f.empty:SetPoint("TOPLEFT",20,-114);f.empty:SetPoint("TOPRIGHT",-20,-114)
     f.note=W.Button(f.left,"Open item details >",function() if f.details.item then A.UI.SetTab('Item Details',{slot=f.details.slot,itemId=f.details.item.id}) end end);f.note:SetPoint("BOTTOMLEFT",12,12);f.note:SetPoint("BOTTOMRIGHT",-12,12)
     f.details=A.UI.ItemDetails.Create(f)
+    f.credit=W.Label(f.left,'Data from ForeverDB.net · https://foreverdb.net');f.credit:SetPoint('BOTTOMLEFT',12,42);f.credit:SetPoint('BOTTOMRIGHT',-12,42);f.credit:SetHeight(18)
     E.filters=E.filters or {}
     f.advanced=W.Button(f.left,'Filters +',function() E.expanded=not E.expanded;E.Render() end);f.advanced:SetSize(100,22);f.advanced:SetPoint('TOPRIGHT',-12,-3)
     f.extra={}
@@ -56,17 +57,23 @@ function E.Render()
     f.advanced:SetText(E.expanded and 'Filters −' or 'Filters +')
     for _,b in ipairs(f.extra) do b:SetShown(E.expanded==true) end
     f.extra[1]:SetText('Quality: '..tostring(filter.quality or 'Any'));f.extra[2]:SetText(filter.ownership or 'Any ownership');f.extra[3]:SetText(filter.profession or 'Any profession');f.extra[4]:SetText(filter.dungeon or 'Any dungeon')
-    f.list:ClearAllPoints();f.list:SetPoint('TOPLEFT',12,E.expanded and -182 or -104);f.list:SetPoint('BOTTOMRIGHT',-28,38)
+    f.list:ClearAllPoints();f.list:SetPoint('TOPLEFT',12,E.expanded and -182 or -104);f.list:SetPoint('BOTTOMRIGHT',-28,64)
     f.empty:SetText(#rows==0 and "No candidates match these filters.\n\nOnly Affliction Pre-BiS has imported data. Clear the search / source filter, or switch catalog." or "")
     f.list:Render(rows,function(row,entry,index)
         local item=entry.item
         if not row.itemIcon then row.itemIcon=row:CreateTexture(nil,"ARTWORK");row.itemIcon:SetSize(42,42);row.itemIcon:SetPoint("TOPLEFT",8,-8) end
-        row.itemIcon:SetTexture(A.Compat.ItemInfo(item.id).icon or item.icon)
+        local guide=A.Services.ItemGuide
+        row.itemIcon:SetTexture(A.Compat.ItemInfo(item.id).icon or guide.Icon(item))
         row.title:ClearAllPoints();row.title:SetPoint("TOPLEFT",58,-7);row.title:SetPoint("TOPRIGHT",-8,-7)
-        row.sub:ClearAllPoints();row.sub:SetPoint("BOTTOMLEFT",58,6);row.sub:SetPoint("BOTTOMRIGHT",-8,6)
+        row.sub:ClearAllPoints();row.sub:SetPoint("TOPLEFT",58,-41);row.sub:SetPoint("TOPRIGHT",-8,-41);row.sub:SetHeight(70)
         row.title:SetText(W.Color(item)..item.name.."|r")
+        if A.Services.ItemInspector.IsPilot(item) then
+            if not row.rating then row.rating=W.Label(row,'','GameFontNormal');row.rating:SetPoint('TOPRIGHT',-8,-9);row.rating:SetSize(85,22);row.rating:SetJustifyH('RIGHT') end
+            row.rating:Show();row.title:SetPoint('TOPRIGHT',-96,-7)
+            row.ratingState=A.UI.ItemInspector.PaintRating(row.rating,A.Services.UpgradeComparison.ForSlot(entry.slot,item))
+        elseif row.rating then row.rating:Hide();row.ratingState=nil end
         local target=A.Services.Catalog.Target(entry.slot)
-        row.sub:SetText(A.Data.slotByKey[entry.slot].label..' · '..item.sourceType..'\n'..A.Services.Inventory.Status(item)..(target and target.id==item.id and ' · Target' or ''))
+        row.sub:SetText(guide.Summary(item,3)..'\n'..guide.ShortSource(item)..'\n'..A.Services.Inventory.Status(item)..(target and target.id==item.id and ' · Objetivo' or '')..' · '..guide.ScoreLabel(entry.slot,item))
         W.Active(row,A.UI.selectedItem==item.id and A.UI.selectedSlot==entry.slot)
         row:SetScript("OnClick",function() A.UI.selectedSlot=entry.slot;A.UI.selectedItem=item.id;E.Render() end)
         W.Tooltip(row,function() return item.id end)

@@ -15,6 +15,7 @@ function Methods:SetPoint(point,a,b,c,d)
  self.points[#self.points+1]={point,relative,relativePoint,x,y}
 end
 function Methods:GetPoint(index) return unpack(self.points[index or 1] or {'CENTER',self.parent,'CENTER',0,0}) end
+function Methods:GetNumPoints() return #self.points end
 function Methods:ClearAllPoints() dirty();self.points={} end
 function Methods:SetAllPoints(relative) self:ClearAllPoints();self:SetPoint('TOPLEFT',relative or self.parent,'TOPLEFT');self:SetPoint('BOTTOMRIGHT',relative or self.parent,'BOTTOMRIGHT') end
 local anchors={LEFT=0,RIGHT=1,TOP=1,BOTTOM=0,CENTER=.5}
@@ -75,6 +76,7 @@ function Methods:CreateTexture(_,layer) local t=frame('Texture',self);t.layer=la
 function Methods:CreateFontString(_,layer,font) local t=frame('FontString',self);t.layer=layer;t.font=font;return t end
 function Methods:SetColorTexture(...) self.color={...} end
 function Methods:SetTexture(value) self.texture=value end
+function Methods:SetTexCoord(...) self.texCoord={...} end
 function Methods:SetOrientation(value) self.orientation=value end
 function Methods:SetMinMaxValues(min,max) self.min=min;self.max=max end
 function Methods:SetValue(value) self.value=value;if self.scripts.OnValueChanged then self.scripts.OnValueChanged(self,value) end end

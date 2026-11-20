@@ -1,4 +1,4 @@
-FOREVER COMPANION 3.3.3-preview — interfaz 16001
+FOREVER COMPANION 3.9.0-preview — interfaz 16001
 
 Instala la carpeta ForeverWarlockCompanion completa en
 World of Warcraft/_forever_/Interface/AddOns/ y abre /fwc.
@@ -180,3 +180,165 @@ con referencias parciales. Crédito/enlace visible en los paneles que muestran e
 La API se consulta fuera de WoW. No se distribuyen claves ni metadatos privados de cuenta.
 Catalog/public-vendor-slice.json es un archivo histórico de 3.3.2, no la fuente del build actual.
 La comprobación dentro de WoW y la importación masiva siguen pendientes.
+
+
+3.4.0 — FICHAS VISUALES, ENCANTAMIENTOS Y REQUISITOS
+Data from ForeverDB.net — https://foreverdb.net
+Equipment conserva al personaje 3D y sus ranuras. El detalle del objeto cambia su composición:
+atributos junto a dos alternativas con icono; debajo, mejoras recomendadas; después, requisitos
+de equipamiento y origen, separados de la comparación y los pasos. Las alternativas se pueden
+pulsar y hoverean el tooltip del juego. Las acciones secundarias siguen dentro de More options.
+
+157 objetos consultados individualmente en la API: atributos, nivel requerido, vinculación,
+unicidad y advertencias de disponibilidad/build. Todas las fichas tienen requisitos publicados
+y señalan restricciones extra no confirmadas. Nivel de equipo y habilidad para fabricar son
+conceptos separados; no se exige Sastrería 295 para llevar la Toga del Vacío por inferencia.
+
+17 mejoras de referencia para Aflicción JcE 60: encantamientos, arcanos, inscripción y kit.
+Pulsa una mejora para expandir su fórmula, materiales en bolsas, vendedores/coordenadas y
+costes cuando están publicados. Hay fuentes distintas por facción, orígenes Classic señalados
+y opciones de utilidad para la capa. El kit requiere nivel de objeto 35; no nivel de personaje 35.
+El origen desconocido de un arcano no se convierte en un vendedor o quest inventado.
+Los materiales para 29 objetos fabricables también se muestran en Dónde conseguirlo.
+
+El índice publicado de la guía ForeverDB tiene contexto propio: Aflicción JcE nivel 60,
+todas las fuentes, que pueden incluir bandas. No cambia el orden del catálogo Pre-BiS,
+no es EP de tu personaje y no demuestra porcentaje de mejora o DPS. Identidades por ID,
+sin unir objetos distintos por compartir nombre. El EP y la comparación del cliente conservan
+sus controles anteriores y no usan estos índices o referencias como estadísticas confirmadas.
+
+El addon no accede a Internet, compra, equipa ni aplica encantamientos automáticamente.
+Las claves/respuestas privadas siguen fuera del paquete. Leer docs/ITEM-GUIDE-3.4.md,
+ITEM_GUIDE_COVERAGE.json y las comparativas de geometría simulada en docs/validation-3.4.
+
+
+3.5.0 — INDICADORES DE MEJORA EN EL BOTÍN
+Activados por defecto. /fwc loot on | off; también en Settings.
+La ventana de botín estándar muestra una marca junto al objeto y el tooltip desglosa ganancias
+y pérdidas frente al equipo actual. Funciona igual en mazmorras y en mundo abierto, también
+con objetos fuera del catálogo, y en enlaces de chat a través de ItemRefTooltip.
+
+↑ EP = mejora estimada con tus pesos de Stats. ↓ EP = menor puntuación con esos pesos.
+↑ stats / ↓ stats = gana/pierde atributos leídos, sin valoración global de DPS.
+? = comparación incompleta, carga pendiente o uso sin comprobar. + = ranura vacía.
+El detalle enseña cambios concretos como +6 Spell power y -5 Stamina. Mayús amplía los cambios.
+Sin pesos o datos suficientes no se inventa un porcentaje. Efectos, bonus y caps pueden quedar
+fuera de EP: no es una simulación de DPS. Los atributos ausentes no se convierten en cero.
+
+Anillos y abalorios se comparan con las dos ranuras. Un arma de dos manos se compara con el
+arma y mano izquierda actuales; una mano izquierda no se declara mejora directa mientras
+lleves un arma de dos manos. Se respetan los enlaces completos y las variantes del objeto.
+El equipo se consulta en el cliente incluso con inventario cacheado o en combate.
+No se equipa, compra, recoge botín ni se envían mensajes de grupo automáticamente.
+
+La integración usa TooltipDataProcessor si está disponible o hooks del tooltip clásico,
+sin sustituir scripts/texto de Blizzard u otros addons. La insignia del botín admite botones
+clásicos con slot y elementos ScrollBox con GetSlotIndex; interfaces de botín personalizadas
+pueden mostrar sólo el indicador del tooltip. Prueba dentro de WoW aún pendiente.
+Ver docs/LOOT-INDICATOR-3.5.md. Este indicador usa estadísticas del cliente, no puntuaciones
+publicadas por ForeverDB ni referencias offline para declarar una mejora.
+
+
+3.6.0 — TOOLTIP COMPACTO Y PERFIL DE FOREVER LEVELING BIS
+El resumen pasa al interior del tooltip nativo: iconos de atributos, ganancias verdes,
+pérdidas rojas y dos atributos por fila. Ya no crea un panel ancho separado en clientes
+con las líneas estándar del tooltip. Mayús amplía el desglose. No inventa vida, maná,
+regeneración o crítico derivados con fórmulas de otra versión del juego.
+
+GetItemStatDelta permite recuperar pérdidas explícitas que GetItemStats no expone como
+ceros: por ejemplo perder poder con hechizos o aguante al cambiar a un objeto sin ellos.
+Los datos pendientes, errores y referencias offline siguen sin convertirse en cero.
+La dirección de la comparación nativa se valida con atributos comunes a los dos objetos.
+
+Forever Leveling BiS es opcional. Si ofrece API pública v2, se consultan sus puntuaciones
+para el perfil activo y los enlaces completos del objeto actual y del candidato. Los sufijos
+aleatorios se conservan. Se muestra puntuación, cambio absoluto y porcentaje cuando el
+equipo actual tiene puntuación positiva. No se publica un porcentaje del mejor BiS ni un
+ranking que la API no proporciona. Los cambios de configuración de armas requieren cautela.
+
+Settings > Botín: Automático usa tus pesos EP si existen; después intenta Forever Leveling BiS.
+Puedes elegir expresamente Forever Leveling BiS o sólo tus pesos EP. El perfil del addon
+externo se identifica en el tooltip; puede diferir del seleccionado en Forever Companion.
+Sin proveedor/pesos suficientes se muestran los cambios de atributos sin valoración global.
+Desactivar sus flechas de bolsas no desactiva la puntuación de Forever Companion.
+
+API utilizada: https://github.com/thunder426/ForeverLevelingBiS-API
+No se distribuyen código, pesos ni datos privados de ese addon; sólo se consulta su API.
+Los datos de adquisición y fichas siguen atribuidos a ForeverDB.net — https://foreverdb.net.
+Validación local con APIs simuladas; prueba visual y datos del cliente Forever pendientes.
+Recorrido manual y límites: docs/LOOT-TOOLTIP-3.6.md.
+
+
+3.7.0 — ITEM INSPECTOR 2.0 · PILOTO FEL CAPE
+Se activa sólo para Fel Cape (279269). Los demás objetos conservan su ficha actual.
+Cabecera con rareza, ilvl, posesión y fuente; atributos con iconos; comparación contra
+la capa realmente equipada; receta con cantidades/existencias/faltantes; precios separados.
+Crit 14 permanece en su unidad publicada, sin convertirlo automáticamente en porcentaje.
+Origen del patrón pendiente de confirmar. No se exige Sastrería 300 para equipar la capa.
+
+Se distinguen materiales de fabricación, compra al vendedor, reventa al vendedor y mercado.
+Los 99s 99c publicados son REVENTA. No se utiliza ese importe como compra o valor de subasta.
+La afinidad de guía de Aflicción es una referencia JcE 60, no una mejora personal.
+Data from ForeverDB.net — https://foreverdb.net
+
+El servicio UpgradeComparison usa claves estables y comparación nativa entre enlaces
+completos. Se comparte entre ficha, indicadores y tooltip; caché invalidada por eventos.
+El piloto requiere pesos EP propios y cobertura válida. Sin ellos: Upgrade score unavailable
+y EP: Not calculated. La integración opcional de Forever Leveling BiS sigue disponible
+para los otros objetos, sin sustituir los pesos requeridos para este caso piloto.
+Indicadores del piloto: verde/rojo con diferencia EP, neutro dentro del umbral y ? sin cálculo.
+Settings permite ajustar el umbral absoluto de EP y desactivar la extensión del tooltip.
+No es una simulación de DPS ni un ranking absoluto. IDs/API/procedencia están en Advanced Details.
+
+Previews de los frames Lua en docs/validation-3.7: objeto publicado con equipo/bolsas simulados,
+iconos y fuentes aproximados. No son capturas de WoW. Prueba real y generalización de las
+fichas pendientes; instrucciones y criterios en docs/ITEM-INSPECTOR-3.7.md.
+
+
+3.8.0 — INDICADOR DE MEJORA BAJO EL NOMBRE
+El hover sustituye el bloque detallado de comparación por un solo indicador compacto:
+Item Improvement - 2 BiS
++porcentaje% · +puntos GS/EP · https://foreverdb.net
+Sólo se muestra con mejora numérica positiva, equipo actual conocido y uso confirmado.
+Sin mejora, sin pesos/proveedor válidos, con carga pendiente o con ranura vacía no se añade nada.
+
+Colores: 1 BiS naranja legendario; 2/3 morado épico; 4/5 azul raro; resto verde.
+El puesto procede de la referencia publicada compatible con clase, especialización, nivel
+y build. La cobertura actual es Aflicción JcE 60 y 47 posiciones publicadas. No se ordenan
+los objetos del catálogo para inventar un ranking. Sin puesto conocido se indica mejora
+en verde, sin número BiS. Las reglas 4/5 y posteriores están disponibles para datos publicados
+futuros. Fel Cape conserva su posición publicada 2 para el perfil compatible.
+Data from ForeverDB.net — https://foreverdb.net
+
+GS/EP es la puntuación ponderada del objeto que usa Forever Companion: diferencia de EP
+propio o de la API activa de Forever Leveling BiS. No es GearScore de otro addon ni DPS.
+El porcentaje compara ese mismo modelo contra el objeto realmente equipado, no contra
+el mejor BiS. Settings selecciona la fuente. Automático conserva los pesos propios cuando
+existen; en su ausencia puede usar Forever Leveling BiS API v2, también con Fel Cape.
+La comparación completa permanece en la ficha y Stats. No se amplía aún el inspector
+visual al resto de objetos.
+
+La extensión reserva espacio bajo el nombre y restaura sus anclajes al ocultarse. No añade
+líneas nativas ni reconstruye el tooltip. /fwc loot off | on y Settings permiten desactivarla.
+Preview antes/después en docs/validation-3.8; usa equipo/pesos simulados y no es una captura
+del cliente. Recorrido de prueba y metodología: docs/UPGRADE-TOOLTIP-3.8.md.
+
+
+3.9.0 — TARJETA DE COMPARACIÓN INFERIOR
+La tarjeta se coloca debajo del tooltip, con fondo/borde verdes si mejora y rojos si
+empeora. Incluye icono de clase, icono/perfil de especialización, porcentaje y diferencia
+GS/EP. La etiqueta BiS queda separada; los cálculos y las fuentes de pesos se conservan.
+El medidor tiene cero en el centro: verde a la derecha y rojo a la izquierda. Su escala
+visual satura en ±100%; los números muestran la variación calculada completa. No mide
+porcentaje de proximidad al mejor BiS.
+
+Se elimina el desplazamiento de las líneas nativas y la modificación de altura de 3.8,
+que podía abrir un hueco grande en la parte superior en el cliente real. La nueva tarjeta
+sólo mueve y dimensiona sus propios frames. Si falta espacio inferior usa un lateral;
+si tampoco cabe, se oculta para no tapar las estadísticas.
+
+La URL de la base de datos ya no aparece al final del score. Los créditos y enlaces
+siguen dentro de la plataforma, en Settings, Item Explorer y las fichas correspondientes.
+Se conserva /fwc loot off | on y la selección de fuente en Settings.
+Preview antes/después y caso rojo en docs/validation-3.9. Son frames con datos de jugador
+simulados, no capturas de WoW. Instrucciones: docs/UPGRADE-TOOLTIP-3.9.md.

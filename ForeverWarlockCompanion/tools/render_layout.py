@@ -45,7 +45,7 @@ def render(path):
      d.rectangle((x,y,r-1,b-1),fill=(40,25,54,255),outline=(130,96,46,255));d.text((x+w/2,y+h/2),'◇',font=font(min(20,max(8,h//2))),anchor='mm',fill=(208,168,83,255))
   elif n['kind']=='FontString' and n['text']:
    match=re.search(r'\|c([0-9a-fA-F]{8})',n['text']);color=('#'+match[1][2:]) if match else ('#e2bf70' if n['font'].startswith('GameFontNormal') else '#dddce2')
-   text=re.sub(r'\|c[0-9a-fA-F]{8}|\|r','',n['text']);size=19 if 'Large' in n['font'] else 13 if n['font']=='GameFontNormal' else 11
+   text=re.sub(r'\|T.*?\|t','◆ ',n['text']);text=re.sub(r'\|c[0-9a-fA-F]{8}|\|r','',text);size=19 if 'Large' in n['font'] else 13 if n['font']=='GameFontNormal' else 11
    ft=font(size,'Normal' in n['font']);lines=[]
    for original in text.split('\n'):
     words=original.split();line=''
@@ -75,14 +75,15 @@ def render(path):
   for c in frames:walk(c,clip)
  root=next(n for n in nodes.values() if n['p'] not in nodes);walk(root,(0,0,canvas.width,canvas.height));return canvas.convert('RGB')
 
-def main(before,after,dest):
+def main(before,after,dest,before_label='3.2',after_label='3.3'):
  dest=Path(dest);dest.mkdir(parents=True,exist_ok=True)
- for screen in ('dashboard','equipment','item','objectives'):
+ for screen in ('dashboard','equipment','item','objectives','explorer'):
+  if not Path(before+'-'+screen+'.tsv').exists() or not Path(after+'-'+screen+'.tsv').exists():continue
   old=render(before+'-'+screen+'.tsv');new=render(after+'-'+screen+'.tsv');w=1100;h=round(old.height*w/old.width)
   board=Image.new('RGB',(w*2,h+120),(13,14,21));d=ImageDraw.Draw(board)
   d.text((22,10),'PRUEBA DE DISTRIBUCIÓN · API SIMULADA · NO ES UNA CAPTURA DE WOW',font=font(20,True),fill='#e8c878')
-  d.text((22,42),'Datos de prueba. Iconos, fuentes y modelo 3D reales pendientes de validación en el cliente.',font=font(16),fill='#c2c4d0')
-  for i,(im,label) in enumerate(((old,'ANTES · 3.2'),(new,'DESPUÉS · 3.3 · '+screen.upper()))):
+  d.text((22,42),'Estado del jugador simulado. Iconos, fuentes y modelo 3D pendientes de validación en el cliente.',font=font(16),fill='#c2c4d0')
+  for i,(im,label) in enumerate(((old,'ANTES · '+before_label),(new,'DESPUÉS · '+after_label+' · '+screen.upper()))):
    d.text((i*w+22,77),label,font=font(20,True),fill='#eee7d6');board.paste(im.resize((w,h),Image.Resampling.LANCZOS),(i*w,112))
   board.save(dest/(screen+'-comparison.png'))
 if __name__=='__main__': main(*sys.argv[1:])

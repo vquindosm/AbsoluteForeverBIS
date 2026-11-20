@@ -1,5 +1,5 @@
 -- Bootstrap only. Folder/DB names stay unchanged for upgrades from 2.x.
-FWC = { version = "3.3.3-preview", UI = {}, Services = {}, Data = {}, diagnostics = {} }
+FWC = { version = "3.9.0-preview", UI = {}, Services = {}, Data = {}, diagnostics = {} }
 local A = FWC
 function A:Log(message)
     self.diagnostics[#self.diagnostics + 1] = tostring(message)
@@ -11,4 +11,5 @@ end
 function A:Refresh()
     if self.UI.window and self.UI.window:IsShown() then self.UI.Render() end
     if self.UI.Tracker then self.UI.Tracker.Render() end
+    if self.UI.LootIndicator then self.UI.LootIndicator.Refresh() end
 end

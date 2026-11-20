@@ -75,3 +75,70 @@ GUID localizado, costes/stock temporales, referencias estadísticas y crédito v
 La suite Python anterior también valida el snapshot API reproducible y el adaptador con
 controles sintéticos de formato, atribución/marcas, cuenta privada, unidades y cambios de esquema.
 No incluye respuestas privadas completas ni claves, y no prueba el cliente del juego.
+
+
+## Fichas de objetos y mejoras (3.4)
+
+Ejecutar `lua tests/item_guide.lua modern` y variantes legacy/no-model/player-model.
+Comprueba los 157 objetos, niveles, origen de fórmula según facción, progreso de materiales,
+arcanos de origen desconocido, fuentes Classic, compatibilidad por ranura/nivel de objeto,
+índices de guía separados de EP, IDs distintos con el mismo nombre y las nuevas secciones
+sin solapamiento a tres tamaños. Incluye selección de alternativas, expandir/cerrar mejora,
+limpieza al cambiar objeto/perfil y reutilización de filas.
+
+`python3 -m unittest discover -s tests -p gear_guide.py` valida los hechos normalizados,
+cobertura parcial, reproducción offline, marcas de fuente y fallos de identidad/procedencia.
+Ejecutar también todas las suites anteriores. Las respuestas del jugador son simuladas.
+Las comparativas en docs/validation-3.4 son geometría de frames con iconos simbólicos;
+no son capturas de WoW. El exportador también permite inspeccionar Item Explorer.
+
+
+## Indicadores de botín (3.5)
+
+Ejecutar `lua tests/loot_indicator.lua modern` y variantes legacy/no-model/player-model.
+Los 64 checks por variante usan IDs y respuestas deliberadamente sintéticos: comparación
+fuera de catálogo, enlaces completos, ausencia frente a cero, pesos, restricciones, dos
+anillos/abalorios, 2H con mano izquierda, cambios de equipo en combate, hooks sin duplicados,
+ItemRefTooltip tardío, datos asíncronos y tooltip cambiado, filas recicladas/ScrollBox,
+cierre, activación y preferencias. No es una prueba del cliente Forever ni de un drop real.
+Ejecutar también todas las suites anteriores. Recorrido manual: LOOT-INDICATOR-3.5.md.
+
+## Tooltip compacto y API externa (3.6)
+
+Ejecutar `lua tests/loot_visual.lua modern` y variantes legacy/no-model/player-model.
+Usa respuestas sintéticas para reproducir la forma del caso de las botas: pérdidas de
+atributos ausentes del objeto nuevo, dirección del delta, error/carga, enlace completo,
+puntuación opcional por perfil, fuente manual, baseline cero, callbacks agrupados y
+líneas dentro del tooltip sin duplicar ni borrar contenido de otros addons.
+Ejecutar las suites anteriores. No renderiza WoW ni verifica datos de objetos reales.
+El recorrido manual pendiente figura en docs/LOOT-TOOLTIP-3.6.md.
+
+## Item Inspector 2.0 (3.7 piloto)
+
+`lua tests/item_inspector.lua modern` y variantes legacy/no-model/player-model comprueban
+la ficha real publicada de Fel Cape, receta y cantidades, costes separados, bolsas simuladas,
+identificadores estables, deltas frente a capa de prueba, EP configurado, falta de pesos,
+aliases/solapamientos, caché, perfiles, rating y geometría a 280/360/510 px. No certifica el
+cliente. El fixture no se carga en el TOC. `tests/export_inspector.lua` exporta la geometría
+para las previews antes/después. El recorrido de aceptación está en docs/ITEM-INSPECTOR-3.7.md.
+
+## Indicador bajo el nombre (3.8)
+
+`lua tests/upgrade_banner.lua modern` y variantes legacy/no-model/player-model prueban
+colores por puesto, contexto de referencia, sufijos, mejora positiva, perfil externo
+opcional, porcentaje/GS, anclaje bajo el nombre, preservación de textos, restore, filas
+añadidas por otra extensión, reconstrucción nativa, anchors dependientes, protección y
+datos restringidos. Los puestos de control 1/3/4/5/6/7 son fixtures, no registros nuevos.
+`tests/tooltip_fixture.lua` representa líneas nativas con anclajes independientes.
+Las suites anteriores se adaptan al hover sin bloque detallado; conservan sus comprobaciones
+del cálculo y muestran el indicador sólo cuando hay mejora válida. Preview y recorrido:
+docs/UPGRADE-TOOLTIP-3.8.md. No se ha ejecutado el motor nativo WoW en estas pruebas.
+
+## Tarjeta inferior (3.9)
+
+`tests/upgrade_banner.lua` valida ahora la tarjeta independiente: fondos/bordes
+verde/rojo, clase/spec, medidor con cero central, números positivos/negativos, tema,
+anchura, colisiones y prueba que prohíbe acceder a las fuentes nativas. No se cambia
+la altura ni el número de líneas del tooltip. Ejecutar las cuatro variantes y las
+suites anteriores. `export_upgrade_tooltip.lua` exporta también el frame inferior;
+el argumento `down` genera el control negativo. Recorrido: UPGRADE-TOOLTIP-3.9.md.

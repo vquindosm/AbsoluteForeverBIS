@@ -37,6 +37,7 @@ function P.WeightedComparison(before,after,weights)
     return {before=old,after=new,delta=(new-old)/math.abs(old)*100}
 end
 function P.SlotScore(slot,item)
+    if A.Services.ItemInspector and A.Services.ItemInspector.IsPilot(item) then local r=A.Services.UpgradeComparison.ForSlot(slot,item);return r.score or nil,r.reason end
     local eq=A.Services.Inventory.snapshot.equipped[slot]
     if not eq or not eq.id or not item then return nil,'Equipment or target unavailable.' end
     local stats=A.Services.ItemStats;local before=stats.Equipped(slot);local after=stats.Candidate(item)

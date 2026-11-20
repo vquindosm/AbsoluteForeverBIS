@@ -1,14 +1,17 @@
 ## Interface: 16001
 ## Title: Forever Companion
 ## Notes: Equipment planning, native model preview and progression. Imported lists are unranked.
-## Version: 3.3.3-preview
+## Version: 3.9.0-preview
 ## SavedVariablesPerCharacter: ForeverWarlockCompanionDB
+## OptionalDeps: ForeverLevelingBiS
 
 ForeverWarlockCompanion.lua
 Data.lua
 Data\Affliction.lua
 Data\Recipes.lua
 Data\Foundation.lua
+Data\ItemGuide.lua
+Data\InspectorPilot.lua
 Services\Compatibility.lua
 Services\ItemStats.lua
 Services\Persistence.lua
@@ -17,10 +20,16 @@ Services\InventoryScanner.lua
 Services\CharacterReader.lua
 Services\ProfessionTracker.lua
 Services\GearPlanner.lua
+Services\LootScore.lua
+Services\UpgradeComparison.lua
+Services\UpgradeIndicator.lua
+Services\LootComparison.lua
 Services\NavigationService.lua
 Services\AcquisitionRequirementsResolver.lua
 Services\MerchantObserver.lua
 Services\AcquisitionResolver.lua
+Services\ItemGuide.lua
+Services\ItemInspector.lua
 Services\ObjectiveService.lua
 Services\ProgressService.lua
 Services\MaterialAggregator.lua
@@ -28,6 +37,7 @@ Services\DungeonService.lua
 UI\Widgets.lua
 UI\DesignSystem.lua
 UI\ModelViewer.lua
+UI\ItemInspector.lua
 UI\ItemDetails.lua
 UI\CharacterPanel.lua
 UI\ItemSelector.lua
@@ -38,4 +48,6 @@ UI\ObjectivesPanel.lua
 UI\ContentPanel.lua
 UI\MainWindow.lua
 UI\Tracker.lua
+UI\UpgradeTooltip.lua
+UI\LootIndicator.lua
 Events.lua

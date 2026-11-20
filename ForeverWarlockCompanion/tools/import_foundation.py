@@ -5,7 +5,7 @@ import argparse,datetime,hashlib,html,json,os,pathlib,re,sys,urllib.request,urll
 sys.path.insert(0,str(pathlib.Path(__file__).resolve().parent/'data'))
 from catalog import ROOT,atomic,compile_catalog,secret_check
 BASE='https://foreverdb.net'
-UA='ForeverCompanion-OfflineImporter/3.3.3 (+addon catalog research)'
+UA='ForeverCompanion-OfflineImporter/3.4 (+addon catalog research)'
 class NoRedirect(urllib.request.HTTPRedirectHandler):
  def redirect_request(self,*args,**kwargs):return None
 
